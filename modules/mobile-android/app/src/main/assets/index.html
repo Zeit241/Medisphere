@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Indoor routing — MapLibre + GeoJSON</title>
+  <link href="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css" rel="stylesheet" />
+  <style>
+    body,html{height:100%;margin:0;font-family:Arial,Helvetica,sans-serif}
+    #map{position:absolute;inset:0}
+    #ui{position:absolute;left:8px;top:8px;z-index:2;background:#fff;padding:8px;border-radius:6px;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+    label{display:block;margin-bottom:6px}
+    select,button{width:100%;margin-bottom:6px}
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <div id="ui">
+    <label>Start (вход): <select id="startSelect"></select></label>
+    <label>Target (кабинет): <select id="endSelect"></select></label>
+    <button id="routeBtn">Построить маршрут</button>
+    <div id="info"></div>
+  </div>
+
+  <script src="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.js"></script>
+  <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="24dp">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_cancel"
+                app:tint="@color/cancelled_status" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="12dp"
+                android:text="Отмена записи"
+                android:textAppearance="?attr/textAppearanceHeadline5"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnSurface" />
+        </LinearLayout>
+
+        <!-- Warning text -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Вы уверены, что хотите отменить запись? Пожалуйста, укажите причину отмены."
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="@color/text_secondary"
+            android:layout_marginBottom="20dp" />
+
+        <!-- Popular reasons section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Частые причины"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurface"
+            android:layout_marginBottom="12dp" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroupReasons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:singleSelection="true"
+            app:chipSpacingHorizontal="8dp"
+            app:chipSpacingVertical="4dp"
+            android:layout_marginBottom="20dp">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipHealthIssue"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Проблемы со здоровьем"
+                app:chipBackgroundColor="@color/primary_light"
+                app:checkedIconVisible="false" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipScheduleConflict"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Изменились планы"
+                app:chipBackgroundColor="@color/primary_light"
+                app:checkedIconVisible="false" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipFoundAnotherDoctor"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Нашёл другого врача"
+                app:chipBackgroundColor="@color/primary_light"
+                app:checkedIconVisible="false" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipNoLongerNeeded"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Визит больше не нужен"
+                app:chipBackgroundColor="@color/primary_light"
+                app:checkedIconVisible="false" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipTransportIssues"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Проблемы с транспортом"
+                app:chipBackgroundColor="@color/primary_light"
+                app:checkedIconVisible="false" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipPersonalReasons"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Личные обстоятельства"
+                app:chipBackgroundColor="@color/primary_light"
+                app:checkedIconVisible="false" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <!-- Custom reason input -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Другая причина (необязательно)"
+            app:boxStrokeColor="@color/cancelled_status"
+            app:hintTextColor="@color/cancelled_status"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_marginBottom="24dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/reasonEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine|textCapSentences"
+                android:minLines="3"
+                android:maxLines="5"
+                android:gravity="top|start"
+                android:textColor="?attr/colorOnSurface" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/cancelDialogButton"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:text="Назад"
+                app:cornerRadius="16dp"
+                app:strokeColor="?attr/colorOutline" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/confirmCancelButton"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="Отменить запись"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/cancelled_status"
+                app:cornerRadius="16dp"
+                app:icon="@drawable/ic_cancel"
+                app:iconGravity="textStart"
+                app:iconTint="@color/white" />
+
+        </LinearLayout>
+
+        <!-- Progress Indicator -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"
+            style="?android:attr/progressBarStyle" />
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+

@@ -1,0 +1,22 @@
+{
+  "name": "clinic-db-seeder",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Интерактивное наполнение Postgres (Docker) тестовыми данными через Faker",
+  "scripts": {
+    "start": "node src/index.mjs",
+    "seed": "node src/index.mjs",
+    "doctor-day": "node src/doctorDayAppointments.mjs",
+    "verify": "node scripts/verify.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^9.6.0",
+    "@inquirer/prompts": "^7.4.1",
+    "dotenv": "^16.4.7",
+    "pg": "^8.14.1"
+  }
+}

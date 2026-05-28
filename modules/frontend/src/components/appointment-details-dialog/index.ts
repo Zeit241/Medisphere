@@ -1,0 +1,1 @@
+export { AppointmentDetailsDialog } from "./AppointmentDetailsDialog";

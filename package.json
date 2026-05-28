@@ -1,0 +1,14 @@
+{
+  "name": "kursovaya",
+  "private": true,
+  "description": "Монорепозиторий информационной системы медицинской клиники",
+  "scripts": {
+    "infra:up": "docker compose up -d db redis directus pgadmin",
+    "infra:down": "docker compose down",
+    "infra:logs": "docker compose logs -f",
+    "landing:dev": "npm --prefix modules/landing run dev",
+    "frontend:dev": "npm --prefix modules/frontend run dev",
+    "backend:run": "cd modules/backend && ./mvnw spring-boot:run",
+    "seeder": "npm --prefix modules/db-seeder start"
+  }
+}

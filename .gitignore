@@ -1,0 +1,64 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build outputs
+**/dist/
+**/build/
+**/target/
+**/.next/
+**/out/
+*.tsbuildinfo
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.cursor/
+
+# Environment & secrets
+.env
+.env.local
+.env.*.local
+**/.env
+!**/.env.example
+local.properties
+**/local.properties
+!**/local.properties.example
+
+# Android
+**/.gradle/
+**/app/build/
+**/.kotlin/
+*.apk
+*.aab
+
+# Logs & runtime
+**/logs/
+**/*.log
+modules/qwen-proxy/session/
+modules/qwen-proxy/uploads/
+
+# Python venv
+**/venv/
+**/__pycache__/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Legacy duplicate (merged into modules/landing)
+lending/
+
+# Presentations (optional local files)
+*.pptx
+
+# Maven wrapper jar (if not tracked)
+.mvn/wrapper/maven-wrapper.jar
+
+# Test coverage
+**/coverage/
+
+# Package locks at root (if any)
+package-lock.json

@@ -1,0 +1,7 @@
+sql migration/cms_overlay.sql:
+- Только cms_site_settings (id=1) + при необходимости снятие устаревших
+  cms_doctor_profile, cms_service_card, cms_review_site, cms_gallery_item,
+  представлений v_site_* и триггеров на doctors/services.
+- Операционные таблицы — из Spring/JPA (doctors, services, specialization_services, …).
+  Предпочтительный порядок: схема бэкенда, затем doctors_photo_directus.sql (photo TEXT), затем cms_overlay.sql.
+- initdb/schema.sql в репозитории может отставать; ориентируйтесь на kursovaya_backend. После SQL — Directus, токен DIRECTUS_TOKEN.

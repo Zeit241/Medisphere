@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--
+      Состояние, когда элемент выбран (активен).
+      Используем ваш цвет primary_light.
+    -->
+    <item android:color="@color/primary_light" android:state_checked="true" />
+
+    <!--
+      Состояние по умолчанию (для неактивных элементов).
+      Используем прозрачный цвет, чтобы фона не было.
+    -->
+    <item android:color="@android:color/transparent" />
+</selector>

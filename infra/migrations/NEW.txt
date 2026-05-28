@@ -1,0 +1,180 @@
+-- ============================= 
+-- 1. Пользователи и Роли 
+-- ============================= 
+CREATE TABLE roles ( 
+    id SERIAL PRIMARY KEY, 
+    code TEXT UNIQUE NOT NULL, 
+    name TEXT NOT NULL 
+);
+
+CREATE TABLE users ( 
+    id SERIAL PRIMARY KEY, 
+    email TEXT UNIQUE NOT NULL, 
+    phone TEXT UNIQUE, 
+    password_hash TEXT, 
+    first_name TEXT, 
+    last_name TEXT, 
+    middle_name TEXT, 
+    role_id INTEGER, 
+    created_at timestamptz NOT NULL DEFAULT now(), 
+    updated_at timestamptz NOT NULL DEFAULT now(), 
+    is_active BOOLEAN NOT NULL DEFAULT true 
+);
+
+ALTER TABLE users ADD CONSTRAINT fk_users_role FOREIGN KEY (role_id) REFERENCES roles (id);
+
+-- ============================= 
+-- 2. Пациенты 
+-- ============================= 
+CREATE TABLE patients ( 
+    id SERIAL PRIMARY KEY, 
+    user_id INTEGER UNIQUE REFERENCES users (id) ON DELETE CASCADE, 
+    birth_date DATE, 
+    gender SMALLINT, 
+    insurance_number TEXT, 
+    created_at timestamptz NOT NULL DEFAULT now(), 
+    updated_at timestamptz NOT NULL DEFAULT now() 
+);
+
+-- ============================= 
+-- 3. Специализации и Врачи 
+-- ============================= 
+CREATE TABLE specializations ( 
+    id SERIAL PRIMARY KEY, 
+    code TEXT UNIQUE NOT NULL, 
+    name TEXT NOT NULL, 
+    description TEXT 
+);
+
+CREATE TABLE doctors ( 
+    id SERIAL PRIMARY KEY, 
+    user_id INTEGER UNIQUE REFERENCES users (id), 
+    hide BOOLEAN,
+    bio TEXT, 
+    experience_years INTEGER CHECK (experience_years >= 0), 
+    photo TEXT, 
+    created_at timestamptz NOT NULL DEFAULT now(), 
+    updated_at timestamptz NOT NULL DEFAULT now() 
+);
+
+-- Связь Врач-Специализация (с валидацией сроков)
+CREATE TABLE doctor_specializations ( 
+    id BIGSERIAL PRIMARY KEY,
+    doctor_id INTEGER REFERENCES doctors (id) ON DELETE CASCADE, 
+    specialization_id INTEGER REFERENCES specializations (id) ON DELETE CASCADE, 
+    valid_from DATE NOT NULL DEFAULT CURRENT_DATE, 
+    valid_to DATE, 
+    certificate_number TEXT, 
+    UNIQUE (doctor_id, specialization_id) 
+);
+
+-- ============================= 
+-- 4. Кабинеты 
+-- ============================= 
+CREATE TABLE rooms ( 
+    id SERIAL PRIMARY KEY, 
+    code TEXT UNIQUE NOT NULL, 
+    name TEXT 
+);
+
+-- ============================= 
+-- 5. Услуги 
+-- ============================= 
+CREATE TABLE services ( 
+    id SERIAL PRIMARY KEY, 
+    name TEXT NOT NULL, 
+    code TEXT UNIQUE, 
+    price DECIMAL(10, 2) NOT NULL DEFAULT 0, 
+    duration_minutes INTEGER NOT NULL DEFAULT 30, 
+    description TEXT 
+);
+
+-- ============================= 
+-- 6. Диагнозы (МКБ-10) 
+-- ============================= 
+CREATE TABLE diagnoses ( 
+    id SERIAL PRIMARY KEY, 
+    code TEXT UNIQUE NOT NULL, 
+    name TEXT NOT NULL, 
+    category TEXT 
+);
+
+-- ============================= 
+-- 7. Расписание приёма 
+-- ============================= 
+CREATE TABLE doctor_schedules ( 
+    id SERIAL PRIMARY KEY, 
+    doctor_id INTEGER REFERENCES doctors (id) NOT NULL, 
+    room_id INTEGER REFERENCES rooms (id), 
+    dateAt DATE, 
+    start_time TIME NOT NULL, 
+    end_time TIME NOT NULL CHECK (end_time > start_time), 
+    slot_duration_minutes INTEGER NOT NULL CHECK (slot_duration_minutes > 0), 
+    created_at timestamptz NOT NULL DEFAULT now(), 
+    updated_at timestamptz NOT NULL DEFAULT now(), 
+UNIQUE (doctor_id, dateAt, start_time, end_time) 
+);
+
+-- ============================= 
+-- 8. Приёмы 
+-- ============================= 
+CREATE TABLE appointments ( 
+    id SERIAL PRIMARY KEY, 
+    schedule_id INTEGER REFERENCES doctor_schedules (id) ON DELETE SET NULL, 
+    doctor_id INTEGER REFERENCES doctors (id) NOT NULL, 
+    patient_id INTEGER REFERENCES patients (id), 
+    room_id INTEGER REFERENCES rooms (id), 
+    service_id INTEGER REFERENCES services (id), 
+    diagnosis_id INTEGER REFERENCES diagnoses (id), 
+    start_time timestamptz NOT NULL, 
+    end_time timestamptz NOT NULL, 
+    status TEXT NOT NULL CHECK ( status IN ('available','scheduled','confirmed','in_progress','completed','cancelled','no_show') ), 
+    source TEXT NOT NULL CHECK ( source IN ('mobile','reception','web','admin') ), 
+    created_by INTEGER REFERENCES users (id), 
+    created_at timestamptz NOT NULL DEFAULT now(), 
+    updated_at timestamptz NOT NULL DEFAULT now(), 
+    cancel_reason TEXT,
+    complaints TEXT,                -- Жалобы пациента со слов
+    anamnesis TEXT,                 -- Анамнез заболевания и жизни
+    recommendations TEXT            -- Назначения и план лечения
+);
+
+-- ============================= 
+-- 9. Отзывы (НОВОЕ) 
+-- ============================= 
+CREATE TABLE reviews ( 
+    id SERIAL PRIMARY KEY, 
+    appointment_id INTEGER UNIQUE REFERENCES appointments (id) NOT NULL, -- Один отзыв на прием
+    doctor_id INTEGER REFERENCES doctors (id) NOT NULL,                  -- Денормализация для быстрого поиска
+    patient_id INTEGER REFERENCES patients (id) NOT NULL, 
+    rating SMALLINT NOT NULL CHECK (rating BETWEEN 1 AND 5), 
+    review_text TEXT, 
+    created_at timestamptz NOT NULL DEFAULT now() 
+);
+
+-- ============================= 
+-- ИНДЕКСЫ 
+-- ============================= 
+CREATE INDEX idx_appointments_doctor ON appointments(doctor_id);
+CREATE INDEX idx_appointments_patient ON appointments(patient_id);
+CREATE INDEX idx_appointments_service ON appointments(service_id);
+CREATE INDEX idx_appointments_diagnosis ON appointments(diagnosis_id);
+
+-- Индексы для отзывов
+CREATE INDEX idx_reviews_doctor ON reviews(doctor_id);       -- Поиск отзывов по врачу
+CREATE INDEX idx_reviews_patient ON reviews(patient_id);     -- История отзывов пациента
+CREATE INDEX idx_reviews_rating ON reviews(rating);          -- Для статистики и фильтров
+
+
+CREATE TABLE specialization_services ( 
+    id BIGSERIAL PRIMARY KEY,
+    specialization_id INTEGER REFERENCES specializations (id) ON DELETE CASCADE, 
+    service_id INTEGER REFERENCES services (id) ON DELETE CASCADE, 
+    is_active BOOLEAN NOT NULL DEFAULT true, -- Позволяет временно скрыть услугу для специализации
+    created_at timestamptz NOT NULL DEFAULT now(), 
+    UNIQUE (specialization_id, service_id) 
+);
+
+-- Индексы для быстрого поиска
+CREATE INDEX idx_spec_services_spec ON specialization_services(specialization_id);
+CREATE INDEX idx_spec_services_svc ON specialization_services(service_id);

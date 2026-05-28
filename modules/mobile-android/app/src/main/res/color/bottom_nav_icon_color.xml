@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--
+      Состояние, когда элемент выбран.
+      Иконка и текст будут синими (primary) для лучшего контраста на светло-голубом фоне.
+    -->
+    <item android:color="@color/primary" android:state_checked="true" />
+
+    <!--
+      Состояние по умолчанию.
+      Иконка и текст будут черными.
+    -->
+    <item android:color="@color/black" />
+</selector>

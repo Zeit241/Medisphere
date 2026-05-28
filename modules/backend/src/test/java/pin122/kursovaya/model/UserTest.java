@@ -1,0 +1,134 @@
+package pin122.kursovaya.model;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import pin122.kursovaya.dto.UserDto;
+
+import java.time.OffsetDateTime;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+@DisplayName("User - тесты модели пользователя")
+class UserTest {
+
+    private User user;
+
+    @BeforeEach
+    void setUp() {
+        user = new User();
+        user.setId(1L);
+        user.setEmail("test@example.com");
+        user.setPhone("+79001234567");
+        user.setFirstName("Иван");
+        user.setLastName("Петров");
+        user.setMiddleName("Сергеевич");
+        user.setPasswordHash("hashedPassword123");
+        user.setActive(true);
+        user.setCreatedAt(OffsetDateTime.now());
+        user.setUpdatedAt(OffsetDateTime.now());
+    }
+
+    @Test
+    @DisplayName("Создание пользователя с конструктором по умолчанию")
+    void defaultConstructor_createsEmptyUser() {
+        User newUser = new User();
+
+        assertNotNull(newUser);
+        assertNull(newUser.getId());
+        assertNull(newUser.getEmail());
+        assertTrue(newUser.isActive());
+        assertNotNull(newUser.getCreatedAt());
+        assertNotNull(newUser.getUpdatedAt());
+    }
+
+    @Test
+    @DisplayName("Создание пользователя из UserDto")
+    void constructorFromDto_copiesAllFields() {
+        UserDto dto = new UserDto(
+                2L,
+                "dto@example.com",
+                "+79009999999",
+                "Мария",
+                "Сидорова",
+                "Ивановна",
+                OffsetDateTime.now(),
+                OffsetDateTime.now(),
+                true
+        );
+
+        User userFromDto = new User(dto);
+
+        assertEquals(dto.getId(), userFromDto.getId());
+        assertEquals(dto.getEmail(), userFromDto.getEmail());
+        assertEquals(dto.getPhone(), userFromDto.getPhone());
+        assertEquals(dto.getFirstName(), userFromDto.getFirstName());
+        assertEquals(dto.getLastName(), userFromDto.getLastName());
+        assertEquals(dto.getMiddleName(), userFromDto.getMiddleName());
+    }
+
+    @Test
+    @DisplayName("Проверка геттеров и сеттеров")
+    void gettersAndSetters_workCorrectly() {
+        assertEquals(1L, user.getId());
+        assertEquals("test@example.com", user.getEmail());
+        assertEquals("+79001234567", user.getPhone());
+        assertEquals("Иван", user.getFirstName());
+        assertEquals("Петров", user.getLastName());
+        assertEquals("Сергеевич", user.getMiddleName());
+        assertEquals("hashedPassword123", user.getPasswordHash());
+        assertTrue(user.isActive());
+    }
+
+    @Test
+    @DisplayName("Установка и получение роли")
+    void role_canBeSetAndRetrieved() {
+        Role adminRole = new Role();
+        adminRole.setId(1L);
+        adminRole.setCode("admin");
+        adminRole.setName("Администратор");
+
+        user.setRole(adminRole);
+
+        assertNotNull(user.getRole());
+        assertEquals("admin", user.getRole().getCode());
+    }
+
+    @Test
+    @DisplayName("Связь с Patient - установка и получение")
+    void patientRelation_canBeSetAndRetrieved() {
+        Patient patient = new Patient();
+        patient.setId(1L);
+        patient.setUser(user);
+        patient.setInsuranceNumber("123-456-789-04");
+
+        user.setPatient(patient);
+
+        assertNotNull(user.getPatient());
+        assertEquals(patient, user.getPatient());
+        assertEquals("123-456-789-04", user.getPatient().getInsuranceNumber());
+    }
+
+    @Test
+    @DisplayName("Изменение активности пользователя")
+    void setActive_changesActiveStatus() {
+        assertTrue(user.isActive());
+        user.setActive(false);
+        assertFalse(user.isActive());
+    }
+
+    @Test
+    @DisplayName("Проверка equals и hashCode")
+    void equalsAndHashCode_workWithoutRelations() {
+        User user1 = new User();
+        user1.setId(1L);
+        user1.setEmail("test@test.com");
+
+        User user2 = new User();
+        user2.setId(1L);
+        user2.setEmail("test@test.com");
+
+        assertEquals(user1, user2);
+        assertEquals(user1.hashCode(), user2.hashCode());
+    }
+}

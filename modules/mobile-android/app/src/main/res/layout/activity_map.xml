@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface"
+    tools:context=".activity.MapActivity">
+
+    <!-- Заголовок экрана -->
+    <LinearLayout
+        android:id="@+id/headerLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorSurfaceContainer"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Карта больницы"
+            android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Навигация внутри здания"
+            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+            android:textColor="?android:attr/textColorSecondary" />
+    </LinearLayout>
+
+    <!-- Форма выбора маршрута -->
+    <LinearLayout
+        android:id="@+id/routeSelectionLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headerLayout">
+
+        <!-- Выбор начальной точки -->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Начало маршрута">
+
+            <AutoCompleteTextView
+                android:id="@+id/startLocationAutoComplete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:text="Главный вход" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Выбор конечной точки -->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Конец маршрута">
+
+            <AutoCompleteTextView
+                android:id="@+id/endLocationAutoComplete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                tools:text="Кабинет 101" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Кнопка построения маршрута -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buildRouteButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:paddingVertical="12dp"
+            android:text="Проложить маршрут"
+            app:icon="@drawable/ic_arrow_back"
+            app:iconGravity="textStart" />
+    </LinearLayout>
+
+    <!-- Заглушка для карты -->
+    <FrameLayout
+        android:id="@+id/mapPlaceholder"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        android:background="?attr/colorSurfaceContainer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/routeSelectionLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="[Здесь будет карта]"
+            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+            android:textColor="?android:attr/textColorSecondary" />
+
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

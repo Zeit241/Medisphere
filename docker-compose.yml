@@ -1,0 +1,124 @@
+
+services:
+  db:
+    image: postgres:15
+    container_name: clinic_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: login
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: clinic_db
+      TZ: Europe/Moscow
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./infra/initdb:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U login -d clinic_db"]
+      interval: 5s
+      retries: 5
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: clinic_pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@clinic.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+
+  redis:
+    image: redis:7-alpine
+    container_name: clinic_redis
+    restart: always
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+
+  directus:
+    image: directus/directus:latest
+    container_name: clinic_directus
+    restart: always
+    ports:
+      - "8055:8055"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      SECRET: "supersecretkey-change-in-production"
+      DB_CLIENT: "pg"
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: clinic_db
+      DB_USER: login
+      DB_PASSWORD: pass
+      CACHE_ENABLED: "true"
+      CACHE_STORE: "redis"
+      REDIS: "redis://redis:6379"
+      ADMIN_EMAIL: "admin@clinic.com"
+      ADMIN_PASSWORD: "admin123"
+      PUBLIC_URL: "http://localhost:8055"
+      CORS_ENABLED: "true"
+      CORS_ORIGIN: "http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000,http://127.0.0.1:3000"
+    volumes:
+      - directus_uploads:/directus/uploads
+      - directus_extensions:/directus/extensions
+
+  landing:
+    build:
+      context: ./modules/landing
+      dockerfile: Dockerfile
+    container_name: clinic_landing
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - directus
+      - db
+    environment:
+      NODE_ENV: production
+      PGSQL_USER: login
+      PGSQL_PASSWORD: pass
+      PGSQL_HOST: db
+      PGSQL_PORT: 5432
+      PGSQL_DATABASE: clinic_db
+      NEXTAUTH_SECRET: "nextauth-secret-change-in-production"
+      NEXTAUTH_URL: "http://localhost:3000"
+      NEXT_PUBLIC_DIRECTUS_URL: "http://localhost:8055"
+      DIRECTUS_INTERNAL_URL: "http://directus:8055"
+      DIRECTUS_TOKEN: "your_static_token_here"
+      NEXT_PUBLIC_SITE_URL: "http://localhost:3000"
+
+  qwen-proxy:
+    build:
+      context: ./modules/qwen-proxy
+      dockerfile: Dockerfile
+    container_name: qwen-proxy
+    environment:
+      - SKIP_ACCOUNT_MENU=true
+      - PORT=3264
+    ports:
+      - "3264:3264"
+    volumes:
+      - ./modules/qwen-proxy/session:/app/session
+      - ./modules/qwen-proxy/logs:/app/logs
+      - ./modules/qwen-proxy/uploads:/app/uploads
+    restart: unless-stopped
+
+volumes:
+  pg_data:
+  redis_data:
+  directus_uploads:
+  directus_extensions:

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginTop="12dp"
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="24dp"
+    app:cardElevation="4dp"
+    app:strokeColor="?attr/colorOutlineVariant"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorSurface"
+        android:padding="24dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/imageCardView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="50dp"
+            app:cardElevation="6dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="?attr/colorPrimary"
+            app:strokeWidth="2dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/doctorImageView"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
+                app:srcCompat="@drawable/bg_circle_primary" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/doctorNameTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="8dp"
+            android:letterSpacing="0.02"
+            android:textAppearance="?attr/textAppearanceHeadlineSmall"
+            android:textColor="?attr/colorOnSurface"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/feeCardView"
+            app:layout_constraintStart_toEndOf="@+id/imageCardView"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Д-р. Анна Петрова" />
+
+        <TextView
+            android:id="@+id/doctorSpecialtyTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:letterSpacing="0.01"
+            android:textAppearance="?attr/textAppearanceBodyLarge"
+            android:textColor="?android:attr/textColorSecondary"
+            app:layout_constraintEnd_toEndOf="@+id/doctorNameTextView"
+            app:layout_constraintStart_toStartOf="@+id/doctorNameTextView"
+            app:layout_constraintTop_toBottomOf="@+id/doctorNameTextView"
+            tools:text="Кардиолог" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/ratingCardView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:cardBackgroundColor="?attr/colorSurfaceVariant"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:layout_constraintStart_toStartOf="@+id/doctorSpecialtyTextView"
+            app:layout_constraintTop_toBottomOf="@+id/doctorSpecialtyTextView"
+            app:strokeWidth="0dp">
+
+            <LinearLayout
+                android:id="@+id/ratingContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="6dp">
+
+                <ImageView
+                    android:id="@+id/starIcon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_star"
+                    app:tint="@color/rating_star_color" />
+
+                <TextView
+                    android:id="@+id/doctorRatingTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="?attr/colorOnSurface"
+                    android:textStyle="bold"
+                    tools:text="4.9" />
+
+                <TextView
+                    android:id="@+id/doctorReviewsTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:textAppearance="?attr/textAppearanceBodySmall"
+                    android:textColor="?android:attr/textColorSecondary"
+                    tools:text="(127 отзывов)" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/feeCardView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="?attr/colorPrimaryContainer"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeWidth="0dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bookButton"
+            style="@style/Widget.Material3.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:letterSpacing="0.02"
+            android:minHeight="56dp"
+            android:text="Записаться на прием"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:cornerRadius="16dp"
+            app:elevation="2dp"
+            app:icon="@drawable/ic_calendar"
+            app:iconGravity="textStart"
+            app:iconPadding="10dp"
+            app:iconSize="22dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ratingCardView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
