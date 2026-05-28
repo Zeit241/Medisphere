@@ -1,27 +1,28 @@
-# Kursovaya — информационная система медицинской клиники
+# Medisphere — информационная система медицинской клиники
 
-Монорепозиторий курсового проекта: веб-приложение (админка + API), публичный лендинг, мобильное Android-приложение, CMS и вспомогательные сервисы.
+Meta-репозиторий курсового проекта: инфраструктура, документация и **git submodules** на отдельные репозитории модулей (backend, frontend, landing, mobile).
 
 ## Состав проекта
 
-| Модуль | Путь | Технологии | Назначение |
-|--------|------|------------|------------|
-| **Backend API** | [`modules/backend`](modules/backend) | Java 21, Spring Boot 3, PostgreSQL, Redis | REST API, JWT, WebSocket, очередь приёмов, отчёты |
-| **Frontend (админка)** | [`modules/frontend`](modules/frontend) | React 19, Vite, Redux Toolkit | Кабинеты администратора, врача, регистратуры |
-| **Landing** | [`modules/landing`](modules/landing) | Next.js 16, Directus | Публичный сайт клиники (услуги, врачи, CMS) |
-| **Mobile Android** | [`modules/mobile-android`](modules/mobile-android) | Kotlin, Android SDK | Мобильное приложение для пациентов |
-| **DB Seeder** | [`modules/db-seeder`](modules/db-seeder) | Node.js, Faker | Наполнение БД тестовыми данными |
-| **Qwen Proxy** | [`modules/qwen-proxy`](modules/qwen-proxy) | Node.js, Puppeteer | Прокси для ИИ-помощника (Qwen) |
-| **Infra** | [`infra`](infra) | SQL, Docker | Схема БД, миграции, init-скрипты |
+| Модуль | Путь | Репозиторий | Ветка |
+|--------|------|-------------|-------|
+| **Backend API** | [`modules/backend`](modules/backend) | [kursovaya_4_kurs_backend](https://github.com/Zeit241/kursovaya_4_kurs_backend) | `master` |
+| **Frontend (админка)** | [`modules/frontend`](modules/frontend) | [kursovaya_4_kurs_frontend](https://github.com/Zeit241/kursovaya_4_kurs_frontend) | `main` |
+| **Landing** | [`modules/landing`](modules/landing) | [Kursovaya_3kurs_web](https://github.com/Zeit241/Kursovaya_3kurs_web) | `main` |
+| **Mobile Android** | [`modules/mobile-android`](modules/mobile-android) | [kursovaya_4_kurs_mobile](https://github.com/Zeit241/kursovaya_4_kurs_mobile) | `master` |
+| **DB Seeder** | [`modules/db-seeder`](modules/db-seeder) | в этом репозитории | `main` |
+| **Qwen Proxy** | [`modules/qwen-proxy`](modules/qwen-proxy) | в этом репозитории | `main` |
+| **Infra** | [`infra`](infra) | в этом репозитории | `main` |
 
-### Исторические репозитории
-
-До объединения в монорепозиторий модули хранились отдельно:
-
-- Backend: https://github.com/Zeit241/kursovaya_4_kurs_backend
-- Frontend: https://github.com/Zeit241/kursovaya_4_kurs_frontend
-- Landing: https://github.com/Zeit241/Kursovaya_3kurs_web
-- Mobile: https://github.com/Zeit241/kursovaya_4_kurs_mobile
+| Модуль | Технологии | Назначение |
+|--------|------------|------------|
+| Backend | Java 21, Spring Boot 3, PostgreSQL, Redis | REST API, JWT, WebSocket, очередь, отчёты |
+| Frontend | React 19, Vite, Redux Toolkit | Кабинеты администратора, врача, регистратуры |
+| Landing | Next.js 16, Directus | Публичный сайт клиники |
+| Mobile | Kotlin, Android SDK | Мобильное приложение для пациентов |
+| DB Seeder | Node.js, Faker | Наполнение БД тестовыми данными |
+| Qwen Proxy | Node.js, Puppeteer | Прокси для ИИ-помощника |
+| Infra | SQL, Docker | Схема БД, миграции |
 
 ## Архитектура
 
@@ -54,6 +55,41 @@ flowchart TB
     API --> Redis
     Directus --> PG
     Directus --> Redis
+```
+
+## Клонирование
+
+```bash
+git clone --recurse-submodules https://github.com/Zeit241/Medisphere.git
+cd Medisphere
+```
+
+Если уже склонировали без submodules:
+
+```bash
+git submodule update --init --recursive
+```
+
+### Обновление submodules
+
+Подтянуть последние коммиты из репозиториев модулей:
+
+```bash
+git submodule update --remote --merge
+```
+
+Или по одному модулю:
+
+```bash
+cd modules/backend && git pull origin master
+cd ../frontend && git pull origin main
+```
+
+После обновления submodules зафиксируйте новые SHA в meta-репозитории:
+
+```bash
+git add modules/backend modules/frontend modules/landing modules/mobile-android
+git commit -m "chore: update submodules"
 ```
 
 ## Быстрый старт (локально)
@@ -153,17 +189,18 @@ npm start
 ## Структура репозитория
 
 ```
-kursovaya/
+Medisphere/
+├── .gitmodules             # Ссылки на submodules
 ├── docker-compose.yml      # Postgres, Redis, Directus, Landing, Qwen
-├── infra/                  # SQL-схема и миграции
-├── docs/                   # Документация
+├── infra/                  # SQL-схема и миграции (в этом репо)
+├── docs/                   # Документация (в этом репо)
 └── modules/
-    ├── backend/            # Spring Boot API
-    ├── frontend/           # React админка
-    ├── landing/            # Next.js лендинг
-    ├── mobile-android/     # Android-приложение
-    ├── db-seeder/          # Seeder для PostgreSQL
-    └── qwen-proxy/         # ИИ-прокси
+    ├── backend/            # submodule → kursovaya_4_kurs_backend
+    ├── frontend/           # submodule → kursovaya_4_kurs_frontend
+    ├── landing/            # submodule → Kursovaya_3kurs_web
+    ├── mobile-android/     # submodule → kursovaya_4_kurs_mobile
+    ├── db-seeder/          # в этом репо
+    └── qwen-proxy/         # в этом репо
 ```
 
 ## Лицензия

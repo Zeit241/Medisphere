@@ -1,5 +1,16 @@
 # Описание модулей
 
+Четыре основных модуля подключены как **git submodules** — код живёт в отдельных репозиториях, meta-репозиторий [Medisphere](https://github.com/Zeit241/Medisphere) хранит ссылки на конкретные коммиты.
+
+| Submodule | Репозиторий |
+|-----------|-------------|
+| `modules/backend` | https://github.com/Zeit241/kursovaya_4_kurs_backend |
+| `modules/frontend` | https://github.com/Zeit241/kursovaya_4_kurs_frontend |
+| `modules/landing` | https://github.com/Zeit241/Kursovaya_3kurs_web |
+| `modules/mobile-android` | https://github.com/Zeit241/kursovaya_4_kurs_mobile |
+
+`db-seeder`, `qwen-proxy` и `infra` — часть meta-репозитория.
+
 ## modules/backend — REST API
 
 **Стек:** Java 21, Spring Boot 3.5, Spring Data JPA, Spring Security (JWT), Redis, WebSocket, PostgreSQL.

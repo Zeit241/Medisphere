@@ -48,9 +48,9 @@ modules/qwen-proxy/uploads/
 Thumbs.db
 desktop.ini
 
-# Legacy duplicate (merged into modules/landing)
+# Legacy duplicates
 lending/
-
+kursovaya_backend/
 # Presentations (optional local files)
 *.pptx
 

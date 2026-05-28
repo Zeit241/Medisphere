@@ -6,6 +6,8 @@
     "infra:up": "docker compose up -d db redis directus pgadmin",
     "infra:down": "docker compose down",
     "infra:logs": "docker compose logs -f",
+    "submodules:init": "git submodule update --init --recursive",
+    "submodules:update": "git submodule update --remote --merge",
     "landing:dev": "npm --prefix modules/landing run dev",
     "frontend:dev": "npm --prefix modules/frontend run dev",
     "backend:run": "cd modules/backend && ./mvnw spring-boot:run",

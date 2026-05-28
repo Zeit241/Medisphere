@@ -1,3 +1,0 @@
-# Скопируйте в local.properties (файл не коммитьте) и подставьте тот же static token,
-# что и VITE_DIRECTUS_STATIC_TOKEN во фронте админки — иначе Glide получит 403 на GET /assets.
-directus.static.token=qX1Yv3kHbdG1CkDg3eowFH0jdG_hkOH1

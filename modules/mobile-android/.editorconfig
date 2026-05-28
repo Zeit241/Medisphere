@@ -1,8 +1,0 @@
-root = true
-
-[*.{kt,kts}]
-max_line_length = off
-ktlint_standard_no-wildcard-imports = disabled
-ktlint_standard_filename = disabled
-ktlint_standard_discouraged-comment-location = disabled
-ktlint_standard_if-else-wrapping = disabled

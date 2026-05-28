@@ -48,16 +48,22 @@ curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 sudo apt install -y nodejs
 ```
 
-Клонируйте монорепозиторий:
+Клонируйте meta-репозиторий **с submodules**:
 
 ```bash
-git clone https://github.com/Zeit241/kursovaya.git /opt/kursovaya
-cd /opt/kursovaya
+git clone --recurse-submodules https://github.com/Zeit241/Medisphere.git /opt/Medisphere
+cd /opt/Medisphere
+```
+
+Если submodules пустые:
+
+```bash
+git submodule update --init --recursive
 ```
 
 ## 2. Переменные окружения
 
-Создайте файл `/opt/kursovaya/.env.production` (не коммитьте в git):
+Создайте файл `/opt/Medisphere/.env.production` (не коммитьте в git):
 
 ```bash
 # PostgreSQL
@@ -99,7 +105,7 @@ MAIL_PASSWORD=
 Запуск:
 
 ```bash
-cd /opt/kursovaya
+cd /opt/Medisphere
 docker compose up -d db redis directus landing qwen-proxy
 ```
 
@@ -131,7 +137,7 @@ docker exec -i clinic_postgres psql -U clinic_user -d clinic_db < infra/migratio
 ### Сборка JAR
 
 ```bash
-cd /opt/kursovaya/modules/backend
+cd /opt/Medisphere/modules/backend
 ./mvnw -DskipTests package
 ```
 
@@ -169,10 +175,10 @@ Requires=docker.service
 [Service]
 Type=simple
 User=www-data
-WorkingDirectory=/opt/kursovaya/modules/backend
+WorkingDirectory=/opt/Medisphere/modules/backend
 Environment=SPRING_PROFILES_ACTIVE=prod
 Environment=TZ=Europe/Moscow
-ExecStart=/usr/bin/java -jar /opt/kursovaya/modules/backend/target/kursovaya-0.0.1-SNAPSHOT.jar
+ExecStart=/usr/bin/java -jar /opt/Medisphere/modules/backend/target/kursovaya-0.0.1-SNAPSHOT.jar
 Restart=on-failure
 RestartSec=10
 
@@ -192,7 +198,7 @@ sudo systemctl status clinic-backend
 ### Сборка
 
 ```bash
-cd /opt/kursovaya/modules/frontend
+cd /opt/Medisphere/modules/frontend
 cp .env.example .env
 # VITE_API_URL=https://api.clinic.example.com
 # VITE_DIRECTUS_PUBLIC_URL=https://cms.clinic.example.com
@@ -213,7 +219,7 @@ server {
     ssl_certificate /etc/letsencrypt/live/admin.clinic.example.com/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/admin.clinic.example.com/privkey.pem;
 
-    root /opt/kursovaya/modules/frontend/dist;
+    root /opt/Medisphere/modules/frontend/dist;
     index index.html;
 
     location / {
@@ -321,7 +327,7 @@ docker compose up -d qwen-proxy
 После первого запуска Postgres:
 
 ```bash
-cd /opt/kursovaya/modules/db-seeder
+cd /opt/Medisphere/modules/db-seeder
 npm ci
 cp .env.example .env
 # PGHOST=127.0.0.1, PGPORT=5432, ...
@@ -332,7 +338,7 @@ npm start
 ## 12. Обновление
 
 ```bash
-cd /opt/kursovaya
+cd /opt/Medisphere
 git pull
 
 # Backend
@@ -343,7 +349,7 @@ sudo systemctl restart clinic-backend
 cd ../frontend && npm ci && npm run build
 
 # Landing + infra
-cd /opt/kursovaya
+cd /opt/Medisphere
 docker compose build landing
 docker compose up -d landing directus
 ```

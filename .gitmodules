@@ -1,0 +1,16 @@
+[submodule "modules/backend"]
+	path = modules/backend
+	url = https://github.com/Zeit241/kursovaya_4_kurs_backend.git
+	branch = master
+[submodule "modules/frontend"]
+	path = modules/frontend
+	url = https://github.com/Zeit241/kursovaya_4_kurs_frontend.git
+	branch = main
+[submodule "modules/landing"]
+	path = modules/landing
+	url = https://github.com/Zeit241/Kursovaya_3kurs_web.git
+	branch = main
+[submodule "modules/mobile-android"]
+	path = modules/mobile-android
+	url = https://github.com/Zeit241/kursovaya_4_kurs_mobile.git
+	branch = master
