@@ -11,7 +11,7 @@ RUN git clone --depth 1 --branch "${GIT_REF}" "${GIT_REPO}" app \
 FROM node:20-alpine AS builder
 WORKDIR /app
 COPY --from=source /src/app/package.json /src/app/package-lock.json ./
-RUN npm ci
+RUN npm ci --legacy-peer-deps
 COPY --from=source /src/app/ .
 ARG VITE_API_URL
 ARG VITE_DIRECTUS_URL=/__directus
