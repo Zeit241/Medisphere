@@ -1,15 +1,21 @@
 # Production stack для Dokploy (Compose Path: docker-compose.dokploy.yml)
 # Домены настраивайте во вкладке Domains в UI Dokploy (рекомендуется).
 # Переменные окружения — во вкладке Environment (сохраняются в .env).
+#
+# ВАЖНО: POSTGRES_USER/POSTGRES_PASSWORD применяются только при ПЕРВОМ создании volume pg_data.
+# Сменили пароль или пользователя — удалите volume pg_data и задеплойте заново.
+
+x-postgres-env: &postgres-env
+  POSTGRES_USER: &pg_user ${POSTGRES_USER:-login}
+  POSTGRES_PASSWORD: &pg_pass ${POSTGRES_PASSWORD:-pass}
+  POSTGRES_DB: &pg_db ${POSTGRES_DB:-clinic_db}
 
 services:
   db:
     image: postgres:15
     restart: always
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-clinic_user}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
-      POSTGRES_DB: ${POSTGRES_DB:-clinic_db}
+      <<: *postgres-env
       TZ: Europe/Moscow
     volumes:
       - pg_data:/var/lib/postgresql/data
@@ -52,9 +58,9 @@ services:
       DB_CLIENT: pg
       DB_HOST: db
       DB_PORT: 5432
-      DB_DATABASE: ${POSTGRES_DB:-clinic_db}
-      DB_USER: ${POSTGRES_USER:-clinic_user}
-      DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      DB_DATABASE: *pg_db
+      DB_USER: *pg_user
+      DB_PASSWORD: *pg_pass
       CACHE_ENABLED: "true"
       CACHE_STORE: redis
       REDIS: redis://redis:6379
@@ -88,8 +94,8 @@ services:
       SPRING_PROFILES_ACTIVE: prod
       TZ: Europe/Moscow
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB:-clinic_db}
-      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-clinic_user}
-      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      SPRING_DATASOURCE_USERNAME: *pg_user
+      SPRING_DATASOURCE_PASSWORD: *pg_pass
       SPRING_DATA_REDIS_HOST: redis
       SPRING_DATA_REDIS_PORT: 6379
       JWT_SECRET: ${JWT_SECRET}
@@ -118,11 +124,11 @@ services:
       - db
     environment:
       NODE_ENV: production
-      PGSQL_USER: ${POSTGRES_USER:-clinic_user}
-      PGSQL_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      PGSQL_USER: *pg_user
+      PGSQL_PASSWORD: *pg_pass
       PGSQL_HOST: db
       PGSQL_PORT: 5432
-      PGSQL_DATABASE: ${POSTGRES_DB:-clinic_db}
+      PGSQL_DATABASE: *pg_db
       NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
       NEXTAUTH_URL: ${NEXTAUTH_URL}
       NEXT_PUBLIC_DIRECTUS_URL: ${NEXT_PUBLIC_DIRECTUS_URL}
