@@ -117,8 +117,8 @@ curl -I https://cms.example.com/server/health
 
 ## 10. Частые проблемы
 
-**Сборка падает: `modules/backend` not found**  
-→ Submodules не инициализированы. См. раздел 2.
+**Сборка падает: `open Dockerfile: no such file or directory`**  
+→ Убедитесь, что в Dokploy указан путь `docker-compose.dokploy.yml` и задеплоен последний коммит meta-репозитория. Dockerfile'ы лежат в `infra/docker/`, а не в submodules.
 
 **403 на фото врачей**  
 → Проверьте `DIRECTUS_TOKEN` и `VITE_DIRECTUS_PUBLIC_URL`.

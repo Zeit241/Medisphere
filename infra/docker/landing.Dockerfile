@@ -8,7 +8,7 @@ WORKDIR /src
 RUN git clone --depth 1 --branch "${GIT_REF}" "${GIT_REPO}" app \
  || (git clone "${GIT_REPO}" app && cd app && git checkout "${GIT_REF}")
 
-FROM node:18-alpine AS base
+FROM node:20-alpine AS base
 
 FROM base AS deps
 RUN apk add --no-cache libc6-compat
