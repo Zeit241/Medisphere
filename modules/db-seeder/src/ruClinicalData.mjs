@@ -69,6 +69,13 @@ export const SPECIALIZATION_TEMPLATES = [
   { key: "vascular_surgery", name: "Сосудистая хирургия", description: "Заболевания артерий и вен" },
   { key: "plastic_surgery", name: "Пластическая хирургия", description: "Реконструктивные и эстетические операции" },
   { key: "hematology", name: "Гематология", description: "Заболевания крови и системы кроветворения" },
+  { key: "dietology", name: "Диетология", description: "Коррекция питания и массы тела" },
+  { key: "narcology", name: "Наркология", description: "Лечение зависимостей" },
+  { key: "sports_medicine", name: "Спортивная медицина", description: "Медицинское сопровождение спортсменов" },
+  { key: "neonatology", name: "Неонатология", description: "Уход за новорождёнными" },
+  { key: "phthisiology", name: "Фтизиатрия", description: "Туберкулёз и заболевания лёгких" },
+  { key: "medical_genetics", name: "Медицинская генетика", description: "Наследственные заболевания" },
+  { key: "surdology", name: "Сурдология", description: "Нарушения слуха и равновесия" },
 ];
 
 /** Имя специализации по key (для связки в БД по полю name) */

@@ -1,0 +1,13 @@
+# Сборка qwen-proxy из корня репозитория (infra/qwen-proxy/Dockerfile)
+*
+!modules/
+modules/*
+!modules/qwen-proxy/
+modules/qwen-proxy/session/
+modules/qwen-proxy/logs/
+modules/qwen-proxy/uploads/
+modules/qwen-proxy/node_modules/
+!infra/
+infra/*
+!infra/qwen-proxy/
+!infra/qwen-proxy/**

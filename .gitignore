@@ -38,6 +38,7 @@ local.properties
 **/*.log
 modules/qwen-proxy/session/
 modules/qwen-proxy/uploads/
+.qwen-proxy-local-data/
 
 # Python venv
 **/venv/

@@ -143,21 +143,6 @@ CREATE INDEX idx_appointments_doctor_time ON appointments (doctor_id, start_time
 
 CREATE INDEX idx_appointments_patient ON appointments (patient_id);
 
--- =============================
--- 9. Электронная очередь
--- =============================
-CREATE TABLE
-    queue_entries (
-        id SERIAL PRIMARY KEY,
-        doctor_id INTEGER REFERENCES doctors (id) NOT NULL,
-        appointment_id INTEGER UNIQUE REFERENCES appointments (id) ON DELETE CASCADE,
-        patient_id INTEGER REFERENCES patients (id) NOT NULL,
-        position INTEGER NOT NULL CHECK (position >= 0),
-        last_updated timestamptz NOT NULL DEFAULT now (),
-        UNIQUE (doctor_id, position)
-    );
-
-CREATE INDEX idx_queue_doctor_position ON queue_entries (doctor_id, position);
 
 -- =============================
 -- 10. Отзывы и оценки (объединённая таблица)
@@ -175,18 +160,3 @@ CREATE TABLE
 
 CREATE INDEX idx_reviews_doctor ON reviews (doctor_id);
 
--- =============================
--- 11. Уведомления
--- =============================
-CREATE TABLE
-    notifications (
-        id SERIAL PRIMARY KEY,
-        user_id INTEGER REFERENCES users (id) NOT NULL,
-        appointment_id INTEGER REFERENCES appointments (id),
-        type TEXT NOT NULL,
-        payload JSONB,
-        sent_at timestamptz,
-        status TEXT CHECK (status IN ('pending', 'sent', 'failed')) DEFAULT 'pending'
-    );
-
-CREATE INDEX idx_notifications_user ON notifications (user_id);

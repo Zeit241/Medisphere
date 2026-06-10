@@ -14,3 +14,7 @@
 	path = modules/mobile-android
 	url = https://github.com/Zeit241/kursovaya_4_kurs_mobile.git
 	branch = master
+[submodule "modules/qwen-proxy"]
+	path = modules/qwen-proxy
+	url = https://github.com/y13sint/FreeQwenApi.git
+	branch = main

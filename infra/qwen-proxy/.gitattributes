@@ -1,0 +1,3 @@
+docker-entrypoint.sh text eol=lf
+apply-patches.sh text eol=lf
+patches/*.patch text eol=lf

@@ -103,8 +103,8 @@ services:
 
   qwen-proxy:
     build:
-      context: ./modules/qwen-proxy
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: infra/qwen-proxy/Dockerfile
     container_name: qwen-proxy
     environment:
       - SKIP_ACCOUNT_MENU=true

@@ -8,9 +8,17 @@
     "infra:logs": "docker compose logs -f",
     "submodules:init": "git submodule update --init --recursive",
     "submodules:update": "git submodule update --remote --merge",
+    "qwen-proxy:patches": "powershell -ExecutionPolicy Bypass -File scripts/apply-qwen-proxy-patches.ps1",
+    "qwen-proxy:update": "git submodule update --remote modules/qwen-proxy && npm run qwen-proxy:patches",
     "landing:dev": "npm --prefix modules/landing run dev",
     "frontend:dev": "npm --prefix modules/frontend run dev",
     "backend:run": "cd modules/backend && ./mvnw spring-boot:run",
-    "seeder": "npm --prefix modules/db-seeder start"
+    "backend:verify": "cd modules/backend && ./mvnw verify",
+    "frontend:verify": "npm --prefix modules/frontend run verify",
+    "landing:verify": "npm --prefix modules/landing run verify",
+    "android:verify": "cd modules/mobile-android && ./gradlew ktlintCheck test koverVerify",
+    "verify:all": "powershell -ExecutionPolicy Bypass -File scripts/verify-all.ps1",
+    "seeder": "npm --prefix modules/db-seeder start",
+    "generate:seed": "node scripts/generate-seed-demo.mjs"
   }
 }

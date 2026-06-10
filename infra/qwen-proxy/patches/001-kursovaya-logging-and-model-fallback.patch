@@ -1,0 +1,182 @@
+diff --git a/src/api/chat.js b/src/api/chat.js
+index da1f551..145e360 100644
+--- a/src/api/chat.js
++++ b/src/api/chat.js
+@@ -498,12 +498,20 @@ async function executeApiRequestWithNodeStreaming(apiUrl, payload, token, onChun
+                     const chunk = JSON.parse(jsonStr);
+ 
+                     if (chunk.code === 'RateLimited' || (chunk.code && chunk.detail)) {
+-                        streamError = { status: 429, errorBody: JSON.stringify(chunk) };
++                        streamError = {
++                            status: 429,
++                            error: chunk.detail || chunk.code || 'RateLimited',
++                            errorBody: JSON.stringify(chunk)
++                        };
+                         finished = true;
+                         break;
+                     }
+                     if (chunk.error && !chunk.choices) {
+-                        streamError = { status: 500, errorBody: JSON.stringify(chunk) };
++                        streamError = {
++                            status: 500,
++                            error: typeof chunk.error === 'string' ? chunk.error : JSON.stringify(chunk.error),
++                            errorBody: JSON.stringify(chunk)
++                        };
+                         finished = true;
+                         break;
+                     }
+@@ -618,9 +626,12 @@ async function executeApiRequest(page, apiUrl, payload, token, onChunk = null) {
+                         // API иногда возвращает JSON с success=false и code при HTTP 200.
+                         if (hasStructuredError) {
+                             const isRateLimited = topLevelCode === 'RateLimited' || nestedCode === 'RateLimited';
++                            const errorCode = topLevelCode || nestedCode || parsed?.error || 'API_ERROR';
++                            const errorDetails = parsed?.details || parsed?.data?.details || parsed?.message;
+                             return {
+                                 success: false,
+                                 status: isRateLimited ? 429 : 500,
++                                error: errorDetails ? `${errorCode}: ${errorDetails}` : String(errorCode),
+                                 errorBody: body
+                             };
+                         }
+@@ -656,12 +667,20 @@ async function executeApiRequest(page, apiUrl, payload, token, onChunk = null) {
+                             const chunk = JSON.parse(jsonStr);
+ 
+                             if (chunk.code === 'RateLimited' || (chunk.code && chunk.detail)) {
+-                                streamError = { status: 429, errorBody: JSON.stringify(chunk) };
++                                streamError = {
++                                    status: 429,
++                                    error: chunk.detail || chunk.code || 'RateLimited',
++                                    errorBody: JSON.stringify(chunk)
++                                };
+                                 finished = true;
+                                 break;
+                             }
+                             if (chunk.error && !chunk.choices) {
+-                                streamError = { status: 500, errorBody: JSON.stringify(chunk) };
++                                streamError = {
++                                    status: 500,
++                                    error: typeof chunk.error === 'string' ? chunk.error : JSON.stringify(chunk.error),
++                                    errorBody: JSON.stringify(chunk)
++                                };
+                                 finished = true;
+                                 break;
+                             }
+@@ -681,6 +700,15 @@ async function executeApiRequest(page, apiUrl, payload, token, onChunk = null) {
+                     return { success: false, ...streamError };
+                 }
+ 
++                if (!fullContent.trim()) {
++                    return {
++                        success: false,
++                        status: 500,
++                        error: 'Пустой SSE-ответ от Qwen API',
++                        errorBody: JSON.stringify({ model: data.payload.model, responseId, contentLength: fullContent.length })
++                    };
++                }
++
+                 return {
+                     success: true,
+                     isTask: false,
+@@ -697,17 +725,67 @@ async function executeApiRequest(page, apiUrl, payload, token, onChunk = null) {
+             }
+ 
+             const errorBody = await response.text();
+-            return { success: false, status: response.status, statusText: response.statusText, errorBody };
++            return {
++                success: false,
++                status: response.status,
++                statusText: response.statusText,
++                error: response.statusText || `HTTP ${response.status}`,
++                errorBody
++            };
+         } catch (error) {
+             return { success: false, error: error.toString() };
+         }
+     }, requestBody);
+ }
+ 
+-async function handleApiError(response, tokenObj, message, model, chatId, parentId, files, retryCount, chatType, size, waitForCompletion, onChunk = null) {
++function parseApiErrorBody(errorBody) {
++    if (!errorBody) return null;
++    try {
++        return typeof errorBody === 'string' ? JSON.parse(errorBody) : errorBody;
++    } catch {
++        return { raw: String(errorBody).slice(0, 2000) };
++    }
++}
++
++function formatApiFailure(response) {
++    const parts = [];
++    if (response.error) parts.push(response.error);
++    if (response.status) parts.push(`HTTP ${response.status}`);
++    if (response.statusText) parts.push(response.statusText);
++
++    const parsed = parseApiErrorBody(response.errorBody);
++    if (parsed) {
++        const code = parsed.code || parsed.data?.code;
++        const details = parsed.details || parsed.data?.details || parsed.error || parsed.message;
++        if (code) parts.push(`code=${code}`);
++        if (details) parts.push(String(details));
++        if (!code && !details && parsed.raw) parts.push(parsed.raw);
++    }
++
++    return parts.filter(Boolean).join(' | ') || 'Неизвестная ошибка API (нет деталей в ответе)';
++}
++
++function isModelNotFoundError(response) {
++    const haystack = [
++        response.error,
++        response.errorBody,
++        formatApiFailure(response)
++    ].filter(Boolean).join(' ').toLowerCase();
++    return haystack.includes('model not found') || haystack.includes('not_found');
++}
++
++async function handleApiError(response, tokenObj, message, model, chatId, parentId, files, retryCount, chatType, size, waitForCompletion, onChunk = null, tools = null, toolChoice = null, systemMessage = null) {
++    const summary = formatApiFailure(response);
+     logRaw(JSON.stringify(response));
+-    logError(`Ошибка при получении ответа: ${response.error || response.statusText}`);
+-    if (response.errorBody) logDebug(`Тело ответа с ошибкой: ${response.errorBody}`);
++    logError(`Ошибка при получении ответа: ${summary}`);
++    if (response.errorBody) {
++        logError(`Тело ответа с ошибкой: ${typeof response.errorBody === 'string' ? response.errorBody : JSON.stringify(response.errorBody)}`);
++    }
++
++    if (isModelNotFoundError(response) && model !== DEFAULT_MODEL && retryCount < MAX_RETRY_COUNT) {
++        logWarn(`Модель "${model}" недоступна в Qwen API, повтор с "${DEFAULT_MODEL}"`);
++        return sendMessage(message, DEFAULT_MODEL, chatId, parentId, files, tools, toolChoice, systemMessage, chatType, size, waitForCompletion, retryCount + 1, onChunk);
++    }
+ 
+     if (response.html && response.html.includes('Verification')) {
+         setAuthenticationStatus(false);
+@@ -911,7 +989,7 @@ export async function sendMessage(message, model = DEFAULT_MODEL, chatId = null,
+             return response.data;
+         }
+ 
+-        return handleApiError(response, tokenObj, message, model, chatId, parentId, files, retryCount, chatType, size, waitForCompletion, onChunk);
++        return handleApiError(response, tokenObj, message, model, chatId, parentId, files, retryCount, chatType, size, waitForCompletion, onChunk, tools, toolChoice, systemMessage);
+     } catch (error) {
+         logError('Ошибка при отправке сообщения', error);
+         return { error: error.toString(), chatId };
+diff --git a/src/api/modelMapping.js b/src/api/modelMapping.js
+index b4ee944..75f3bee 100644
+--- a/src/api/modelMapping.js
++++ b/src/api/modelMapping.js
+@@ -235,9 +235,17 @@ export const MODEL_MAPPING = buildModelMapping();
+  * @param {string} defaultModel - Модель по умолчанию
+  * @returns {string} - Доступная модель
+  */
++const DEPRECATED_MODEL_FALLBACKS = Object.freeze({
++    'qwen-max-latest': 'qwen3.7-max'
++});
++
+ export function getMappedModel(requestedModel, defaultModel = DEFAULT_MODEL) {
+     if (!requestedModel) return defaultModel;
+ 
++    if (DEPRECATED_MODEL_FALLBACKS[requestedModel]) {
++        return DEPRECATED_MODEL_FALLBACKS[requestedModel];
++    }
++
+     // Проверяем точное соответствие в словаре
+     if (MODEL_MAPPING[requestedModel]) {
+         return MODEL_MAPPING[requestedModel];

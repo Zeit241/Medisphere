@@ -129,7 +129,17 @@ docker compose logs -f directus
 При первом запуске Postgres выполнит скрипты из `infra/initdb/`. Дополнительные миграции — вручную через psql или pgAdmin:
 
 ```bash
+# Полный демо-набор (35 врачей, 35 пациентов, 40 специализаций, ~800 диагнозов, приёмы с отзывами):
+docker exec -i clinic_postgres psql -U clinic_user -d clinic_db < infra/migrations/seed_demo.sql
+
+# Минимальный пример (5 пользователей):
 docker exec -i clinic_postgres psql -U clinic_user -d clinic_db < infra/migrations/seed.sql
+```
+
+Перегенерировать `seed_demo.sql` после изменения шаблонов или карты:
+
+```bash
+npm run generate:seed
 ```
 
 ## 4. Backend (Spring Boot)
