@@ -129,6 +129,11 @@ curl -I https://cms.example.com/server/health
 **Backend не видит Redis**  
 → В prod используется хост `redis:6379` (внутри docker-сети), не `6380`.
 
+**`db` unhealthy / dependency failed to start**  
+→ Проверьте, что в Environment заданы `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB`.  
+→ При первом запуске init-скрипты (`infra/initdb/`) могут выполняться 1–2 минуты — в compose добавлен `start_period: 120s`.  
+→ Если volume `pg_data` создан с другими credentials или повреждён — удалите volume `pg_data` в Dokploy (Volume Backups / Docker volumes) и задеплойте заново.
+
 **Пустая БД после деплоя**  
 → Init-скрипты из `infra/initdb/` выполняются только при **первом** создании volume `pg_data`. Для демо-данных — `seed_demo.sql`.
 
