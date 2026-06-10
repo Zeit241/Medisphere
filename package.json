@@ -6,6 +6,8 @@
     "infra:up": "docker compose up -d db redis directus pgadmin",
     "backend:docker": "docker compose up -d --build backend",
     "backend:docker:logs": "docker compose logs -f backend",
+    "dokploy:up": "docker network create dokploy-network 2>nul & docker compose -f docker-compose.dokploy.yml --env-file .env up -d --build",
+    "dokploy:down": "docker compose -f docker-compose.dokploy.yml down",
     "infra:down": "docker compose down",
     "infra:logs": "docker compose logs -f",
     "submodules:init": "git submodule update --init --recursive",

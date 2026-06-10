@@ -1,0 +1,173 @@
+# Production stack для Dokploy (Compose Path: docker-compose.dokploy.yml)
+# Домены настраивайте во вкладке Domains в UI Dokploy (рекомендуется).
+# Переменные окружения — во вкладке Environment (сохраняются в .env).
+
+services:
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      TZ: Europe/Moscow
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./infra/initdb:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      retries: 5
+    networks:
+      - dokploy-network
+
+  redis:
+    image: redis:7-alpine
+    restart: always
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+    networks:
+      - dokploy-network
+
+  directus:
+    image: directus/directus:latest
+    restart: always
+    expose:
+      - "8055"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      SECRET: ${DIRECTUS_SECRET}
+      DB_CLIENT: pg
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: ${POSTGRES_DB}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      CACHE_ENABLED: "true"
+      CACHE_STORE: redis
+      REDIS: redis://redis:6379
+      ADMIN_EMAIL: ${DIRECTUS_ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${DIRECTUS_ADMIN_PASSWORD}
+      PUBLIC_URL: ${DIRECTUS_PUBLIC_URL}
+      CORS_ENABLED: "true"
+      CORS_ORIGIN: ${CORS_ORIGIN}
+    volumes:
+      - directus_uploads:/directus/uploads
+      - directus_extensions:/directus/extensions
+    networks:
+      - dokploy-network
+
+  backend:
+    build:
+      context: ./modules/backend
+      dockerfile: Dockerfile
+    restart: always
+    expose:
+      - "8085"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      TZ: Europe/Moscow
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+      JWT_SECRET: ${JWT_SECRET}
+      APP_DIRECTUS_PUBLIC_URL: ${DIRECTUS_PUBLIC_URL}
+      MAIL_HOST: ${MAIL_HOST:-}
+      MAIL_PORT: ${MAIL_PORT:-587}
+      MAIL_USERNAME: ${MAIL_USERNAME:-}
+      MAIL_PASSWORD: ${MAIL_PASSWORD:-}
+    networks:
+      - dokploy-network
+
+  landing:
+    build:
+      context: ./modules/landing
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_DIRECTUS_URL: ${NEXT_PUBLIC_DIRECTUS_URL}
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL}
+    restart: always
+    expose:
+      - "3000"
+    depends_on:
+      - directus
+      - db
+    environment:
+      NODE_ENV: production
+      PGSQL_USER: ${POSTGRES_USER}
+      PGSQL_PASSWORD: ${POSTGRES_PASSWORD}
+      PGSQL_HOST: db
+      PGSQL_PORT: 5432
+      PGSQL_DATABASE: ${POSTGRES_DB}
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
+      NEXTAUTH_URL: ${NEXTAUTH_URL}
+      NEXT_PUBLIC_DIRECTUS_URL: ${NEXT_PUBLIC_DIRECTUS_URL}
+      DIRECTUS_INTERNAL_URL: http://directus:8055
+      DIRECTUS_TOKEN: ${DIRECTUS_TOKEN}
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL}
+    networks:
+      - dokploy-network
+
+  frontend:
+    build:
+      context: ./modules/frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL}
+        VITE_DIRECTUS_URL: ${VITE_DIRECTUS_URL:-/__directus}
+        VITE_DIRECTUS_PUBLIC_URL: ${VITE_DIRECTUS_PUBLIC_URL}
+        VITE_DIRECTUS_STATIC_TOKEN: ${DIRECTUS_TOKEN}
+    restart: always
+    expose:
+      - "80"
+    depends_on:
+      - backend
+      - directus
+    networks:
+      - dokploy-network
+
+  qwen-proxy:
+    build:
+      context: .
+      dockerfile: infra/qwen-proxy/Dockerfile
+    restart: unless-stopped
+    expose:
+      - "3264"
+    environment:
+      SKIP_ACCOUNT_MENU: "true"
+      PORT: "3264"
+    volumes:
+      - qwen_session:/app/session
+      - qwen_logs:/app/logs
+      - qwen_uploads:/app/uploads
+    networks:
+      - dokploy-network
+
+networks:
+  dokploy-network:
+    external: true
+
+volumes:
+  pg_data:
+  redis_data:
+  directus_uploads:
+  directus_extensions:
+  qwen_session:
+  qwen_logs:
+  qwen_uploads:
