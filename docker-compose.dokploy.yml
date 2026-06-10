@@ -52,9 +52,9 @@ services:
       DB_CLIENT: pg
       DB_HOST: db
       DB_PORT: 5432
-      DB_DATABASE: ${POSTGRES_DB}
-      DB_USER: ${POSTGRES_USER}
-      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_DATABASE: ${POSTGRES_DB:-clinic_db}
+      DB_USER: ${POSTGRES_USER:-clinic_user}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
       CACHE_ENABLED: "true"
       CACHE_STORE: redis
       REDIS: redis://redis:6379
@@ -87,9 +87,9 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: prod
       TZ: Europe/Moscow
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB}
-      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
-      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB:-clinic_db}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-clinic_user}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
       SPRING_DATA_REDIS_HOST: redis
       SPRING_DATA_REDIS_PORT: 6379
       JWT_SECRET: ${JWT_SECRET}
@@ -118,11 +118,11 @@ services:
       - db
     environment:
       NODE_ENV: production
-      PGSQL_USER: ${POSTGRES_USER}
-      PGSQL_PASSWORD: ${POSTGRES_PASSWORD}
+      PGSQL_USER: ${POSTGRES_USER:-clinic_user}
+      PGSQL_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
       PGSQL_HOST: db
       PGSQL_PORT: 5432
-      PGSQL_DATABASE: ${POSTGRES_DB}
+      PGSQL_DATABASE: ${POSTGRES_DB:-clinic_db}
       NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
       NEXTAUTH_URL: ${NEXTAUTH_URL}
       NEXT_PUBLIC_DIRECTUS_URL: ${NEXT_PUBLIC_DIRECTUS_URL}
