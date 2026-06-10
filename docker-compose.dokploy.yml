@@ -68,8 +68,11 @@ services:
 
   backend:
     build:
-      context: ./modules/backend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: infra/docker/backend.Dockerfile
+      args:
+        GIT_REPO: https://github.com/Zeit241/kursovaya_4_kurs_backend.git
+        GIT_REF: ${BACKEND_GIT_REF:-master}
     restart: always
     expose:
       - "8085"
@@ -97,9 +100,11 @@ services:
 
   landing:
     build:
-      context: ./modules/landing
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: infra/docker/landing.Dockerfile
       args:
+        GIT_REPO: https://github.com/Zeit241/Kursovaya_3kurs_web.git
+        GIT_REF: ${LANDING_GIT_REF:-main}
         NEXT_PUBLIC_DIRECTUS_URL: ${NEXT_PUBLIC_DIRECTUS_URL}
         NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL}
     restart: always
@@ -126,9 +131,11 @@ services:
 
   frontend:
     build:
-      context: ./modules/frontend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: infra/docker/frontend.Dockerfile
       args:
+        GIT_REPO: https://github.com/Zeit241/kursovaya_4_kurs_frontend.git
+        GIT_REF: ${FRONTEND_GIT_REF:-main}
         VITE_API_URL: ${VITE_API_URL}
         VITE_DIRECTUS_URL: ${VITE_DIRECTUS_URL:-/__directus}
         VITE_DIRECTUS_PUBLIC_URL: ${VITE_DIRECTUS_PUBLIC_URL}
@@ -146,6 +153,9 @@ services:
     build:
       context: .
       dockerfile: infra/qwen-proxy/Dockerfile
+      args:
+        GIT_REPO: https://github.com/y13sint/FreeQwenApi.git
+        GIT_REF: ${QWEN_GIT_REF:-main}
     restart: unless-stopped
     expose:
       - "3264"

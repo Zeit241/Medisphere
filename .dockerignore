@@ -1,13 +1,8 @@
-# Сборка qwen-proxy из корня репозитория (infra/qwen-proxy/Dockerfile)
+# Контекст сборки для Dokploy: только infra (исходники клонируются в Dockerfile).
 *
-!modules/
-modules/*
-!modules/qwen-proxy/
-modules/qwen-proxy/session/
-modules/qwen-proxy/logs/
-modules/qwen-proxy/uploads/
-modules/qwen-proxy/node_modules/
 !infra/
 infra/*
+!infra/docker/
+!infra/docker/**
 !infra/qwen-proxy/
 !infra/qwen-proxy/**

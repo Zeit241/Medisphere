@@ -1,5 +1,13 @@
 # syntax=docker/dockerfile:1.6
-# Обёртка над upstream FreeQwenApi: код берётся из submodule modules/qwen-proxy.
+# Обёртка над upstream FreeQwenApi: код клонируется при сборке (без git submodule).
+FROM alpine:3.20 AS source
+RUN apk add --no-cache git
+ARG GIT_REPO=https://github.com/y13sint/FreeQwenApi.git
+ARG GIT_REF=main
+WORKDIR /src
+RUN git clone --depth 1 --branch "${GIT_REF}" "${GIT_REPO}" app \
+ || (git clone "${GIT_REPO}" app && cd app && git checkout "${GIT_REF}")
+
 FROM node:20-slim AS base
 
 RUN apt-get update \
@@ -15,10 +23,10 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
 
 WORKDIR /app
 
-COPY modules/qwen-proxy/package.json ./
+COPY --from=source /src/app/package.json ./
 RUN npm install --omit=dev
 
-COPY modules/qwen-proxy/ ./
+COPY --from=source /src/app/ ./
 
 COPY infra/qwen-proxy/patches/ /tmp/qwen-patches/
 COPY infra/qwen-proxy/apply-patches.sh /tmp/apply-qwen-patches.sh

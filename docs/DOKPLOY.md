@@ -30,20 +30,17 @@
 | `cms.example.com` | `directus` |
 | `qwen.example.com` | `qwen-proxy` (если нужен) |
 
-## 2. Репозиторий и submodules
+## 2. Исходники сервисов (submodules)
 
-Проект использует **git submodules** (`modules/backend`, `frontend`, `landing`, `qwen-proxy`).
+Docker-сборка для Dokploy **не зависит от git submodules**: исходники `backend`, `frontend`, `landing` и `qwen-proxy` **клонируются из GitHub прямо в Dockerfile** (`infra/docker/*.Dockerfile`).
 
-При подключении Git в Dokploy:
+Submodules нужны только для локальной разработки. На сервере достаточно клонировать meta-репозиторий `Medisphere`.
 
-1. Укажите meta-репозиторий (Medisphere / kursovaya).
-2. Включите **Recursively clone submodules** (если есть в настройках клонирования).
-3. Если submodules пустые после деплоя — в Advanced добавьте pre-deploy команду:
-   ```bash
-   git submodule update --init --recursive
-   ```
-
-Без submodules сборка `backend`, `landing`, `frontend` и `qwen-proxy` **не пройдёт**.
+При необходимости зафиксируйте ветку/коммит через переменные:
+- `BACKEND_GIT_REF` (по умолчанию `master`)
+- `FRONTEND_GIT_REF` (по умолчанию `main`)
+- `LANDING_GIT_REF` (по умолчанию `main`)
+- `QWEN_GIT_REF` (по умолчанию `main`)
 
 ## 3. Создание Compose-приложения
 
