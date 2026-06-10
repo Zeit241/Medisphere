@@ -1,0 +1,1448 @@
+2026-03-25 14:19:09 [info]: Запуск сервера...
+2026-03-25 14:19:10 [info]: Автоматический запуск: обнаружено 1 аккаунтов, из них 1 активны.
+2026-03-25 14:19:10 [info]: Инициализация браузера с Puppeteer Stealth...
+2026-03-25 14:19:10 [info]: Браузер инициализирован с максимальной защитой от обнаружения
+2026-03-25 14:19:10 [info]: Сервер запущен на 0.0.0.0:3264
+2026-03-25 14:19:10 [info]: API доступен по адресу: http://localhost:3264/api
+2026-03-25 14:19:10 [info]: Для проверки статуса авторизации: GET /api/status
+2026-03-25 14:19:10 [info]: Для отправки сообщения: POST /api/chat
+2026-03-25 14:19:10 [info]: Для получения списка моделей: GET /api/models
+2026-03-25 14:19:10 [info]: ======================================================
+2026-03-25 14:19:10 [info]: API v2 - История чатов хранится на серверах Qwen
+2026-03-25 14:19:10 [info]: Создать новый чат: POST /api/chats
+2026-03-25 14:19:10 [info]: Отправить сообщение: POST /api/chat (с chatId и parentId)
+2026-03-25 14:19:10 [info]: ======================================================
+2026-03-25 14:19:10 [info]: Доступно 25 моделей Qwen (через систему маппинга):
+2026-03-25 14:19:10 [info]: - Стандартные: qwen-max, qwen-plus, qwen-turbo и их latest-версии
+2026-03-25 14:19:10 [info]: - Coder: qwen3-coder-plus, qwen2.5-coder-*b-instruct (0.5b - 32b)
+2026-03-25 14:19:10 [info]: - Визуальные: qwen-vl-max, qwen-vl-plus и их latest-версии
+2026-03-25 14:19:10 [info]: - Qwen 3: qwen3, qwen3-max, qwen3-plus, qwen3-omni-flash
+2026-03-25 14:19:10 [info]: - Qwen 3.5: qwen3.5-plus, qwen3.5-flash, qwen3.5-397b-a17b, qwen3.5-122b-a10b, qwen3.5-27b, qwen3.5-35b-a3b
+2026-03-25 14:19:10 [info]: ======================================================
+2026-03-25 14:19:10 [info]: Формат JSON запроса на чат:
+2026-03-25 14:19:10 [info]: { "message": "текст сообщения", "model": "название модели (опционально)", "chatId": "ID чата (опционально)", "parentId": "ID родительского сообщения (опционально)" }
+2026-03-25 14:19:10 [info]: Пример первого запроса: { "message": "Привет, как дела?" }
+2026-03-25 14:19:10 [info]: Пример второго запроса: { "message": "А что ты умеешь?", "chatId": "полученный_id_чата", "parentId": "полученный_parentId" }
+2026-03-25 14:19:10 [info]: ======================================================
+2026-03-25 14:19:10 [info]: Поддержка OpenAI совместимого API: POST /api/chat/completions
+2026-03-25 14:19:10 [info]: В ответе возвращаются chatId и parentId для продолжения диалога
+2026-03-25 14:19:10 [info]: ======================================================
+2026-03-25 14:19:10 [info]: Создан шаблон файла ключей: /app/src/Authorization.txt
+2026-03-25 14:19:10 [info]: ===== ДОСТУПНЫЕ МОДЕЛИ =====
+2026-03-25 14:19:10 [info]: - qwen3.5-plus
+2026-03-25 14:19:10 [info]: - qwen3.5-397b-a17b
+2026-03-25 14:19:10 [info]: - qwen3-max
+2026-03-25 14:19:10 [info]: - qwen3-vl-plus
+2026-03-25 14:19:10 [info]: - qwen3-coder-plus
+2026-03-25 14:19:10 [info]: - qwen3-omni-flash
+2026-03-25 14:19:10 [info]: - qwen3-omni-flash-2025-12-01
+2026-03-25 14:19:10 [info]: - qwen-max-latest
+2026-03-25 14:19:10 [info]: - qwen-plus-2025-09-11
+2026-03-25 14:19:10 [info]: - qwen-plus-2025-01-25
+2026-03-25 14:19:10 [info]: - qwq-32b
+2026-03-25 14:19:10 [info]: - qwen3-235b-a22b
+2026-03-25 14:19:10 [info]: - qwen3-30b-a3b
+2026-03-25 14:19:10 [info]: - qwen3-coder-30b-a3b-instruct
+2026-03-25 14:19:10 [info]: - qwen-turbo-2025-02-11
+2026-03-25 14:19:10 [info]: - qwen2.5-omni-7b
+2026-03-25 14:19:10 [info]: - qvq-72b-preview-0310
+2026-03-25 14:19:10 [info]: - qwen2.5-vl-32b-instruct
+2026-03-25 14:19:10 [info]: - qwen2.5-14b-instruct-1m
+2026-03-25 14:19:10 [info]: - qwen2.5-coder-32b-instruct
+2026-03-25 14:19:10 [info]: - qwen2.5-72b-instruct
+2026-03-25 14:19:10 [info]: - qwen3.5-plus
+2026-03-25 14:19:10 [info]: - qwen3.5-flash
+2026-03-25 14:19:10 [info]: - qwen3.5-397b-a17b
+2026-03-25 14:19:10 [info]: - qwen3.5-122b-a10b
+2026-03-25 14:19:10 [info]: - qwen3.5-27b
+2026-03-25 14:19:10 [info]: - qwen3.5-35b-a3b
+2026-03-25 14:19:10 [info]: ============================
+2026-03-25 14:36:45 [info]: Запуск сервера...
+2026-03-25 14:36:45 [info]: Автоматический запуск: обнаружено 1 аккаунтов, из них 1 активны.
+2026-03-25 14:36:45 [info]: Инициализация браузера с Puppeteer Stealth...
+2026-03-25 14:36:46 [info]: Браузер инициализирован с максимальной защитой от обнаружения
+2026-03-25 14:36:46 [info]: Сервер запущен на 0.0.0.0:3264
+2026-03-25 14:36:46 [info]: API доступен по адресу: http://localhost:3264/api
+2026-03-25 14:36:46 [info]: Для проверки статуса авторизации: GET /api/status
+2026-03-25 14:36:46 [info]: Для отправки сообщения: POST /api/chat
+2026-03-25 14:36:46 [info]: Для получения списка моделей: GET /api/models
+2026-03-25 14:36:46 [info]: ======================================================
+2026-03-25 14:36:46 [info]: API v2 - История чатов хранится на серверах Qwen
+2026-03-25 14:36:46 [info]: Создать новый чат: POST /api/chats
+2026-03-25 14:36:46 [info]: Отправить сообщение: POST /api/chat (с chatId и parentId)
+2026-03-25 14:36:46 [info]: ======================================================
+2026-03-25 14:36:46 [info]: Доступно 25 моделей Qwen (через систему маппинга):
+2026-03-25 14:36:46 [info]: - Стандартные: qwen-max, qwen-plus, qwen-turbo и их latest-версии
+2026-03-25 14:36:46 [info]: - Coder: qwen3-coder-plus, qwen2.5-coder-*b-instruct (0.5b - 32b)
+2026-03-25 14:36:46 [info]: - Визуальные: qwen-vl-max, qwen-vl-plus и их latest-версии
+2026-03-25 14:36:46 [info]: - Qwen 3: qwen3, qwen3-max, qwen3-plus, qwen3-omni-flash
+2026-03-25 14:36:46 [info]: - Qwen 3.5: qwen3.5-plus, qwen3.5-flash, qwen3.5-397b-a17b, qwen3.5-122b-a10b, qwen3.5-27b, qwen3.5-35b-a3b
+2026-03-25 14:36:46 [info]: ======================================================
+2026-03-25 14:36:46 [info]: Формат JSON запроса на чат:
+2026-03-25 14:36:46 [info]: { "message": "текст сообщения", "model": "название модели (опционально)", "chatId": "ID чата (опционально)", "parentId": "ID родительского сообщения (опционально)" }
+2026-03-25 14:36:46 [info]: Пример первого запроса: { "message": "Привет, как дела?" }
+2026-03-25 14:36:46 [info]: Пример второго запроса: { "message": "А что ты умеешь?", "chatId": "полученный_id_чата", "parentId": "полученный_parentId" }
+2026-03-25 14:36:46 [info]: ======================================================
+2026-03-25 14:36:46 [info]: Поддержка OpenAI совместимого API: POST /api/chat/completions
+2026-03-25 14:36:46 [info]: В ответе возвращаются chatId и parentId для продолжения диалога
+2026-03-25 14:36:46 [info]: ======================================================
+2026-03-25 14:36:46 [info]: ===== ДОСТУПНЫЕ МОДЕЛИ =====
+2026-03-25 14:36:46 [info]: - qwen3.5-plus
+2026-03-25 14:36:46 [info]: - qwen3.5-397b-a17b
+2026-03-25 14:36:46 [info]: - qwen3-max
+2026-03-25 14:36:46 [info]: - qwen3-vl-plus
+2026-03-25 14:36:46 [info]: - qwen3-coder-plus
+2026-03-25 14:36:46 [info]: - qwen3-omni-flash
+2026-03-25 14:36:46 [info]: - qwen3-omni-flash-2025-12-01
+2026-03-25 14:36:46 [info]: - qwen-max-latest
+2026-03-25 14:36:46 [info]: - qwen-plus-2025-09-11
+2026-03-25 14:36:46 [info]: - qwen-plus-2025-01-25
+2026-03-25 14:36:46 [info]: - qwq-32b
+2026-03-25 14:36:46 [info]: - qwen3-235b-a22b
+2026-03-25 14:36:46 [info]: - qwen3-30b-a3b
+2026-03-25 14:36:46 [info]: - qwen3-coder-30b-a3b-instruct
+2026-03-25 14:36:46 [info]: - qwen-turbo-2025-02-11
+2026-03-25 14:36:46 [info]: - qwen2.5-omni-7b
+2026-03-25 14:36:46 [info]: - qvq-72b-preview-0310
+2026-03-25 14:36:46 [info]: - qwen2.5-vl-32b-instruct
+2026-03-25 14:36:46 [info]: - qwen2.5-14b-instruct-1m
+2026-03-25 14:36:46 [info]: - qwen2.5-coder-32b-instruct
+2026-03-25 14:36:46 [info]: - qwen2.5-72b-instruct
+2026-03-25 14:36:46 [info]: - qwen3.5-plus
+2026-03-25 14:36:46 [info]: - qwen3.5-flash
+2026-03-25 14:36:46 [info]: - qwen3.5-397b-a17b
+2026-03-25 14:36:46 [info]: - qwen3.5-122b-a10b
+2026-03-25 14:36:46 [info]: - qwen3.5-27b
+2026-03-25 14:36:46 [info]: - qwen3.5-35b-a3b
+2026-03-25 14:36:46 [info]: ============================
+2026-03-25 18:36:30 [info]: Получен OpenAI-совместимый запрос
+2026-03-25 18:36:30 [info]: Используется модель: qwen-max-latest
+2026-03-25 18:36:30 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-25 18:36:30 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-25 18:36:30 [info]: История содержит 2 сообщений: system, user
+2026-03-25 18:36:30 [info]: ===== ДОСТУПНЫЕ МОДЕЛИ =====
+2026-03-25 18:36:30 [info]: - qwen3.5-plus
+2026-03-25 18:36:30 [info]: - qwen3.5-397b-a17b
+2026-03-25 18:36:30 [info]: - qwen3-max
+2026-03-25 18:36:30 [info]: - qwen3-vl-plus
+2026-03-25 18:36:30 [info]: - qwen3-coder-plus
+2026-03-25 18:36:30 [info]: - qwen3-omni-flash
+2026-03-25 18:36:30 [info]: - qwen3-omni-flash-2025-12-01
+2026-03-25 18:36:30 [info]: - qwen-max-latest
+2026-03-25 18:36:30 [info]: - qwen-plus-2025-09-11
+2026-03-25 18:36:30 [info]: - qwen-plus-2025-01-25
+2026-03-25 18:36:30 [info]: - qwq-32b
+2026-03-25 18:36:30 [info]: - qwen3-235b-a22b
+2026-03-25 18:36:30 [info]: - qwen3-30b-a3b
+2026-03-25 18:36:30 [info]: - qwen3-coder-30b-a3b-instruct
+2026-03-25 18:36:30 [info]: - qwen-turbo-2025-02-11
+2026-03-25 18:36:30 [info]: - qwen2.5-omni-7b
+2026-03-25 18:36:30 [info]: - qvq-72b-preview-0310
+2026-03-25 18:36:30 [info]: - qwen2.5-vl-32b-instruct
+2026-03-25 18:36:30 [info]: - qwen2.5-14b-instruct-1m
+2026-03-25 18:36:30 [info]: - qwen2.5-coder-32b-instruct
+2026-03-25 18:36:30 [info]: - qwen2.5-72b-instruct
+2026-03-25 18:36:30 [info]: - qwen3.5-plus
+2026-03-25 18:36:30 [info]: - qwen3.5-flash
+2026-03-25 18:36:30 [info]: - qwen3.5-397b-a17b
+2026-03-25 18:36:30 [info]: - qwen3.5-122b-a10b
+2026-03-25 18:36:30 [info]: - qwen3.5-27b
+2026-03-25 18:36:30 [info]: - qwen3.5-35b-a3b
+2026-03-25 18:36:30 [info]: ============================
+2026-03-25 18:36:30 [info]: Используется аккаунт для создания чата: forairdroponly@gmail.com
+2026-03-25 18:36:35 [info]: Чат создан: f16aa958-402d-4728-b4d2-277a29d93d8c
+2026-03-25 18:36:35 [info]: Создан новый чат v2 с ID: f16aa958-402d-4728-b4d2-277a29d93d8c
+2026-03-25 18:36:35 [info]: Используемая модель: "qwen-max-latest"
+2026-03-25 18:36:35 [info]: Используется аккаунт: forairdroponly@gmail.com
+2026-03-25 18:36:35 [info]: Отправка запроса к API v2...
+2026-03-25 18:36:39 [info]: Ответ получен успешно
+2026-03-25 18:36:39 [info]: Файл истории для чата f16aa958-402d-4728-b4d2-277a29d93d8c не найден
+2026-03-25 18:36:39 [info]: Создаем новую историю для чата f16aa958-402d-4728-b4d2-277a29d93d8c
+2026-03-25 18:36:39 [info]: Создана директория для истории чатов: /app/session/history
+2026-03-25 18:47:45 [info]: Получен OpenAI-совместимый запрос
+2026-03-25 18:47:45 [info]: Используется модель: qwen-max-latest
+2026-03-25 18:47:45 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-25 18:47:45 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-25 18:47:45 [info]: История содержит 4 сообщений: system, user, assistant, user
+2026-03-25 18:47:45 [info]: Используется аккаунт для создания чата: forairdroponly@gmail.com
+2026-03-25 18:47:46 [info]: Чат создан: 1a4f3b3b-0355-47ca-a457-958068e9b598
+2026-03-25 18:47:46 [info]: Создан новый чат v2 с ID: 1a4f3b3b-0355-47ca-a457-958068e9b598
+2026-03-25 18:47:46 [info]: Используемая модель: "qwen-max-latest"
+2026-03-25 18:47:46 [info]: Используется аккаунт: forairdroponly@gmail.com
+2026-03-25 18:47:46 [info]: Отправка запроса к API v2...
+2026-03-25 18:47:51 [info]: Ответ получен успешно
+2026-03-25 18:47:51 [info]: Файл истории для чата 1a4f3b3b-0355-47ca-a457-958068e9b598 не найден
+2026-03-25 18:47:51 [info]: Создаем новую историю для чата 1a4f3b3b-0355-47ca-a457-958068e9b598
+2026-03-25 19:16:47 [info]: Получен OpenAI-совместимый запрос
+2026-03-25 19:16:47 [info]: Используется модель: qwen-max-latest
+2026-03-25 19:16:47 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-25 19:16:47 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-25 19:16:47 [info]: История содержит 6 сообщений: system, user, assistant, user, assistant, user
+2026-03-25 19:16:47 [info]: Используется аккаунт для создания чата: forairdroponly@gmail.com
+2026-03-25 19:16:48 [info]: Чат создан: 9c5de98e-fc23-482c-ba31-294021b3b45c
+2026-03-25 19:16:48 [info]: Создан новый чат v2 с ID: 9c5de98e-fc23-482c-ba31-294021b3b45c
+2026-03-25 19:16:48 [info]: Используемая модель: "qwen-max-latest"
+2026-03-25 19:16:48 [info]: Используется аккаунт: forairdroponly@gmail.com
+2026-03-25 19:16:48 [info]: Отправка запроса к API v2...
+2026-03-25 19:16:53 [info]: Ответ получен успешно
+2026-03-25 19:16:53 [info]: Файл истории для чата 9c5de98e-fc23-482c-ba31-294021b3b45c не найден
+2026-03-25 19:16:53 [info]: Создаем новую историю для чата 9c5de98e-fc23-482c-ba31-294021b3b45c
+2026-03-25 19:39:16 [info]: Получен OpenAI-совместимый запрос
+2026-03-25 19:39:16 [info]: Используется модель: qwen-max-latest
+2026-03-25 19:39:16 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-25 19:39:16 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-25 19:39:16 [info]: История содержит 8 сообщений: system, user, assistant, user, assistant, user, assistant, user
+2026-03-25 19:39:16 [info]: Используется аккаунт для создания чата: forairdroponly@gmail.com
+2026-03-25 19:39:17 [info]: Чат создан: 4f6ca8af-adb4-4dd9-ae3e-acd3582ee4b4
+2026-03-25 19:39:17 [info]: Создан новый чат v2 с ID: 4f6ca8af-adb4-4dd9-ae3e-acd3582ee4b4
+2026-03-25 19:39:17 [info]: Используемая модель: "qwen-max-latest"
+2026-03-25 19:39:17 [info]: Используется аккаунт: forairdroponly@gmail.com
+2026-03-25 19:39:17 [info]: Отправка запроса к API v2...
+2026-03-25 19:39:23 [info]: Ответ получен успешно
+2026-03-25 19:39:23 [info]: Файл истории для чата 4f6ca8af-adb4-4dd9-ae3e-acd3582ee4b4 не найден
+2026-03-25 19:39:23 [info]: Создаем новую историю для чата 4f6ca8af-adb4-4dd9-ae3e-acd3582ee4b4
+2026-03-25 19:41:12 [info]: Получен OpenAI-совместимый запрос
+2026-03-25 19:41:12 [info]: Используется модель: qwen-max-latest
+2026-03-25 19:41:12 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-25 19:41:12 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-25 19:41:12 [info]: История содержит 10 сообщений: system, user, assistant, user, assistant, user, assistant, user, assistant, user
+2026-03-25 19:41:12 [info]: Используется аккаунт для создания чата: forairdroponly@gmail.com
+2026-03-25 19:41:13 [info]: Чат создан: 4b46a014-b544-42a3-bccc-75e5783a1614
+2026-03-25 19:41:13 [info]: Создан новый чат v2 с ID: 4b46a014-b544-42a3-bccc-75e5783a1614
+2026-03-25 19:41:13 [info]: Используемая модель: "qwen-max-latest"
+2026-03-25 19:41:13 [info]: Используется аккаунт: forairdroponly@gmail.com
+2026-03-25 19:41:13 [info]: Отправка запроса к API v2...
+2026-03-25 19:41:18 [info]: Ответ получен успешно
+2026-03-25 19:41:18 [info]: Файл истории для чата 4b46a014-b544-42a3-bccc-75e5783a1614 не найден
+2026-03-25 19:41:18 [info]: Создаем новую историю для чата 4b46a014-b544-42a3-bccc-75e5783a1614
+2026-03-26 05:40:06 [info]: Получен OpenAI-совместимый запрос
+2026-03-26 05:40:06 [info]: Используется модель: qwen-max-latest
+2026-03-26 05:40:06 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-26 05:40:06 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-26 05:40:06 [info]: История содержит 12 сообщений: system, user, assistant, user, assistant, user, assistant, user, assistant, user, assistant, user
+2026-03-26 05:40:06 [info]: Используется аккаунт для создания чата: forairdroponly@gmail.com
+2026-03-26 05:40:28 [error]: Ошибка при создании чата: unknown (попытка 1)
+2026-03-26 05:40:37 [info]: 
+Получен сигнал завершения. Закрываем браузер...
+2026-03-26 05:40:37 [error]: Ошибка при закрытии страницы в пуле: Protocol error (Target.closeTarget): Target closed
+2026-03-26 05:40:37 [error]: TargetCloseError: Protocol error (Target.closeTarget): Target closed
+    at CallbackRegistry.clear (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/common/CallbackRegistry.js:82:36)
+    at #onClose (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/Connection.js:188:25)
+    at WebSocket.<anonymous> (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/node/NodeWebSocketTransport.js:48:30)
+    at callListener (/app/node_modules/ws/lib/event-target.js:290:14)
+    at WebSocket.onClose (/app/node_modules/ws/lib/event-target.js:220:9)
+    at WebSocket.emit (node:events:524:28)
+    at WebSocket.emitClose (/app/node_modules/ws/lib/websocket.js:273:10)
+    at Socket.socketOnClose (/app/node_modules/ws/lib/websocket.js:1346:15)
+    at Socket.emit (node:events:524:28)
+    at TCP.<anonymous> (node:net:343:12)
+2026-03-26 05:40:37 [info]: Браузер закрыт
+2026-03-26 05:40:41 [info]: Запуск сервера...
+2026-03-26 05:40:41 [info]: Автоматический запуск: обнаружено 1 аккаунтов, из них 1 активны.
+2026-03-26 05:40:41 [info]: Инициализация браузера с Puppeteer Stealth...
+2026-03-26 05:40:42 [info]: Браузер инициализирован с максимальной защитой от обнаружения
+2026-03-26 05:40:42 [info]: Сервер запущен на 0.0.0.0:3264
+2026-03-26 05:40:42 [info]: API доступен по адресу: http://localhost:3264/api
+2026-03-26 05:40:42 [info]: Для проверки статуса авторизации: GET /api/status
+2026-03-26 05:40:42 [info]: Для отправки сообщения: POST /api/chat
+2026-03-26 05:40:42 [info]: Для получения списка моделей: GET /api/models
+2026-03-26 05:40:42 [info]: ======================================================
+2026-03-26 05:40:42 [info]: API v2 - История чатов хранится на серверах Qwen
+2026-03-26 05:40:42 [info]: Создать новый чат: POST /api/chats
+2026-03-26 05:40:42 [info]: Отправить сообщение: POST /api/chat (с chatId и parentId)
+2026-03-26 05:40:42 [info]: ======================================================
+2026-03-26 05:40:42 [info]: Доступно 25 моделей Qwen (через систему маппинга):
+2026-03-26 05:40:42 [info]: - Стандартные: qwen-max, qwen-plus, qwen-turbo и их latest-версии
+2026-03-26 05:40:42 [info]: - Coder: qwen3-coder-plus, qwen2.5-coder-*b-instruct (0.5b - 32b)
+2026-03-26 05:40:42 [info]: - Визуальные: qwen-vl-max, qwen-vl-plus и их latest-версии
+2026-03-26 05:40:42 [info]: - Qwen 3: qwen3, qwen3-max, qwen3-plus, qwen3-omni-flash
+2026-03-26 05:40:42 [info]: - Qwen 3.5: qwen3.5-plus, qwen3.5-flash, qwen3.5-397b-a17b, qwen3.5-122b-a10b, qwen3.5-27b, qwen3.5-35b-a3b
+2026-03-26 05:40:42 [info]: ======================================================
+2026-03-26 05:40:42 [info]: Формат JSON запроса на чат:
+2026-03-26 05:40:42 [info]: { "message": "текст сообщения", "model": "название модели (опционально)", "chatId": "ID чата (опционально)", "parentId": "ID родительского сообщения (опционально)" }
+2026-03-26 05:40:42 [info]: Пример первого запроса: { "message": "Привет, как дела?" }
+2026-03-26 05:40:42 [info]: Пример второго запроса: { "message": "А что ты умеешь?", "chatId": "полученный_id_чата", "parentId": "полученный_parentId" }
+2026-03-26 05:40:42 [info]: ======================================================
+2026-03-26 05:40:42 [info]: Поддержка OpenAI совместимого API: POST /api/chat/completions
+2026-03-26 05:40:42 [info]: В ответе возвращаются chatId и parentId для продолжения диалога
+2026-03-26 05:40:42 [info]: ======================================================
+2026-03-26 05:40:42 [info]: ===== ДОСТУПНЫЕ МОДЕЛИ =====
+2026-03-26 05:40:42 [info]: - qwen3.5-plus
+2026-03-26 05:40:42 [info]: - qwen3.5-397b-a17b
+2026-03-26 05:40:42 [info]: - qwen3-max
+2026-03-26 05:40:42 [info]: - qwen3-vl-plus
+2026-03-26 05:40:42 [info]: - qwen3-coder-plus
+2026-03-26 05:40:42 [info]: - qwen3-omni-flash
+2026-03-26 05:40:42 [info]: - qwen3-omni-flash-2025-12-01
+2026-03-26 05:40:42 [info]: - qwen-max-latest
+2026-03-26 05:40:42 [info]: - qwen-plus-2025-09-11
+2026-03-26 05:40:42 [info]: - qwen-plus-2025-01-25
+2026-03-26 05:40:42 [info]: - qwq-32b
+2026-03-26 05:40:42 [info]: - qwen3-235b-a22b
+2026-03-26 05:40:42 [info]: - qwen3-30b-a3b
+2026-03-26 05:40:42 [info]: - qwen3-coder-30b-a3b-instruct
+2026-03-26 05:40:42 [info]: - qwen-turbo-2025-02-11
+2026-03-26 05:40:42 [info]: - qwen2.5-omni-7b
+2026-03-26 05:40:42 [info]: - qvq-72b-preview-0310
+2026-03-26 05:40:42 [info]: - qwen2.5-vl-32b-instruct
+2026-03-26 05:40:42 [info]: - qwen2.5-14b-instruct-1m
+2026-03-26 05:40:42 [info]: - qwen2.5-coder-32b-instruct
+2026-03-26 05:40:42 [info]: - qwen2.5-72b-instruct
+2026-03-26 05:40:42 [info]: - qwen3.5-plus
+2026-03-26 05:40:42 [info]: - qwen3.5-flash
+2026-03-26 05:40:42 [info]: - qwen3.5-397b-a17b
+2026-03-26 05:40:42 [info]: - qwen3.5-122b-a10b
+2026-03-26 05:40:42 [info]: - qwen3.5-27b
+2026-03-26 05:40:42 [info]: - qwen3.5-35b-a3b
+2026-03-26 05:40:42 [info]: ============================
+2026-03-26 05:41:06 [info]: Получен OpenAI-совместимый запрос
+2026-03-26 05:41:06 [info]: Используется модель: qwen-max-latest
+2026-03-26 05:41:06 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-26 05:41:06 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-26 05:41:06 [info]: История содержит 13 сообщений: system, user, assistant, user, assistant, user, assistant, user, assistant, user, assistant, user, user
+2026-03-26 05:41:06 [info]: ===== ДОСТУПНЫЕ МОДЕЛИ =====
+2026-03-26 05:41:06 [info]: - qwen3.5-plus
+2026-03-26 05:41:06 [info]: - qwen3.5-397b-a17b
+2026-03-26 05:41:06 [info]: - qwen3-max
+2026-03-26 05:41:06 [info]: - qwen3-vl-plus
+2026-03-26 05:41:06 [info]: - qwen3-coder-plus
+2026-03-26 05:41:06 [info]: - qwen3-omni-flash
+2026-03-26 05:41:06 [info]: - qwen3-omni-flash-2025-12-01
+2026-03-26 05:41:06 [info]: - qwen-max-latest
+2026-03-26 05:41:06 [info]: - qwen-plus-2025-09-11
+2026-03-26 05:41:06 [info]: - qwen-plus-2025-01-25
+2026-03-26 05:41:06 [info]: - qwq-32b
+2026-03-26 05:41:06 [info]: - qwen3-235b-a22b
+2026-03-26 05:41:06 [info]: - qwen3-30b-a3b
+2026-03-26 05:41:06 [info]: - qwen3-coder-30b-a3b-instruct
+2026-03-26 05:41:06 [info]: - qwen-turbo-2025-02-11
+2026-03-26 05:41:06 [info]: - qwen2.5-omni-7b
+2026-03-26 05:41:06 [info]: - qvq-72b-preview-0310
+2026-03-26 05:41:06 [info]: - qwen2.5-vl-32b-instruct
+2026-03-26 05:41:06 [info]: - qwen2.5-14b-instruct-1m
+2026-03-26 05:41:06 [info]: - qwen2.5-coder-32b-instruct
+2026-03-26 05:41:06 [info]: - qwen2.5-72b-instruct
+2026-03-26 05:41:06 [info]: - qwen3.5-plus
+2026-03-26 05:41:06 [info]: - qwen3.5-flash
+2026-03-26 05:41:06 [info]: - qwen3.5-397b-a17b
+2026-03-26 05:41:06 [info]: - qwen3.5-122b-a10b
+2026-03-26 05:41:06 [info]: - qwen3.5-27b
+2026-03-26 05:41:06 [info]: - qwen3.5-35b-a3b
+2026-03-26 05:41:06 [info]: ============================
+2026-03-26 05:41:06 [info]: Используется аккаунт для создания чата: forairdroponly@gmail.com
+2026-03-26 05:41:29 [error]: Ошибка при создании чата: net::ERR_NAME_NOT_RESOLVED at https://chat.qwen.ai/
+2026-03-26 05:41:29 [error]: Error: net::ERR_NAME_NOT_RESOLVED at https://chat.qwen.ai/
+    at navigate (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/Frame.js:184:27)
+    at async Deferred.race (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/util/Deferred.js:36:20)
+    at async CdpFrame.goto (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/Frame.js:150:25)
+    at async CdpPage.goto (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:580:20)
+    at async Object.getPage (file:///app/src/api/chat.js:91:9)
+    at async createChatV2 (file:///app/src/api/chat.js:962:16)
+    at async sendMessage (file:///app/src/api/chat.js:770:31)
+    at async file:///app/src/api/routes.js:916:28
+2026-03-26 05:45:42 [info]: Получен OpenAI-совместимый запрос
+2026-03-26 05:45:42 [info]: Используется модель: qwen-max-latest
+2026-03-26 05:45:42 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-26 05:45:42 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-26 05:45:42 [info]: История содержит 14 сообщений: system, user, assistant, user, assistant, user, assistant, user, assistant, user, assistant, user, user, user
+2026-03-26 05:45:42 [info]: Используется аккаунт для создания чата: forairdroponly@gmail.com
+2026-03-26 05:45:46 [info]: Чат создан: 2dea4d67-5f7e-4ed8-baf2-820a739a5f44
+2026-03-26 05:45:46 [info]: Создан новый чат v2 с ID: 2dea4d67-5f7e-4ed8-baf2-820a739a5f44
+2026-03-26 05:45:46 [info]: Используемая модель: "qwen-max-latest"
+2026-03-26 05:45:46 [info]: Используется аккаунт: forairdroponly@gmail.com
+2026-03-26 05:45:46 [info]: Отправка запроса к API v2...
+2026-03-26 05:45:56 [info]: Ответ получен успешно
+2026-03-26 05:45:56 [info]: Файл истории для чата 2dea4d67-5f7e-4ed8-baf2-820a739a5f44 не найден
+2026-03-26 05:45:56 [info]: Создаем новую историю для чата 2dea4d67-5f7e-4ed8-baf2-820a739a5f44
+2026-03-26 05:46:16 [info]: Получен OpenAI-совместимый запрос
+2026-03-26 05:46:16 [info]: Используется модель: qwen-max-latest
+2026-03-26 05:46:16 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-26 05:46:16 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-26 05:46:16 [info]: История содержит 16 сообщений: system, user, assistant, user, assistant, user, assistant, user, assistant, user, assistant, user, user, user, assistant, user
+2026-03-26 05:46:16 [info]: Используется аккаунт для создания чата: forairdroponly@gmail.com
+2026-03-26 05:46:17 [info]: Чат создан: 213b99af-cf6c-4b70-adfb-93d5cc1d0ff6
+2026-03-26 05:46:17 [info]: Создан новый чат v2 с ID: 213b99af-cf6c-4b70-adfb-93d5cc1d0ff6
+2026-03-26 05:46:17 [info]: Используемая модель: "qwen-max-latest"
+2026-03-26 05:46:17 [info]: Используется аккаунт: forairdroponly@gmail.com
+2026-03-26 05:46:17 [info]: Отправка запроса к API v2...
+2026-03-26 05:46:21 [info]: Ответ получен успешно
+2026-03-26 05:46:21 [info]: Файл истории для чата 213b99af-cf6c-4b70-adfb-93d5cc1d0ff6 не найден
+2026-03-26 05:46:21 [info]: Создаем новую историю для чата 213b99af-cf6c-4b70-adfb-93d5cc1d0ff6
+2026-03-26 05:47:30 [info]: Получен OpenAI-совместимый запрос
+2026-03-26 05:47:30 [info]: Используется модель: qwen-max-latest
+2026-03-26 05:47:30 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-26 05:47:30 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-26 05:47:30 [info]: История содержит 18 сообщений: system, user, assistant, user, assistant, user, assistant, user, assistant, user, assistant, user, user, user, assistant, user, assistant, user
+2026-03-26 05:47:30 [info]: Используется аккаунт для создания чата: forairdroponly@gmail.com
+2026-03-26 05:47:30 [info]: Чат создан: 9ef99aac-aaf4-4e87-b909-c394e712987a
+2026-03-26 05:47:30 [info]: Создан новый чат v2 с ID: 9ef99aac-aaf4-4e87-b909-c394e712987a
+2026-03-26 05:47:30 [info]: Используемая модель: "qwen-max-latest"
+2026-03-26 05:47:30 [info]: Используется аккаунт: forairdroponly@gmail.com
+2026-03-26 05:47:30 [info]: Отправка запроса к API v2...
+2026-03-26 05:47:39 [info]: Ответ получен успешно
+2026-03-26 05:47:39 [info]: Файл истории для чата 9ef99aac-aaf4-4e87-b909-c394e712987a не найден
+2026-03-26 05:47:39 [info]: Создаем новую историю для чата 9ef99aac-aaf4-4e87-b909-c394e712987a
+2026-03-26 07:15:51 [info]: Получен OpenAI-совместимый запрос
+2026-03-26 07:15:51 [info]: Используется модель: qwen-max-latest
+2026-03-26 07:15:51 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-26 07:15:51 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-26 07:15:51 [info]: История содержит 20 сообщений: system, user, assistant, user, assistant, user, assistant, user, assistant, user, assistant, user, user, user, assistant, user, assistant, user, assistant, user
+2026-03-26 07:15:51 [info]: Используется аккаунт для создания чата: forairdroponly@gmail.com
+2026-03-26 07:16:15 [error]: Ошибка при создании чата: unknown (попытка 1)
+2026-03-26 07:16:43 [info]: Получен OpenAI-совместимый запрос
+2026-03-26 07:16:43 [info]: Используется модель: qwen-max-latest
+2026-03-26 07:16:43 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-26 07:16:43 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-26 07:16:43 [info]: История содержит 21 сообщений: system, user, assistant, user, assistant, user, assistant, user, assistant, user, assistant, user, user, user, assistant, user, assistant, user, assistant, user, user
+2026-03-26 07:16:43 [info]: Используется аккаунт для создания чата: forairdroponly@gmail.com
+2026-03-26 07:17:26 [error]: Ошибка при создании чата: unknown (попытка 1)
+2026-03-26 07:17:40 [info]: 
+Получен сигнал завершения. Закрываем браузер...
+2026-03-26 07:17:40 [error]: Ошибка при закрытии страницы в пуле: Protocol error (Target.closeTarget): Target closed
+2026-03-26 07:17:40 [error]: TargetCloseError: Protocol error (Target.closeTarget): Target closed
+    at CallbackRegistry.clear (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/common/CallbackRegistry.js:82:36)
+    at #onClose (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/Connection.js:188:25)
+    at WebSocket.<anonymous> (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/node/NodeWebSocketTransport.js:48:30)
+    at callListener (/app/node_modules/ws/lib/event-target.js:290:14)
+    at WebSocket.onClose (/app/node_modules/ws/lib/event-target.js:220:9)
+    at WebSocket.emit (node:events:524:28)
+    at WebSocket.emitClose (/app/node_modules/ws/lib/websocket.js:273:10)
+    at Socket.socketOnClose (/app/node_modules/ws/lib/websocket.js:1346:15)
+    at Socket.emit (node:events:524:28)
+    at TCP.<anonymous> (node:net:343:12)
+2026-03-26 07:17:40 [info]: Браузер закрыт
+2026-03-26 07:17:42 [info]: Запуск сервера...
+2026-03-26 07:17:42 [info]: Автоматический запуск: обнаружено 1 аккаунтов, из них 1 активны.
+2026-03-26 07:17:42 [info]: Инициализация браузера с Puppeteer Stealth...
+2026-03-26 07:17:43 [info]: Браузер инициализирован с максимальной защитой от обнаружения
+2026-03-26 07:17:43 [info]: Сервер запущен на 0.0.0.0:3264
+2026-03-26 07:17:43 [info]: API доступен по адресу: http://localhost:3264/api
+2026-03-26 07:17:43 [info]: Для проверки статуса авторизации: GET /api/status
+2026-03-26 07:17:43 [info]: Для отправки сообщения: POST /api/chat
+2026-03-26 07:17:43 [info]: Для получения списка моделей: GET /api/models
+2026-03-26 07:17:43 [info]: ======================================================
+2026-03-26 07:17:43 [info]: API v2 - История чатов хранится на серверах Qwen
+2026-03-26 07:17:43 [info]: Создать новый чат: POST /api/chats
+2026-03-26 07:17:43 [info]: Отправить сообщение: POST /api/chat (с chatId и parentId)
+2026-03-26 07:17:43 [info]: ======================================================
+2026-03-26 07:17:43 [info]: Доступно 25 моделей Qwen (через систему маппинга):
+2026-03-26 07:17:43 [info]: - Стандартные: qwen-max, qwen-plus, qwen-turbo и их latest-версии
+2026-03-26 07:17:43 [info]: - Coder: qwen3-coder-plus, qwen2.5-coder-*b-instruct (0.5b - 32b)
+2026-03-26 07:17:43 [info]: - Визуальные: qwen-vl-max, qwen-vl-plus и их latest-версии
+2026-03-26 07:17:43 [info]: - Qwen 3: qwen3, qwen3-max, qwen3-plus, qwen3-omni-flash
+2026-03-26 07:17:43 [info]: - Qwen 3.5: qwen3.5-plus, qwen3.5-flash, qwen3.5-397b-a17b, qwen3.5-122b-a10b, qwen3.5-27b, qwen3.5-35b-a3b
+2026-03-26 07:17:43 [info]: ======================================================
+2026-03-26 07:17:43 [info]: Формат JSON запроса на чат:
+2026-03-26 07:17:43 [info]: { "message": "текст сообщения", "model": "название модели (опционально)", "chatId": "ID чата (опционально)", "parentId": "ID родительского сообщения (опционально)" }
+2026-03-26 07:17:43 [info]: Пример первого запроса: { "message": "Привет, как дела?" }
+2026-03-26 07:17:43 [info]: Пример второго запроса: { "message": "А что ты умеешь?", "chatId": "полученный_id_чата", "parentId": "полученный_parentId" }
+2026-03-26 07:17:43 [info]: ======================================================
+2026-03-26 07:17:43 [info]: Поддержка OpenAI совместимого API: POST /api/chat/completions
+2026-03-26 07:17:43 [info]: В ответе возвращаются chatId и parentId для продолжения диалога
+2026-03-26 07:17:43 [info]: ======================================================
+2026-03-26 07:17:43 [info]: ===== ДОСТУПНЫЕ МОДЕЛИ =====
+2026-03-26 07:17:43 [info]: - qwen3.5-plus
+2026-03-26 07:17:43 [info]: - qwen3.5-397b-a17b
+2026-03-26 07:17:43 [info]: - qwen3-max
+2026-03-26 07:17:43 [info]: - qwen3-vl-plus
+2026-03-26 07:17:43 [info]: - qwen3-coder-plus
+2026-03-26 07:17:43 [info]: - qwen3-omni-flash
+2026-03-26 07:17:43 [info]: - qwen3-omni-flash-2025-12-01
+2026-03-26 07:17:43 [info]: - qwen-max-latest
+2026-03-26 07:17:43 [info]: - qwen-plus-2025-09-11
+2026-03-26 07:17:43 [info]: - qwen-plus-2025-01-25
+2026-03-26 07:17:43 [info]: - qwq-32b
+2026-03-26 07:17:43 [info]: - qwen3-235b-a22b
+2026-03-26 07:17:43 [info]: - qwen3-30b-a3b
+2026-03-26 07:17:43 [info]: - qwen3-coder-30b-a3b-instruct
+2026-03-26 07:17:43 [info]: - qwen-turbo-2025-02-11
+2026-03-26 07:17:43 [info]: - qwen2.5-omni-7b
+2026-03-26 07:17:43 [info]: - qvq-72b-preview-0310
+2026-03-26 07:17:43 [info]: - qwen2.5-vl-32b-instruct
+2026-03-26 07:17:43 [info]: - qwen2.5-14b-instruct-1m
+2026-03-26 07:17:43 [info]: - qwen2.5-coder-32b-instruct
+2026-03-26 07:17:43 [info]: - qwen2.5-72b-instruct
+2026-03-26 07:17:43 [info]: - qwen3.5-plus
+2026-03-26 07:17:43 [info]: - qwen3.5-flash
+2026-03-26 07:17:43 [info]: - qwen3.5-397b-a17b
+2026-03-26 07:17:43 [info]: - qwen3.5-122b-a10b
+2026-03-26 07:17:43 [info]: - qwen3.5-27b
+2026-03-26 07:17:43 [info]: - qwen3.5-35b-a3b
+2026-03-26 07:17:43 [info]: ============================
+2026-03-26 07:18:32 [info]: Получен OpenAI-совместимый запрос
+2026-03-26 07:18:32 [info]: Используется модель: qwen-max-latest
+2026-03-26 07:18:32 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-26 07:18:32 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-26 07:18:32 [info]: История содержит 22 сообщений: system, user, assistant, user, assistant, user, assistant, user, assistant, user, assistant, user, user, user, assistant, user, assistant, user, assistant, user, user, user
+2026-03-26 07:18:32 [info]: ===== ДОСТУПНЫЕ МОДЕЛИ =====
+2026-03-26 07:18:32 [info]: - qwen3.5-plus
+2026-03-26 07:18:32 [info]: - qwen3.5-397b-a17b
+2026-03-26 07:18:32 [info]: - qwen3-max
+2026-03-26 07:18:32 [info]: - qwen3-vl-plus
+2026-03-26 07:18:32 [info]: - qwen3-coder-plus
+2026-03-26 07:18:32 [info]: - qwen3-omni-flash
+2026-03-26 07:18:32 [info]: - qwen3-omni-flash-2025-12-01
+2026-03-26 07:18:32 [info]: - qwen-max-latest
+2026-03-26 07:18:32 [info]: - qwen-plus-2025-09-11
+2026-03-26 07:18:32 [info]: - qwen-plus-2025-01-25
+2026-03-26 07:18:32 [info]: - qwq-32b
+2026-03-26 07:18:32 [info]: - qwen3-235b-a22b
+2026-03-26 07:18:32 [info]: - qwen3-30b-a3b
+2026-03-26 07:18:32 [info]: - qwen3-coder-30b-a3b-instruct
+2026-03-26 07:18:32 [info]: - qwen-turbo-2025-02-11
+2026-03-26 07:18:32 [info]: - qwen2.5-omni-7b
+2026-03-26 07:18:32 [info]: - qvq-72b-preview-0310
+2026-03-26 07:18:32 [info]: - qwen2.5-vl-32b-instruct
+2026-03-26 07:18:32 [info]: - qwen2.5-14b-instruct-1m
+2026-03-26 07:18:32 [info]: - qwen2.5-coder-32b-instruct
+2026-03-26 07:18:32 [info]: - qwen2.5-72b-instruct
+2026-03-26 07:18:32 [info]: - qwen3.5-plus
+2026-03-26 07:18:32 [info]: - qwen3.5-flash
+2026-03-26 07:18:32 [info]: - qwen3.5-397b-a17b
+2026-03-26 07:18:32 [info]: - qwen3.5-122b-a10b
+2026-03-26 07:18:32 [info]: - qwen3.5-27b
+2026-03-26 07:18:32 [info]: - qwen3.5-35b-a3b
+2026-03-26 07:18:32 [info]: ============================
+2026-03-26 07:18:32 [info]: Используется аккаунт для создания чата: forairdroponly@gmail.com
+2026-03-26 07:18:35 [info]: Чат создан: b51516d7-4b18-4119-9c69-e08670f42e8d
+2026-03-26 07:18:35 [info]: Создан новый чат v2 с ID: b51516d7-4b18-4119-9c69-e08670f42e8d
+2026-03-26 07:18:35 [info]: Используемая модель: "qwen-max-latest"
+2026-03-26 07:18:35 [info]: Используется аккаунт: forairdroponly@gmail.com
+2026-03-26 07:18:35 [info]: Отправка запроса к API v2...
+2026-03-26 07:18:43 [info]: Ответ получен успешно
+2026-03-26 07:18:43 [info]: Файл истории для чата b51516d7-4b18-4119-9c69-e08670f42e8d не найден
+2026-03-26 07:18:43 [info]: Создаем новую историю для чата b51516d7-4b18-4119-9c69-e08670f42e8d
+2026-03-26 07:19:27 [info]: Получен OpenAI-совместимый запрос
+2026-03-26 07:19:27 [info]: Используется модель: qwen-max-latest
+2026-03-26 07:19:27 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-26 07:19:27 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-26 07:19:27 [info]: История содержит 24 сообщений: system, user, assistant, user, assistant, user, assistant, user, assistant, user, assistant, user, user, user, assistant, user, assistant, user, assistant, user, user, user, assistant, user
+2026-03-26 07:19:27 [info]: Используется аккаунт для создания чата: forairdroponly@gmail.com
+2026-03-26 07:19:28 [info]: Чат создан: a4c46a5c-9928-44d6-803a-097ee09bc38a
+2026-03-26 07:19:28 [info]: Создан новый чат v2 с ID: a4c46a5c-9928-44d6-803a-097ee09bc38a
+2026-03-26 07:19:28 [info]: Используемая модель: "qwen-max-latest"
+2026-03-26 07:19:28 [info]: Используется аккаунт: forairdroponly@gmail.com
+2026-03-26 07:19:28 [info]: Отправка запроса к API v2...
+2026-03-26 07:19:39 [info]: Ответ получен успешно
+2026-03-26 07:19:39 [info]: Файл истории для чата a4c46a5c-9928-44d6-803a-097ee09bc38a не найден
+2026-03-26 07:19:39 [info]: Создаем новую историю для чата a4c46a5c-9928-44d6-803a-097ee09bc38a
+2026-03-26 07:20:17 [info]: Получен OpenAI-совместимый запрос
+2026-03-26 07:20:17 [info]: Используется модель: qwen-max-latest
+2026-03-26 07:20:17 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-26 07:20:17 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-26 07:20:17 [info]: История содержит 26 сообщений: system, user, assistant, user, assistant, user, assistant, user, assistant, user, assistant, user, user, user, assistant, user, assistant, user, assistant, user, user, user, assistant, user, assistant, user
+2026-03-26 07:20:17 [info]: Используется аккаунт для создания чата: forairdroponly@gmail.com
+2026-03-26 07:20:17 [info]: Чат создан: 1113a8e5-bb3c-4b2d-a4a5-6be0f0e65e9c
+2026-03-26 07:20:17 [info]: Создан новый чат v2 с ID: 1113a8e5-bb3c-4b2d-a4a5-6be0f0e65e9c
+2026-03-26 07:20:17 [info]: Используемая модель: "qwen-max-latest"
+2026-03-26 07:20:17 [info]: Используется аккаунт: forairdroponly@gmail.com
+2026-03-26 07:20:17 [info]: Отправка запроса к API v2...
+2026-03-26 07:20:22 [info]: Ответ получен успешно
+2026-03-26 07:20:22 [info]: Файл истории для чата 1113a8e5-bb3c-4b2d-a4a5-6be0f0e65e9c не найден
+2026-03-26 07:20:22 [info]: Создаем новую историю для чата 1113a8e5-bb3c-4b2d-a4a5-6be0f0e65e9c
+2026-03-26 07:21:19 [info]: Получен OpenAI-совместимый запрос
+2026-03-26 07:21:19 [info]: Используется модель: qwen-max-latest
+2026-03-26 07:21:19 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-26 07:21:19 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-26 07:21:19 [info]: История содержит 28 сообщений: system, user, assistant, user, assistant, user, assistant, user, assistant, user, assistant, user, user, user, assistant, user, assistant, user, assistant, user, user, user, assistant, user, assistant, user, assistant, user
+2026-03-26 07:21:19 [info]: Используется аккаунт для создания чата: forairdroponly@gmail.com
+2026-03-26 07:21:20 [info]: Чат создан: bf8d9a1f-2863-41be-8479-42fc0b2f4c21
+2026-03-26 07:21:20 [info]: Создан новый чат v2 с ID: bf8d9a1f-2863-41be-8479-42fc0b2f4c21
+2026-03-26 07:21:20 [info]: Используемая модель: "qwen-max-latest"
+2026-03-26 07:21:20 [info]: Используется аккаунт: forairdroponly@gmail.com
+2026-03-26 07:21:20 [info]: Отправка запроса к API v2...
+2026-03-26 07:21:25 [info]: Ответ получен успешно
+2026-03-26 07:21:25 [info]: Файл истории для чата bf8d9a1f-2863-41be-8479-42fc0b2f4c21 не найден
+2026-03-26 07:21:25 [info]: Создаем новую историю для чата bf8d9a1f-2863-41be-8479-42fc0b2f4c21
+2026-03-26 08:56:54 [info]: Получен OpenAI-совместимый запрос
+2026-03-26 08:56:54 [info]: Используется модель: qwen-max-latest
+2026-03-26 08:56:54 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-26 08:56:54 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-03-26 08:56:54 [info]: История содержит 2 сообщений: system, user
+2026-03-26 08:56:54 [info]: Используется аккаунт для создания чата: forairdroponly@gmail.com
+2026-03-26 08:57:33 [error]: Ошибка при создании чата: unknown (попытка 1)
+2026-04-18 20:37:32 [info]: Запуск сервера...
+2026-04-18 20:37:32 [info]: Автоматический запуск: обнаружено 1 аккаунтов, из них 1 активны.
+2026-04-18 20:37:32 [info]: Инициализация браузера с Puppeteer Stealth...
+2026-04-18 20:37:33 [info]: Браузер инициализирован с максимальной защитой от обнаружения
+2026-04-18 20:37:33 [info]: Сервер запущен на 0.0.0.0:3264
+2026-04-18 20:37:33 [info]: API доступен по адресу: http://localhost:3264/api
+2026-04-18 20:37:33 [info]: Для проверки статуса авторизации: GET /api/status
+2026-04-18 20:37:33 [info]: Для отправки сообщения: POST /api/chat
+2026-04-18 20:37:33 [info]: Для получения списка моделей: GET /api/models
+2026-04-18 20:37:33 [info]: ======================================================
+2026-04-18 20:37:33 [info]: API v2 - История чатов хранится на серверах Qwen
+2026-04-18 20:37:33 [info]: Создать новый чат: POST /api/chats
+2026-04-18 20:37:33 [info]: Отправить сообщение: POST /api/chat (с chatId и parentId)
+2026-04-18 20:37:33 [info]: ======================================================
+2026-04-18 20:37:33 [info]: Доступно 25 моделей Qwen (через систему маппинга):
+2026-04-18 20:37:33 [info]: - Стандартные: qwen-max, qwen-plus, qwen-turbo и их latest-версии
+2026-04-18 20:37:33 [info]: - Coder: qwen3-coder-plus, qwen2.5-coder-*b-instruct (0.5b - 32b)
+2026-04-18 20:37:33 [info]: - Визуальные: qwen-vl-max, qwen-vl-plus и их latest-версии
+2026-04-18 20:37:33 [info]: - Qwen 3: qwen3, qwen3-max, qwen3-plus, qwen3-omni-flash
+2026-04-18 20:37:33 [info]: - Qwen 3.5: qwen3.5-plus, qwen3.5-flash, qwen3.5-397b-a17b, qwen3.5-122b-a10b, qwen3.5-27b, qwen3.5-35b-a3b
+2026-04-18 20:37:33 [info]: ======================================================
+2026-04-18 20:37:33 [info]: Формат JSON запроса на чат:
+2026-04-18 20:37:33 [info]: { "message": "текст сообщения", "model": "название модели (опционально)", "chatId": "ID чата (опционально)", "parentId": "ID родительского сообщения (опционально)" }
+2026-04-18 20:37:33 [info]: Пример первого запроса: { "message": "Привет, как дела?" }
+2026-04-18 20:37:33 [info]: Пример второго запроса: { "message": "А что ты умеешь?", "chatId": "полученный_id_чата", "parentId": "полученный_parentId" }
+2026-04-18 20:37:33 [info]: ======================================================
+2026-04-18 20:37:33 [info]: Поддержка OpenAI совместимого API: POST /api/chat/completions
+2026-04-18 20:37:33 [info]: В ответе возвращаются chatId и parentId для продолжения диалога
+2026-04-18 20:37:33 [info]: ======================================================
+2026-04-18 20:37:33 [info]: ===== ДОСТУПНЫЕ МОДЕЛИ =====
+2026-04-18 20:37:33 [info]: - qwen3.5-plus
+2026-04-18 20:37:33 [info]: - qwen3.5-397b-a17b
+2026-04-18 20:37:33 [info]: - qwen3-max
+2026-04-18 20:37:33 [info]: - qwen3-vl-plus
+2026-04-18 20:37:33 [info]: - qwen3-coder-plus
+2026-04-18 20:37:33 [info]: - qwen3-omni-flash
+2026-04-18 20:37:33 [info]: - qwen3-omni-flash-2025-12-01
+2026-04-18 20:37:33 [info]: - qwen-max-latest
+2026-04-18 20:37:33 [info]: - qwen-plus-2025-09-11
+2026-04-18 20:37:33 [info]: - qwen-plus-2025-01-25
+2026-04-18 20:37:33 [info]: - qwq-32b
+2026-04-18 20:37:33 [info]: - qwen3-235b-a22b
+2026-04-18 20:37:33 [info]: - qwen3-30b-a3b
+2026-04-18 20:37:33 [info]: - qwen3-coder-30b-a3b-instruct
+2026-04-18 20:37:33 [info]: - qwen-turbo-2025-02-11
+2026-04-18 20:37:33 [info]: - qwen2.5-omni-7b
+2026-04-18 20:37:33 [info]: - qvq-72b-preview-0310
+2026-04-18 20:37:33 [info]: - qwen2.5-vl-32b-instruct
+2026-04-18 20:37:33 [info]: - qwen2.5-14b-instruct-1m
+2026-04-18 20:37:33 [info]: - qwen2.5-coder-32b-instruct
+2026-04-18 20:37:33 [info]: - qwen2.5-72b-instruct
+2026-04-18 20:37:33 [info]: - qwen3.5-plus
+2026-04-18 20:37:33 [info]: - qwen3.5-flash
+2026-04-18 20:37:33 [info]: - qwen3.5-397b-a17b
+2026-04-18 20:37:33 [info]: - qwen3.5-122b-a10b
+2026-04-18 20:37:33 [info]: - qwen3.5-27b
+2026-04-18 20:37:33 [info]: - qwen3.5-35b-a3b
+2026-04-18 20:37:33 [info]: ============================
+2026-04-28 13:01:38 [info]: Получен OpenAI-совместимый запрос
+2026-04-28 13:01:38 [info]: Используется модель: qwen-max-latest
+2026-04-28 13:01:38 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-04-28 13:01:38 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-04-28 13:01:38 [info]: История содержит 3 сообщений: system, user, user
+2026-04-28 13:01:38 [info]: ===== ДОСТУПНЫЕ МОДЕЛИ =====
+2026-04-28 13:01:38 [info]: - qwen3.5-plus
+2026-04-28 13:01:38 [info]: - qwen3.5-397b-a17b
+2026-04-28 13:01:38 [info]: - qwen3-max
+2026-04-28 13:01:38 [info]: - qwen3-vl-plus
+2026-04-28 13:01:38 [info]: - qwen3-coder-plus
+2026-04-28 13:01:38 [info]: - qwen3-omni-flash
+2026-04-28 13:01:38 [info]: - qwen3-omni-flash-2025-12-01
+2026-04-28 13:01:38 [info]: - qwen-max-latest
+2026-04-28 13:01:38 [info]: - qwen-plus-2025-09-11
+2026-04-28 13:01:38 [info]: - qwen-plus-2025-01-25
+2026-04-28 13:01:38 [info]: - qwq-32b
+2026-04-28 13:01:38 [info]: - qwen3-235b-a22b
+2026-04-28 13:01:38 [info]: - qwen3-30b-a3b
+2026-04-28 13:01:38 [info]: - qwen3-coder-30b-a3b-instruct
+2026-04-28 13:01:38 [info]: - qwen-turbo-2025-02-11
+2026-04-28 13:01:38 [info]: - qwen2.5-omni-7b
+2026-04-28 13:01:38 [info]: - qvq-72b-preview-0310
+2026-04-28 13:01:38 [info]: - qwen2.5-vl-32b-instruct
+2026-04-28 13:01:38 [info]: - qwen2.5-14b-instruct-1m
+2026-04-28 13:01:38 [info]: - qwen2.5-coder-32b-instruct
+2026-04-28 13:01:38 [info]: - qwen2.5-72b-instruct
+2026-04-28 13:01:38 [info]: - qwen3.5-plus
+2026-04-28 13:01:38 [info]: - qwen3.5-flash
+2026-04-28 13:01:38 [info]: - qwen3.5-397b-a17b
+2026-04-28 13:01:38 [info]: - qwen3.5-122b-a10b
+2026-04-28 13:01:38 [info]: - qwen3.5-27b
+2026-04-28 13:01:38 [info]: - qwen3.5-35b-a3b
+2026-04-28 13:01:38 [info]: ============================
+2026-04-28 13:01:38 [info]: Используется аккаунт для создания чата: forairdroponly@gmail.com
+2026-04-28 13:01:49 [error]: Ошибка при создании чата: unknown (попытка 1)
+2026-04-29 20:35:24 [info]: Аккаунт forairdroponly@gmail.com удалён.
+2026-04-29 20:35:30 [info]: ======================================================
+2026-04-29 20:35:30 [info]: Добавление нового аккаунта Qwen
+2026-04-29 20:35:30 [info]: Браузер откроется, войдите в систему, затем вернитесь к консоли.
+2026-04-29 20:35:30 [info]: ======================================================
+2026-04-29 20:35:30 [info]: Инициализация браузера с Puppeteer Stealth...
+2026-04-29 20:35:37 [info]: Браузер инициализирован с максимальной защитой от обнаружения
+2026-04-29 20:35:37 [info]: Открытие страницы для ручной авторизации...
+2026-04-29 20:41:07 [info]: Получено подтверждение, продолжаем...
+2026-04-29 20:41:07 [error]: Ошибка при ручной авторизации: Protocol error (Network.getCookies): Session closed. Most likely the page has been closed.
+2026-04-29 20:41:07 [error]: TargetCloseError: Protocol error (Network.getCookies): Session closed. Most likely the page has been closed.
+    at CdpCDPSession.send (C:\Users\zeeit\OneDrive\Desktop\kursovaya\qwen\node_modules\puppeteer-core\lib\cjs\puppeteer\cdp\CdpSession.js:72:35)
+    at CdpPage.cookies (C:\Users\zeeit\OneDrive\Desktop\kursovaya\qwen\node_modules\puppeteer-core\lib\cjs\puppeteer\cdp\Page.js:508:66)
+    at startManualAuthenticationPuppeteer (file:///C:/Users/zeeit/OneDrive/Desktop/kursovaya/qwen/src/browser/browser.js:168:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async initBrowser (file:///C:/Users/zeeit/OneDrive/Desktop/kursovaya/qwen/src/browser/browser.js:105:13)
+    at async addAccountInteractive (file:///C:/Users/zeeit/OneDrive/Desktop/kursovaya/qwen/src/utils/accountSetup.js:27:16)
+    at async runInteractiveMenu (file:///C:/Users/zeeit/OneDrive/Desktop/kursovaya/qwen/scripts/auth.js:114:13)
+    at async file:///C:/Users/zeeit/OneDrive/Desktop/kursovaya/qwen/scripts/auth.js:136:5
+2026-04-29 20:41:07 [error]: Ошибка при инициализации браузера: Protocol error (Network.getCookies): Session closed. Most likely the page has been closed.
+2026-04-29 20:41:07 [error]: TargetCloseError: Protocol error (Network.getCookies): Session closed. Most likely the page has been closed.
+    at CdpCDPSession.send (C:\Users\zeeit\OneDrive\Desktop\kursovaya\qwen\node_modules\puppeteer-core\lib\cjs\puppeteer\cdp\CdpSession.js:72:35)
+    at CdpPage.cookies (C:\Users\zeeit\OneDrive\Desktop\kursovaya\qwen\node_modules\puppeteer-core\lib\cjs\puppeteer\cdp\Page.js:508:66)
+    at startManualAuthenticationPuppeteer (file:///C:/Users/zeeit/OneDrive/Desktop/kursovaya/qwen/src/browser/browser.js:168:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async initBrowser (file:///C:/Users/zeeit/OneDrive/Desktop/kursovaya/qwen/src/browser/browser.js:105:13)
+    at async addAccountInteractive (file:///C:/Users/zeeit/OneDrive/Desktop/kursovaya/qwen/src/utils/accountSetup.js:27:16)
+    at async runInteractiveMenu (file:///C:/Users/zeeit/OneDrive/Desktop/kursovaya/qwen/scripts/auth.js:114:13)
+    at async file:///C:/Users/zeeit/OneDrive/Desktop/kursovaya/qwen/scripts/auth.js:136:5
+2026-04-29 20:41:07 [error]: Не удалось запустить браузер.
+2026-04-29 20:41:18 [info]: ======================================================
+2026-04-29 20:41:18 [info]: Добавление нового аккаунта Qwen
+2026-04-29 20:41:18 [info]: Браузер откроется, войдите в систему, затем вернитесь к консоли.
+2026-04-29 20:41:18 [info]: ======================================================
+2026-04-29 20:41:18 [warn]: Не удалось создать новую страницу из текущего контекста: Connection closed.
+2026-04-29 20:41:18 [error]: Ошибка при извлечении токена авторизации: Базовая страница браузера закрыта
+2026-04-29 20:41:18 [error]: Error: Базовая страница браузера закрыта
+    at getPage (file:///C:/Users/zeeit/OneDrive/Desktop/kursovaya/qwen/src/api/chat.js:54:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async extractAuthToken (file:///C:/Users/zeeit/OneDrive/Desktop/kursovaya/qwen/src/api/chat.js:202:22)
+    at async addAccountInteractive (file:///C:/Users/zeeit/OneDrive/Desktop/kursovaya/qwen/src/utils/accountSetup.js:34:17)
+    at async runInteractiveMenu (file:///C:/Users/zeeit/OneDrive/Desktop/kursovaya/qwen/scripts/auth.js:114:13)
+    at async file:///C:/Users/zeeit/OneDrive/Desktop/kursovaya/qwen/scripts/auth.js:136:5
+2026-04-29 20:41:18 [error]: Токен не был получен. Аккаунт не добавлен.
+2026-04-29 20:41:18 [info]: Браузер закрыт
+2026-04-29 20:41:22 [info]: ======================================================
+2026-04-29 20:41:22 [info]: Добавление нового аккаунта Qwen
+2026-04-29 20:41:22 [info]: Браузер откроется, войдите в систему, затем вернитесь к консоли.
+2026-04-29 20:41:22 [info]: ======================================================
+2026-04-29 20:41:22 [info]: Инициализация браузера с Puppeteer Stealth...
+2026-04-29 20:41:26 [info]: Браузер инициализирован с максимальной защитой от обнаружения
+2026-04-29 20:41:26 [info]: Открытие страницы для ручной авторизации...
+2026-04-29 20:43:46 [info]: Получено подтверждение, продолжаем...
+2026-04-29 20:43:46 [info]: Сохранено 16 cookies
+2026-04-29 20:43:46 [info]: Токен найден и будет сохранен
+2026-04-29 20:43:46 [info]: Токен авторизации сохранен
+2026-04-29 20:43:46 [info]: Cookies сохранены для аккаунта acc_1777484626251
+2026-04-29 20:43:46 [info]: Сессия сохранена с ID: acc_1777484626251
+2026-04-29 20:43:46 [info]: Авторизация завершена успешно
+2026-04-29 20:43:52 [info]: Токен авторизации успешно извлечен
+2026-04-29 20:43:52 [info]: Токен авторизации сохранен
+2026-04-29 20:43:53 [info]: Браузер закрыт
+2026-04-29 20:43:53 [info]: Аккаунт 'acc_1777484633782' добавлен. Всего аккаунтов: 1
+2026-04-29 20:43:53 [info]: ======================================================
+2026-04-29 17:54:00 [info]: Получен OpenAI-совместимый запрос
+2026-04-29 17:54:00 [info]: Используется модель: qwen-max-latest
+2026-04-29 17:54:00 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-04-29 17:54:00 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-04-29 17:54:00 [info]: История содержит 4 сообщений: system, user, user, user
+2026-04-29 17:54:00 [info]: Используется аккаунт для создания чата: acc_1777484633782
+2026-04-29 17:54:02 [info]: Чат создан: 483e411d-0d40-4982-96c2-c236256f25d3
+2026-04-29 17:54:02 [info]: Создан новый чат v2 с ID: 483e411d-0d40-4982-96c2-c236256f25d3
+2026-04-29 17:54:02 [info]: Используемая модель: "qwen-max-latest"
+2026-04-29 17:54:02 [info]: Используется аккаунт: acc_1777484633782
+2026-04-29 17:54:02 [info]: Отправка запроса к API v2...
+2026-04-29 17:54:06 [info]: Ответ получен успешно
+2026-04-29 17:54:06 [info]: Файл истории для чата 483e411d-0d40-4982-96c2-c236256f25d3 не найден
+2026-04-29 17:54:06 [info]: Создаем новую историю для чата 483e411d-0d40-4982-96c2-c236256f25d3
+2026-04-29 17:55:59 [info]: Получен OpenAI-совместимый запрос
+2026-04-29 17:55:59 [info]: Используется модель: qwen-max-latest
+2026-04-29 17:55:59 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-04-29 17:55:59 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-04-29 17:55:59 [info]: История содержит 6 сообщений: system, user, user, user, assistant, user
+2026-04-29 17:55:59 [info]: Используется аккаунт для создания чата: acc_1777484633782
+2026-04-29 17:56:00 [info]: Чат создан: 95936c66-bdae-44b6-a04b-a127cb8e45c6
+2026-04-29 17:56:00 [info]: Создан новый чат v2 с ID: 95936c66-bdae-44b6-a04b-a127cb8e45c6
+2026-04-29 17:56:00 [info]: Используемая модель: "qwen-max-latest"
+2026-04-29 17:56:00 [info]: Используется аккаунт: acc_1777484633782
+2026-04-29 17:56:00 [info]: Отправка запроса к API v2...
+2026-04-29 17:56:03 [info]: Ответ получен успешно
+2026-04-29 17:56:03 [info]: Файл истории для чата 95936c66-bdae-44b6-a04b-a127cb8e45c6 не найден
+2026-04-29 17:56:03 [info]: Создаем новую историю для чата 95936c66-bdae-44b6-a04b-a127cb8e45c6
+2026-04-29 17:57:37 [info]: Получен OpenAI-совместимый запрос
+2026-04-29 17:57:37 [info]: Используется модель: qwen-max-latest
+2026-04-29 17:57:37 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-04-29 17:57:37 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-04-29 17:57:37 [info]: История содержит 8 сообщений: system, user, user, user, assistant, user, assistant, user
+2026-04-29 17:57:37 [info]: Используется аккаунт для создания чата: acc_1777484633782
+2026-04-29 17:57:37 [info]: Чат создан: c54722a9-5772-4555-8d51-82e738266fb6
+2026-04-29 17:57:37 [info]: Создан новый чат v2 с ID: c54722a9-5772-4555-8d51-82e738266fb6
+2026-04-29 17:57:37 [info]: Используемая модель: "qwen-max-latest"
+2026-04-29 17:57:37 [info]: Используется аккаунт: acc_1777484633782
+2026-04-29 17:57:37 [info]: Отправка запроса к API v2...
+2026-04-29 17:57:43 [info]: Ответ получен успешно
+2026-04-29 17:57:43 [info]: Файл истории для чата c54722a9-5772-4555-8d51-82e738266fb6 не найден
+2026-04-29 17:57:43 [info]: Создаем новую историю для чата c54722a9-5772-4555-8d51-82e738266fb6
+2026-06-07 15:36:11 [info]: Запуск сервера...
+2026-06-07 15:36:11 [info]: Автоматический запуск: обнаружено 1 аккаунтов, из них 1 активны.
+2026-06-07 15:36:11 [info]: Инициализация браузера с Puppeteer Stealth...
+2026-06-07 15:36:11 [info]: Браузер инициализирован с максимальной защитой от обнаружения
+2026-06-07 15:36:11 [info]: Сервер запущен на 0.0.0.0:3264
+2026-06-07 15:36:11 [info]: API доступен по адресу: http://localhost:3264/api
+2026-06-07 15:36:11 [info]: Для проверки статуса авторизации: GET /api/status
+2026-06-07 15:36:11 [info]: Для отправки сообщения: POST /api/chat
+2026-06-07 15:36:11 [info]: Для получения списка моделей: GET /api/models
+2026-06-07 15:36:11 [info]: ======================================================
+2026-06-07 15:36:11 [info]: API v2 - История чатов хранится на серверах Qwen
+2026-06-07 15:36:11 [info]: Создать новый чат: POST /api/chats
+2026-06-07 15:36:11 [info]: Отправить сообщение: POST /api/chat (с chatId и parentId)
+2026-06-07 15:36:11 [info]: ======================================================
+2026-06-07 15:36:11 [info]: Доступно 25 моделей Qwen (через систему маппинга):
+2026-06-07 15:36:11 [info]: - Стандартные: qwen-max, qwen-plus, qwen-turbo и их latest-версии
+2026-06-07 15:36:11 [info]: - Coder: qwen3-coder-plus, qwen2.5-coder-*b-instruct (0.5b - 32b)
+2026-06-07 15:36:11 [info]: - Визуальные: qwen-vl-max, qwen-vl-plus и их latest-версии
+2026-06-07 15:36:11 [info]: - Qwen 3: qwen3, qwen3-max, qwen3-plus, qwen3-omni-flash
+2026-06-07 15:36:11 [info]: - Qwen 3.5: qwen3.5-plus, qwen3.5-flash, qwen3.5-397b-a17b, qwen3.5-122b-a10b, qwen3.5-27b, qwen3.5-35b-a3b
+2026-06-07 15:36:11 [info]: ======================================================
+2026-06-07 15:36:11 [info]: Формат JSON запроса на чат:
+2026-06-07 15:36:11 [info]: { "message": "текст сообщения", "model": "название модели (опционально)", "chatId": "ID чата (опционально)", "parentId": "ID родительского сообщения (опционально)" }
+2026-06-07 15:36:11 [info]: Пример первого запроса: { "message": "Привет, как дела?" }
+2026-06-07 15:36:11 [info]: Пример второго запроса: { "message": "А что ты умеешь?", "chatId": "полученный_id_чата", "parentId": "полученный_parentId" }
+2026-06-07 15:36:11 [info]: ======================================================
+2026-06-07 15:36:11 [info]: Поддержка OpenAI совместимого API: POST /api/chat/completions
+2026-06-07 15:36:11 [info]: В ответе возвращаются chatId и parentId для продолжения диалога
+2026-06-07 15:36:11 [info]: ======================================================
+2026-06-07 15:36:11 [info]: Создан шаблон файла ключей: /app/src/Authorization.txt
+2026-06-07 15:36:11 [info]: ===== ДОСТУПНЫЕ МОДЕЛИ =====
+2026-06-07 15:36:11 [info]: - qwen3.5-plus
+2026-06-07 15:36:11 [info]: - qwen3.5-397b-a17b
+2026-06-07 15:36:11 [info]: - qwen3-max
+2026-06-07 15:36:11 [info]: - qwen3-vl-plus
+2026-06-07 15:36:11 [info]: - qwen3-coder-plus
+2026-06-07 15:36:11 [info]: - qwen3-omni-flash
+2026-06-07 15:36:11 [info]: - qwen3-omni-flash-2025-12-01
+2026-06-07 15:36:11 [info]: - qwen-max-latest
+2026-06-07 15:36:11 [info]: - qwen-plus-2025-09-11
+2026-06-07 15:36:11 [info]: - qwen-plus-2025-01-25
+2026-06-07 15:36:11 [info]: - qwq-32b
+2026-06-07 15:36:11 [info]: - qwen3-235b-a22b
+2026-06-07 15:36:11 [info]: - qwen3-30b-a3b
+2026-06-07 15:36:11 [info]: - qwen3-coder-30b-a3b-instruct
+2026-06-07 15:36:11 [info]: - qwen-turbo-2025-02-11
+2026-06-07 15:36:11 [info]: - qwen2.5-omni-7b
+2026-06-07 15:36:11 [info]: - qvq-72b-preview-0310
+2026-06-07 15:36:11 [info]: - qwen2.5-vl-32b-instruct
+2026-06-07 15:36:11 [info]: - qwen2.5-14b-instruct-1m
+2026-06-07 15:36:11 [info]: - qwen2.5-coder-32b-instruct
+2026-06-07 15:36:11 [info]: - qwen2.5-72b-instruct
+2026-06-07 15:36:11 [info]: - qwen3.5-plus
+2026-06-07 15:36:11 [info]: - qwen3.5-flash
+2026-06-07 15:36:11 [info]: - qwen3.5-397b-a17b
+2026-06-07 15:36:11 [info]: - qwen3.5-122b-a10b
+2026-06-07 15:36:11 [info]: - qwen3.5-27b
+2026-06-07 15:36:11 [info]: - qwen3.5-35b-a3b
+2026-06-07 15:36:11 [info]: ============================
+2026-06-07 15:38:56 [info]: Получен OpenAI-совместимый запрос
+2026-06-07 15:38:56 [info]: Используется модель: qwen-max-latest
+2026-06-07 15:38:56 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-06-07 15:38:56 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-06-07 15:38:56 [info]: История содержит 2 сообщений: system, user
+2026-06-07 15:38:56 [info]: ===== ДОСТУПНЫЕ МОДЕЛИ =====
+2026-06-07 15:38:56 [info]: - qwen3.5-plus
+2026-06-07 15:38:56 [info]: - qwen3.5-397b-a17b
+2026-06-07 15:38:56 [info]: - qwen3-max
+2026-06-07 15:38:56 [info]: - qwen3-vl-plus
+2026-06-07 15:38:56 [info]: - qwen3-coder-plus
+2026-06-07 15:38:56 [info]: - qwen3-omni-flash
+2026-06-07 15:38:56 [info]: - qwen3-omni-flash-2025-12-01
+2026-06-07 15:38:56 [info]: - qwen-max-latest
+2026-06-07 15:38:56 [info]: - qwen-plus-2025-09-11
+2026-06-07 15:38:56 [info]: - qwen-plus-2025-01-25
+2026-06-07 15:38:56 [info]: - qwq-32b
+2026-06-07 15:38:56 [info]: - qwen3-235b-a22b
+2026-06-07 15:38:56 [info]: - qwen3-30b-a3b
+2026-06-07 15:38:56 [info]: - qwen3-coder-30b-a3b-instruct
+2026-06-07 15:38:56 [info]: - qwen-turbo-2025-02-11
+2026-06-07 15:38:56 [info]: - qwen2.5-omni-7b
+2026-06-07 15:38:56 [info]: - qvq-72b-preview-0310
+2026-06-07 15:38:56 [info]: - qwen2.5-vl-32b-instruct
+2026-06-07 15:38:56 [info]: - qwen2.5-14b-instruct-1m
+2026-06-07 15:38:56 [info]: - qwen2.5-coder-32b-instruct
+2026-06-07 15:38:56 [info]: - qwen2.5-72b-instruct
+2026-06-07 15:38:56 [info]: - qwen3.5-plus
+2026-06-07 15:38:56 [info]: - qwen3.5-flash
+2026-06-07 15:38:56 [info]: - qwen3.5-397b-a17b
+2026-06-07 15:38:56 [info]: - qwen3.5-122b-a10b
+2026-06-07 15:38:56 [info]: - qwen3.5-27b
+2026-06-07 15:38:56 [info]: - qwen3.5-35b-a3b
+2026-06-07 15:38:56 [info]: ============================
+2026-06-07 15:38:56 [info]: Используется аккаунт для создания чата: acc_1777484633782
+2026-06-07 15:39:01 [error]: Ошибка при создании чата: unknown (попытка 1)
+2026-06-07 18:39:42 [info]: Запуск сервера...
+2026-06-07 18:40:02 [info]: Аккаунт acc_1777484633782 удалён.
+2026-06-07 18:40:06 [info]: ======================================================
+2026-06-07 18:40:06 [info]: Добавление нового аккаунта Qwen
+2026-06-07 18:40:06 [info]: Браузер откроется, войдите в систему, затем вернитесь к консоли.
+2026-06-07 18:40:06 [info]: ======================================================
+2026-06-07 18:40:06 [info]: Инициализация браузера с Puppeteer Stealth...
+2026-06-07 18:40:10 [info]: Браузер инициализирован с максимальной защитой от обнаружения
+2026-06-07 18:40:10 [info]: Открытие страницы для ручной авторизации...
+2026-06-07 18:48:51 [info]: Получено подтверждение, продолжаем...
+2026-06-07 18:48:51 [info]: Сохранено 17 cookies
+2026-06-07 18:48:51 [info]: Токен найден и будет сохранен
+2026-06-07 18:48:51 [info]: Токен авторизации сохранен
+2026-06-07 18:48:51 [info]: Cookies сохранены для аккаунта acc_1780847331127
+2026-06-07 18:48:51 [info]: Сессия сохранена с ID: acc_1780847331127
+2026-06-07 18:48:51 [info]: Авторизация завершена успешно
+2026-06-07 18:48:56 [info]: Токен авторизации успешно извлечен
+2026-06-07 18:48:56 [info]: Токен авторизации сохранен
+2026-06-07 18:48:57 [info]: Браузер закрыт
+2026-06-07 18:48:57 [info]: Аккаунт 'acc_1780847337577' добавлен. Всего аккаунтов: 1
+2026-06-07 18:48:57 [info]: ======================================================
+2026-06-07 15:50:49 [info]: Получен OpenAI-совместимый запрос
+2026-06-07 15:50:49 [info]: Используется модель: qwen-max-latest
+2026-06-07 15:50:49 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-06-07 15:50:49 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-06-07 15:50:49 [info]: История содержит 3 сообщений: system, user, user
+2026-06-07 15:50:49 [info]: Используется аккаунт для создания чата: acc_1780847337577
+2026-06-07 15:50:50 [info]: Чат создан: c925a3b2-97d5-4d76-bc4b-865b57bb786f
+2026-06-07 15:50:50 [info]: Создан новый чат v2 с ID: c925a3b2-97d5-4d76-bc4b-865b57bb786f
+2026-06-07 15:50:50 [info]: Используемая модель: "qwen-max-latest"
+2026-06-07 15:50:50 [info]: Используется аккаунт: acc_1780847337577
+2026-06-07 15:50:50 [info]: Отправка запроса к API v2...
+2026-06-07 15:50:50 [error]: Ошибка при получении ответа: undefined
+2026-06-07 15:50:50 [info]: Файл истории для чата c925a3b2-97d5-4d76-bc4b-865b57bb786f не найден
+2026-06-07 15:50:50 [info]: Создаем новую историю для чата c925a3b2-97d5-4d76-bc4b-865b57bb786f
+2026-06-07 18:57:07 [info]: 
+Получен сигнал завершения. Закрываем браузер...
+2026-06-07 15:59:29 [info]: Получен OpenAI-совместимый запрос
+2026-06-07 15:59:29 [info]: Используется модель: qwen-max-latest
+2026-06-07 15:59:29 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-06-07 15:59:29 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-06-07 15:59:29 [info]: История содержит 5 сообщений: system, user, user, assistant, user
+2026-06-07 15:59:29 [info]: Используется аккаунт для создания чата: acc_1780847337577
+2026-06-07 15:59:30 [info]: Чат создан: 918df492-f7bb-40fc-a4cc-2ea7411e2db2
+2026-06-07 15:59:30 [info]: Создан новый чат v2 с ID: 918df492-f7bb-40fc-a4cc-2ea7411e2db2
+2026-06-07 15:59:30 [info]: Используемая модель: "qwen-max-latest"
+2026-06-07 15:59:30 [info]: Используется аккаунт: acc_1780847337577
+2026-06-07 15:59:30 [info]: Отправка запроса к API v2...
+2026-06-07 15:59:31 [error]: Ошибка при получении ответа: undefined
+2026-06-07 15:59:31 [info]: Файл истории для чата 918df492-f7bb-40fc-a4cc-2ea7411e2db2 не найден
+2026-06-07 15:59:31 [info]: Создаем новую историю для чата 918df492-f7bb-40fc-a4cc-2ea7411e2db2
+2026-06-07 16:11:51 [info]: Запуск сервера...
+2026-06-07 16:11:51 [info]: Автоматический запуск: обнаружено 1 аккаунтов, из них 1 активны.
+2026-06-07 16:11:51 [info]: Инициализация браузера с Puppeteer Stealth...
+2026-06-07 16:11:52 [info]: Браузер инициализирован с максимальной защитой от обнаружения
+2026-06-07 16:11:52 [info]: Сервер запущен на 0.0.0.0:3264
+2026-06-07 16:11:52 [info]: API доступен по адресу: http://localhost:3264/api
+2026-06-07 16:11:52 [info]: Для проверки статуса авторизации: GET /api/status
+2026-06-07 16:11:52 [info]: Для отправки сообщения: POST /api/chat
+2026-06-07 16:11:52 [info]: Для получения списка моделей: GET /api/models
+2026-06-07 16:11:52 [info]: ======================================================
+2026-06-07 16:11:52 [info]: API v2 - История чатов хранится на серверах Qwen
+2026-06-07 16:11:52 [info]: Создать новый чат: POST /api/chats
+2026-06-07 16:11:52 [info]: Отправить сообщение: POST /api/chat (с chatId и parentId)
+2026-06-07 16:11:52 [info]: ======================================================
+2026-06-07 16:11:52 [info]: Доступно 25 моделей Qwen (через систему маппинга):
+2026-06-07 16:11:52 [info]: - Стандартные: qwen-max, qwen-plus, qwen-turbo и их latest-версии
+2026-06-07 16:11:52 [info]: - Coder: qwen3-coder-plus, qwen2.5-coder-*b-instruct (0.5b - 32b)
+2026-06-07 16:11:52 [info]: - Визуальные: qwen-vl-max, qwen-vl-plus и их latest-версии
+2026-06-07 16:11:52 [info]: - Qwen 3: qwen3, qwen3-max, qwen3-plus, qwen3-omni-flash
+2026-06-07 16:11:52 [info]: - Qwen 3.5: qwen3.5-plus, qwen3.5-flash, qwen3.5-397b-a17b, qwen3.5-122b-a10b, qwen3.5-27b, qwen3.5-35b-a3b
+2026-06-07 16:11:52 [info]: ======================================================
+2026-06-07 16:11:52 [info]: Формат JSON запроса на чат:
+2026-06-07 16:11:52 [info]: { "message": "текст сообщения", "model": "название модели (опционально)", "chatId": "ID чата (опционально)", "parentId": "ID родительского сообщения (опционально)" }
+2026-06-07 16:11:52 [info]: Пример первого запроса: { "message": "Привет, как дела?" }
+2026-06-07 16:11:52 [info]: Пример второго запроса: { "message": "А что ты умеешь?", "chatId": "полученный_id_чата", "parentId": "полученный_parentId" }
+2026-06-07 16:11:52 [info]: ======================================================
+2026-06-07 16:11:52 [info]: Поддержка OpenAI совместимого API: POST /api/chat/completions
+2026-06-07 16:11:52 [info]: В ответе возвращаются chatId и parentId для продолжения диалога
+2026-06-07 16:11:52 [info]: ======================================================
+2026-06-07 16:11:52 [info]: ===== ДОСТУПНЫЕ МОДЕЛИ =====
+2026-06-07 16:11:52 [info]: - qwen3.5-plus
+2026-06-07 16:11:52 [info]: - qwen3.5-397b-a17b
+2026-06-07 16:11:52 [info]: - qwen3-max
+2026-06-07 16:11:52 [info]: - qwen3-vl-plus
+2026-06-07 16:11:52 [info]: - qwen3-coder-plus
+2026-06-07 16:11:52 [info]: - qwen3-omni-flash
+2026-06-07 16:11:52 [info]: - qwen3-omni-flash-2025-12-01
+2026-06-07 16:11:52 [info]: - qwen-max-latest
+2026-06-07 16:11:52 [info]: - qwen-plus-2025-09-11
+2026-06-07 16:11:52 [info]: - qwen-plus-2025-01-25
+2026-06-07 16:11:52 [info]: - qwq-32b
+2026-06-07 16:11:52 [info]: - qwen3-235b-a22b
+2026-06-07 16:11:52 [info]: - qwen3-30b-a3b
+2026-06-07 16:11:52 [info]: - qwen3-coder-30b-a3b-instruct
+2026-06-07 16:11:52 [info]: - qwen-turbo-2025-02-11
+2026-06-07 16:11:52 [info]: - qwen2.5-omni-7b
+2026-06-07 16:11:52 [info]: - qvq-72b-preview-0310
+2026-06-07 16:11:52 [info]: - qwen2.5-vl-32b-instruct
+2026-06-07 16:11:52 [info]: - qwen2.5-14b-instruct-1m
+2026-06-07 16:11:52 [info]: - qwen2.5-coder-32b-instruct
+2026-06-07 16:11:52 [info]: - qwen2.5-72b-instruct
+2026-06-07 16:11:52 [info]: - qwen3.5-plus
+2026-06-07 16:11:52 [info]: - qwen3.5-flash
+2026-06-07 16:11:52 [info]: - qwen3.5-397b-a17b
+2026-06-07 16:11:52 [info]: - qwen3.5-122b-a10b
+2026-06-07 16:11:52 [info]: - qwen3.5-27b
+2026-06-07 16:11:52 [info]: - qwen3.5-35b-a3b
+2026-06-07 16:11:52 [info]: ============================
+2026-06-07 16:11:58 [info]: Получен OpenAI-совместимый запрос
+2026-06-07 16:11:58 [info]: Используется модель: qwen-max-latest
+2026-06-07 16:11:58 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-06-07 16:11:58 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-06-07 16:11:58 [info]: История содержит 6 сообщений: system, user, user, assistant, user, user
+2026-06-07 16:11:58 [info]: ===== ДОСТУПНЫЕ МОДЕЛИ =====
+2026-06-07 16:11:58 [info]: - qwen3.5-plus
+2026-06-07 16:11:58 [info]: - qwen3.5-397b-a17b
+2026-06-07 16:11:58 [info]: - qwen3-max
+2026-06-07 16:11:58 [info]: - qwen3-vl-plus
+2026-06-07 16:11:58 [info]: - qwen3-coder-plus
+2026-06-07 16:11:58 [info]: - qwen3-omni-flash
+2026-06-07 16:11:58 [info]: - qwen3-omni-flash-2025-12-01
+2026-06-07 16:11:58 [info]: - qwen-max-latest
+2026-06-07 16:11:58 [info]: - qwen-plus-2025-09-11
+2026-06-07 16:11:58 [info]: - qwen-plus-2025-01-25
+2026-06-07 16:11:58 [info]: - qwq-32b
+2026-06-07 16:11:58 [info]: - qwen3-235b-a22b
+2026-06-07 16:11:58 [info]: - qwen3-30b-a3b
+2026-06-07 16:11:58 [info]: - qwen3-coder-30b-a3b-instruct
+2026-06-07 16:11:58 [info]: - qwen-turbo-2025-02-11
+2026-06-07 16:11:58 [info]: - qwen2.5-omni-7b
+2026-06-07 16:11:58 [info]: - qvq-72b-preview-0310
+2026-06-07 16:11:58 [info]: - qwen2.5-vl-32b-instruct
+2026-06-07 16:11:58 [info]: - qwen2.5-14b-instruct-1m
+2026-06-07 16:11:58 [info]: - qwen2.5-coder-32b-instruct
+2026-06-07 16:11:58 [info]: - qwen2.5-72b-instruct
+2026-06-07 16:11:58 [info]: - qwen3.5-plus
+2026-06-07 16:11:58 [info]: - qwen3.5-flash
+2026-06-07 16:11:58 [info]: - qwen3.5-397b-a17b
+2026-06-07 16:11:58 [info]: - qwen3.5-122b-a10b
+2026-06-07 16:11:58 [info]: - qwen3.5-27b
+2026-06-07 16:11:58 [info]: - qwen3.5-35b-a3b
+2026-06-07 16:11:58 [info]: ============================
+2026-06-07 16:11:58 [info]: Используется аккаунт для создания чата: acc_1780847337577
+2026-06-07 16:12:03 [info]: Чат создан: 03f3bac3-e2ac-41cb-909f-cf90cf3be8f1
+2026-06-07 16:12:03 [info]: Создан новый чат v2 с ID: 03f3bac3-e2ac-41cb-909f-cf90cf3be8f1
+2026-06-07 16:12:03 [info]: Используемая модель: "qwen-max-latest"
+2026-06-07 16:12:03 [info]: Используется аккаунт: acc_1780847337577
+2026-06-07 16:12:03 [info]: Отправка запроса к API v2...
+2026-06-07 16:12:04 [error]: Ошибка при получении ответа: undefined
+2026-06-07 16:12:04 [info]: Файл истории для чата 03f3bac3-e2ac-41cb-909f-cf90cf3be8f1 не найден
+2026-06-07 16:12:04 [info]: Создаем новую историю для чата 03f3bac3-e2ac-41cb-909f-cf90cf3be8f1
+2026-06-07 16:24:23 [info]: 
+Получен сигнал завершения. Закрываем браузер...
+2026-06-07 16:24:24 [error]: Ошибка при закрытии страницы в пуле: Protocol error (Target.closeTarget): Target closed
+2026-06-07 16:24:24 [error]: TargetCloseError: Protocol error (Target.closeTarget): Target closed
+    at CallbackRegistry.clear (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/common/CallbackRegistry.js:82:36)
+    at #onClose (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/Connection.js:188:25)
+    at WebSocket.<anonymous> (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/node/NodeWebSocketTransport.js:48:30)
+    at callListener (/app/node_modules/ws/lib/event-target.js:290:14)
+    at WebSocket.onClose (/app/node_modules/ws/lib/event-target.js:220:9)
+    at WebSocket.emit (node:events:524:28)
+    at WebSocket.emitClose (/app/node_modules/ws/lib/websocket.js:273:10)
+    at Socket.socketOnClose (/app/node_modules/ws/lib/websocket.js:1346:15)
+    at Socket.emit (node:events:524:28)
+    at TCP.<anonymous> (node:net:343:12)
+2026-06-07 16:24:24 [info]: Браузер закрыт
+2026-06-07 16:24:30 [info]: Запуск сервера...
+2026-06-07 16:24:30 [info]: Автоматический запуск: обнаружено 1 аккаунтов, из них 1 активны.
+2026-06-07 16:24:30 [info]: Инициализация браузера с Puppeteer Stealth...
+2026-06-07 16:24:31 [info]: Браузер инициализирован с максимальной защитой от обнаружения
+2026-06-07 16:24:31 [info]: Сервер запущен на 0.0.0.0:3264
+2026-06-07 16:24:31 [info]: API доступен по адресу: http://localhost:3264/api
+2026-06-07 16:24:31 [info]: Для проверки статуса авторизации: GET /api/status
+2026-06-07 16:24:31 [info]: Для отправки сообщения: POST /api/chat
+2026-06-07 16:24:31 [info]: Для получения списка моделей: GET /api/models
+2026-06-07 16:24:31 [info]: ======================================================
+2026-06-07 16:24:31 [info]: API v2 - История чатов хранится на серверах Qwen
+2026-06-07 16:24:31 [info]: Создать новый чат: POST /api/chats
+2026-06-07 16:24:31 [info]: Отправить сообщение: POST /api/chat (с chatId и parentId)
+2026-06-07 16:24:31 [info]: ======================================================
+2026-06-07 16:24:31 [info]: Доступно 25 моделей Qwen (через систему маппинга):
+2026-06-07 16:24:31 [info]: - Стандартные: qwen-max, qwen-plus, qwen-turbo и их latest-версии
+2026-06-07 16:24:31 [info]: - Coder: qwen3-coder-plus, qwen2.5-coder-*b-instruct (0.5b - 32b)
+2026-06-07 16:24:31 [info]: - Визуальные: qwen-vl-max, qwen-vl-plus и их latest-версии
+2026-06-07 16:24:31 [info]: - Qwen 3: qwen3, qwen3-max, qwen3-plus, qwen3-omni-flash
+2026-06-07 16:24:31 [info]: - Qwen 3.5: qwen3.5-plus, qwen3.5-flash, qwen3.5-397b-a17b, qwen3.5-122b-a10b, qwen3.5-27b, qwen3.5-35b-a3b
+2026-06-07 16:24:31 [info]: ======================================================
+2026-06-07 16:24:31 [info]: Формат JSON запроса на чат:
+2026-06-07 16:24:31 [info]: { "message": "текст сообщения", "model": "название модели (опционально)", "chatId": "ID чата (опционально)", "parentId": "ID родительского сообщения (опционально)" }
+2026-06-07 16:24:31 [info]: Пример первого запроса: { "message": "Привет, как дела?" }
+2026-06-07 16:24:31 [info]: Пример второго запроса: { "message": "А что ты умеешь?", "chatId": "полученный_id_чата", "parentId": "полученный_parentId" }
+2026-06-07 16:24:31 [info]: ======================================================
+2026-06-07 16:24:31 [info]: Поддержка OpenAI совместимого API: POST /api/chat/completions
+2026-06-07 16:24:31 [info]: В ответе возвращаются chatId и parentId для продолжения диалога
+2026-06-07 16:24:31 [info]: ======================================================
+2026-06-07 16:24:31 [info]: Создан шаблон файла ключей: /app/src/Authorization.txt
+2026-06-07 16:24:31 [info]: ===== ДОСТУПНЫЕ МОДЕЛИ =====
+2026-06-07 16:24:31 [info]: - qwen3.7-plus
+2026-06-07 16:24:31 [info]: - qwen3.7-max
+2026-06-07 16:24:31 [info]: - qwen3.6-plus
+2026-06-07 16:24:31 [info]: - qwen3.5-plus
+2026-06-07 16:24:31 [info]: - qwen3.5-flash
+2026-06-07 16:24:31 [info]: - qwen3.5-397b-a17b
+2026-06-07 16:24:31 [info]: - qwen3.5-122b-a10b
+2026-06-07 16:24:31 [info]: - qwen3.5-27b
+2026-06-07 16:24:31 [info]: - qwen3.5-35b-a3b
+2026-06-07 16:24:31 [info]: - qwen3-max
+2026-06-07 16:24:31 [info]: - qwen3-vl-plus
+2026-06-07 16:24:31 [info]: - qwen3-coder-plus
+2026-06-07 16:24:31 [info]: - qwen3-omni-flash
+2026-06-07 16:24:31 [info]: - qwen3-omni-flash-2025-12-01
+2026-06-07 16:24:31 [info]: - qwen-max-latest
+2026-06-07 16:24:31 [info]: - qwen-plus-2025-09-11
+2026-06-07 16:24:31 [info]: - qwen-plus-2025-01-25
+2026-06-07 16:24:31 [info]: - qwq-32b
+2026-06-07 16:24:31 [info]: - qwen3-235b-a22b
+2026-06-07 16:24:31 [info]: - qwen3-30b-a3b
+2026-06-07 16:24:31 [info]: - qwen3-coder-30b-a3b-instruct
+2026-06-07 16:24:31 [info]: - qwen-turbo-2025-02-11
+2026-06-07 16:24:31 [info]: - qwen2.5-omni-7b
+2026-06-07 16:24:31 [info]: - qvq-72b-preview-0310
+2026-06-07 16:24:31 [info]: - qwen2.5-vl-32b-instruct
+2026-06-07 16:24:31 [info]: - qwen2.5-14b-instruct-1m
+2026-06-07 16:24:31 [info]: - qwen2.5-coder-32b-instruct
+2026-06-07 16:24:31 [info]: - qwen2.5-72b-instruct
+2026-06-07 16:24:31 [info]: ============================
+2026-06-07 16:26:51 [info]: Получен OpenAI-совместимый запрос
+2026-06-07 16:26:51 [info]: OpenAI/Hermes transcript folded into user message for context/tool-result preservation
+2026-06-07 16:26:51 [info]: Используется модель: qwen-max-latest
+2026-06-07 16:26:51 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-06-07 16:26:51 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-06-07 16:26:51 [info]: История содержит 7 сообщений: system, user, user, assistant, user, user, user
+2026-06-07 16:26:51 [info]: ===== ДОСТУПНЫЕ МОДЕЛИ =====
+2026-06-07 16:26:51 [info]: - qwen3.7-plus
+2026-06-07 16:26:51 [info]: - qwen3.7-max
+2026-06-07 16:26:51 [info]: - qwen3.6-plus
+2026-06-07 16:26:51 [info]: - qwen3.5-plus
+2026-06-07 16:26:51 [info]: - qwen3.5-flash
+2026-06-07 16:26:51 [info]: - qwen3.5-397b-a17b
+2026-06-07 16:26:51 [info]: - qwen3.5-122b-a10b
+2026-06-07 16:26:51 [info]: - qwen3.5-27b
+2026-06-07 16:26:51 [info]: - qwen3.5-35b-a3b
+2026-06-07 16:26:51 [info]: - qwen3-max
+2026-06-07 16:26:51 [info]: - qwen3-vl-plus
+2026-06-07 16:26:51 [info]: - qwen3-coder-plus
+2026-06-07 16:26:51 [info]: - qwen3-omni-flash
+2026-06-07 16:26:51 [info]: - qwen3-omni-flash-2025-12-01
+2026-06-07 16:26:51 [info]: - qwen-max-latest
+2026-06-07 16:26:51 [info]: - qwen-plus-2025-09-11
+2026-06-07 16:26:51 [info]: - qwen-plus-2025-01-25
+2026-06-07 16:26:51 [info]: - qwq-32b
+2026-06-07 16:26:51 [info]: - qwen3-235b-a22b
+2026-06-07 16:26:51 [info]: - qwen3-30b-a3b
+2026-06-07 16:26:51 [info]: - qwen3-coder-30b-a3b-instruct
+2026-06-07 16:26:51 [info]: - qwen-turbo-2025-02-11
+2026-06-07 16:26:51 [info]: - qwen2.5-omni-7b
+2026-06-07 16:26:51 [info]: - qvq-72b-preview-0310
+2026-06-07 16:26:51 [info]: - qwen2.5-vl-32b-instruct
+2026-06-07 16:26:51 [info]: - qwen2.5-14b-instruct-1m
+2026-06-07 16:26:51 [info]: - qwen2.5-coder-32b-instruct
+2026-06-07 16:26:51 [info]: - qwen2.5-72b-instruct
+2026-06-07 16:26:51 [info]: ============================
+2026-06-07 16:26:51 [info]: Используется аккаунт: acc_1780847337577
+2026-06-07 16:26:51 [info]: Используется аккаунт для создания чата: acc_1780847337577
+2026-06-07 16:26:57 [info]: Чат создан: 66990048-78d6-423a-911a-bb979b515244
+2026-06-07 16:26:57 [info]: Создан новый чат v2 с ID: 66990048-78d6-423a-911a-bb979b515244
+2026-06-07 16:26:57 [info]: Используемая модель: "qwen-max-latest"
+2026-06-07 16:26:57 [info]: Отправка запроса к API v2...
+2026-06-07 16:26:58 [error]: Ошибка при получении ответа: undefined
+2026-06-07 16:26:58 [info]: Файл истории для чата 66990048-78d6-423a-911a-bb979b515244 не найден
+2026-06-07 16:26:58 [info]: Создаем новую историю для чата 66990048-78d6-423a-911a-bb979b515244
+2026-06-07 16:32:17 [info]: 
+Получен сигнал завершения. Закрываем браузер...
+2026-06-07 16:32:30 [info]: Запуск сервера...
+2026-06-07 16:32:30 [info]: Автоматический запуск: обнаружено 1 аккаунтов, из них 1 активны.
+2026-06-07 16:32:30 [info]: Инициализация браузера с Puppeteer Stealth...
+2026-06-07 16:32:31 [info]: Браузер инициализирован с максимальной защитой от обнаружения
+2026-06-07 16:32:31 [info]: Сервер запущен на 0.0.0.0:3264
+2026-06-07 16:32:31 [info]: API доступен по адресу: http://localhost:3264/api
+2026-06-07 16:32:31 [info]: Для проверки статуса авторизации: GET /api/status
+2026-06-07 16:32:31 [info]: Для отправки сообщения: POST /api/chat
+2026-06-07 16:32:31 [info]: Для получения списка моделей: GET /api/models
+2026-06-07 16:32:31 [info]: ======================================================
+2026-06-07 16:32:31 [info]: API v2 - История чатов хранится на серверах Qwen
+2026-06-07 16:32:31 [info]: Создать новый чат: POST /api/chats
+2026-06-07 16:32:31 [info]: Отправить сообщение: POST /api/chat (с chatId и parentId)
+2026-06-07 16:32:31 [info]: ======================================================
+2026-06-07 16:32:31 [info]: Доступно 25 моделей Qwen (через систему маппинга):
+2026-06-07 16:32:31 [info]: - Стандартные: qwen-max, qwen-plus, qwen-turbo и их latest-версии
+2026-06-07 16:32:31 [info]: - Coder: qwen3-coder-plus, qwen2.5-coder-*b-instruct (0.5b - 32b)
+2026-06-07 16:32:31 [info]: - Визуальные: qwen-vl-max, qwen-vl-plus и их latest-версии
+2026-06-07 16:32:31 [info]: - Qwen 3: qwen3, qwen3-max, qwen3-plus, qwen3-omni-flash
+2026-06-07 16:32:31 [info]: - Qwen 3.5: qwen3.5-plus, qwen3.5-flash, qwen3.5-397b-a17b, qwen3.5-122b-a10b, qwen3.5-27b, qwen3.5-35b-a3b
+2026-06-07 16:32:31 [info]: ======================================================
+2026-06-07 16:32:31 [info]: Формат JSON запроса на чат:
+2026-06-07 16:32:31 [info]: { "message": "текст сообщения", "model": "название модели (опционально)", "chatId": "ID чата (опционально)", "parentId": "ID родительского сообщения (опционально)" }
+2026-06-07 16:32:31 [info]: Пример первого запроса: { "message": "Привет, как дела?" }
+2026-06-07 16:32:31 [info]: Пример второго запроса: { "message": "А что ты умеешь?", "chatId": "полученный_id_чата", "parentId": "полученный_parentId" }
+2026-06-07 16:32:31 [info]: ======================================================
+2026-06-07 16:32:31 [info]: Поддержка OpenAI совместимого API: POST /api/chat/completions
+2026-06-07 16:32:31 [info]: В ответе возвращаются chatId и parentId для продолжения диалога
+2026-06-07 16:32:31 [info]: ======================================================
+2026-06-07 16:32:31 [info]: Создан шаблон файла ключей: /app/src/Authorization.txt
+2026-06-07 16:32:31 [info]: ===== ДОСТУПНЫЕ МОДЕЛИ =====
+2026-06-07 16:32:31 [info]: - qwen3.7-plus
+2026-06-07 16:32:31 [info]: - qwen3.7-max
+2026-06-07 16:32:31 [info]: - qwen3.6-plus
+2026-06-07 16:32:31 [info]: - qwen3.5-plus
+2026-06-07 16:32:31 [info]: - qwen3.5-flash
+2026-06-07 16:32:31 [info]: - qwen3.5-397b-a17b
+2026-06-07 16:32:31 [info]: - qwen3.5-122b-a10b
+2026-06-07 16:32:31 [info]: - qwen3.5-27b
+2026-06-07 16:32:31 [info]: - qwen3.5-35b-a3b
+2026-06-07 16:32:31 [info]: - qwen3-max
+2026-06-07 16:32:31 [info]: - qwen3-vl-plus
+2026-06-07 16:32:31 [info]: - qwen3-coder-plus
+2026-06-07 16:32:31 [info]: - qwen3-omni-flash
+2026-06-07 16:32:31 [info]: - qwen3-omni-flash-2025-12-01
+2026-06-07 16:32:31 [info]: - qwen-max-latest
+2026-06-07 16:32:31 [info]: - qwen-plus-2025-09-11
+2026-06-07 16:32:31 [info]: - qwen-plus-2025-01-25
+2026-06-07 16:32:31 [info]: - qwq-32b
+2026-06-07 16:32:31 [info]: - qwen3-235b-a22b
+2026-06-07 16:32:31 [info]: - qwen3-30b-a3b
+2026-06-07 16:32:31 [info]: - qwen3-coder-30b-a3b-instruct
+2026-06-07 16:32:31 [info]: - qwen-turbo-2025-02-11
+2026-06-07 16:32:31 [info]: - qwen2.5-omni-7b
+2026-06-07 16:32:31 [info]: - qvq-72b-preview-0310
+2026-06-07 16:32:31 [info]: - qwen2.5-vl-32b-instruct
+2026-06-07 16:32:31 [info]: - qwen2.5-14b-instruct-1m
+2026-06-07 16:32:31 [info]: - qwen2.5-coder-32b-instruct
+2026-06-07 16:32:31 [info]: - qwen2.5-72b-instruct
+2026-06-07 16:32:31 [info]: ============================
+2026-06-07 16:32:33 [info]: Получен OpenAI-совместимый запрос
+2026-06-07 16:32:33 [info]: Модель "qwen-max-latest" заменена на "qwen3.7-max"
+2026-06-07 16:32:33 [info]: Используется модель: qwen3.7-max
+2026-06-07 16:32:33 [info]: История содержит 1 сообщений: user
+2026-06-07 16:32:33 [info]: ===== ДОСТУПНЫЕ МОДЕЛИ =====
+2026-06-07 16:32:33 [info]: - qwen3.7-plus
+2026-06-07 16:32:33 [info]: - qwen3.7-max
+2026-06-07 16:32:33 [info]: - qwen3.6-plus
+2026-06-07 16:32:33 [info]: - qwen3.5-plus
+2026-06-07 16:32:33 [info]: - qwen3.5-flash
+2026-06-07 16:32:33 [info]: - qwen3.5-397b-a17b
+2026-06-07 16:32:33 [info]: - qwen3.5-122b-a10b
+2026-06-07 16:32:33 [info]: - qwen3.5-27b
+2026-06-07 16:32:33 [info]: - qwen3.5-35b-a3b
+2026-06-07 16:32:33 [info]: - qwen3-max
+2026-06-07 16:32:33 [info]: - qwen3-vl-plus
+2026-06-07 16:32:33 [info]: - qwen3-coder-plus
+2026-06-07 16:32:33 [info]: - qwen3-omni-flash
+2026-06-07 16:32:33 [info]: - qwen3-omni-flash-2025-12-01
+2026-06-07 16:32:33 [info]: - qwen-max-latest
+2026-06-07 16:32:33 [info]: - qwen-plus-2025-09-11
+2026-06-07 16:32:33 [info]: - qwen-plus-2025-01-25
+2026-06-07 16:32:33 [info]: - qwq-32b
+2026-06-07 16:32:33 [info]: - qwen3-235b-a22b
+2026-06-07 16:32:33 [info]: - qwen3-30b-a3b
+2026-06-07 16:32:33 [info]: - qwen3-coder-30b-a3b-instruct
+2026-06-07 16:32:33 [info]: - qwen-turbo-2025-02-11
+2026-06-07 16:32:33 [info]: - qwen2.5-omni-7b
+2026-06-07 16:32:33 [info]: - qvq-72b-preview-0310
+2026-06-07 16:32:33 [info]: - qwen2.5-vl-32b-instruct
+2026-06-07 16:32:33 [info]: - qwen2.5-14b-instruct-1m
+2026-06-07 16:32:33 [info]: - qwen2.5-coder-32b-instruct
+2026-06-07 16:32:33 [info]: - qwen2.5-72b-instruct
+2026-06-07 16:32:33 [info]: ============================
+2026-06-07 16:32:33 [info]: Используется аккаунт: acc_1780847337577
+2026-06-07 16:32:33 [info]: Используется аккаунт для создания чата: acc_1780847337577
+2026-06-07 16:32:37 [info]: Чат создан: a89ca2e0-4307-46f4-8f11-8d54a5fcd177
+2026-06-07 16:32:37 [info]: Создан новый чат v2 с ID: a89ca2e0-4307-46f4-8f11-8d54a5fcd177
+2026-06-07 16:32:37 [info]: Используемая модель: "qwen3.7-max"
+2026-06-07 16:32:37 [info]: Отправка запроса к API v2...
+2026-06-07 16:32:39 [info]: Ответ получен успешно
+2026-06-07 16:32:39 [info]: Файл истории для чата a89ca2e0-4307-46f4-8f11-8d54a5fcd177 не найден
+2026-06-07 16:32:39 [info]: Создаем новую историю для чата a89ca2e0-4307-46f4-8f11-8d54a5fcd177
+2026-06-07 16:32:39 [info]: Получен OpenAI-совместимый запрос
+2026-06-07 16:32:39 [info]: Модель "qwen-max-latest" заменена на "qwen3.7-max"
+2026-06-07 16:32:39 [info]: Используется модель: qwen3.7-max
+2026-06-07 16:32:39 [info]: История содержит 1 сообщений: user
+2026-06-07 16:32:39 [info]: Используется аккаунт: acc_1780847337577
+2026-06-07 16:32:39 [info]: Используется аккаунт для создания чата: acc_1780847337577
+2026-06-07 16:32:40 [info]: Чат создан: e1e6ba17-a625-4eed-89b4-7c59ec23bb0b
+2026-06-07 16:32:40 [info]: Создан новый чат v2 с ID: e1e6ba17-a625-4eed-89b4-7c59ec23bb0b
+2026-06-07 16:32:40 [info]: Используемая модель: "qwen3.7-max"
+2026-06-07 16:32:40 [info]: Отправка запроса к API v2...
+2026-06-07 16:32:41 [info]: Ответ получен успешно
+2026-06-07 16:32:41 [info]: Файл истории для чата e1e6ba17-a625-4eed-89b4-7c59ec23bb0b не найден
+2026-06-07 16:32:41 [info]: Создаем новую историю для чата e1e6ba17-a625-4eed-89b4-7c59ec23bb0b
+2026-06-07 16:33:18 [info]: Получен OpenAI-совместимый запрос
+2026-06-07 16:33:18 [info]: OpenAI/Hermes transcript folded into user message for context/tool-result preservation
+2026-06-07 16:33:18 [info]: Модель "qwen-max-latest" заменена на "qwen3.7-max"
+2026-06-07 16:33:18 [info]: Используется модель: qwen3.7-max
+2026-06-07 16:33:18 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-06-07 16:33:18 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-06-07 16:33:18 [info]: История содержит 8 сообщений: system, user, user, assistant, user, user, user, user
+2026-06-07 16:33:18 [info]: Используется аккаунт: acc_1780847337577
+2026-06-07 16:33:18 [info]: Используется аккаунт для создания чата: acc_1780847337577
+2026-06-07 16:33:18 [info]: Чат создан: cd56f91e-1bcb-4354-a2db-f27cdb773459
+2026-06-07 16:33:18 [info]: Создан новый чат v2 с ID: cd56f91e-1bcb-4354-a2db-f27cdb773459
+2026-06-07 16:33:18 [info]: Используемая модель: "qwen3.7-max"
+2026-06-07 16:33:18 [info]: Отправка запроса к API v2...
+2026-06-07 16:33:21 [info]: Ответ получен успешно
+2026-06-07 16:33:21 [info]: Файл истории для чата cd56f91e-1bcb-4354-a2db-f27cdb773459 не найден
+2026-06-07 16:33:21 [info]: Создаем новую историю для чата cd56f91e-1bcb-4354-a2db-f27cdb773459
+2026-06-07 16:42:56 [info]: 
+Получен сигнал завершения. Закрываем браузер...
+2026-06-07 16:42:56 [error]: Ошибка при закрытии страницы в пуле: Protocol error (Target.closeTarget): Target closed
+2026-06-07 16:42:56 [error]: TargetCloseError: Protocol error (Target.closeTarget): Target closed
+    at CallbackRegistry.clear (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/common/CallbackRegistry.js:82:36)
+    at #onClose (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/Connection.js:188:25)
+    at WebSocket.<anonymous> (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/node/NodeWebSocketTransport.js:48:30)
+    at callListener (/app/node_modules/ws/lib/event-target.js:290:14)
+    at WebSocket.onClose (/app/node_modules/ws/lib/event-target.js:220:9)
+    at WebSocket.emit (node:events:524:28)
+    at WebSocket.emitClose (/app/node_modules/ws/lib/websocket.js:279:10)
+    at Socket.socketOnClose (/app/node_modules/ws/lib/websocket.js:1360:15)
+    at Socket.emit (node:events:524:28)
+    at TCP.<anonymous> (node:net:343:12)
+2026-06-07 16:42:56 [info]: Браузер закрыт
+2026-06-07 16:43:02 [info]: Запуск сервера...
+2026-06-07 16:43:02 [info]: Автоматический запуск: обнаружено 1 аккаунтов, из них 1 активны.
+2026-06-07 16:43:02 [info]: Инициализация браузера с Puppeteer Stealth...
+2026-06-07 16:43:03 [info]: Браузер инициализирован с максимальной защитой от обнаружения
+2026-06-07 16:43:03 [info]: Сервер запущен на 0.0.0.0:3264
+2026-06-07 16:43:03 [info]: API доступен по адресу: http://localhost:3264/api
+2026-06-07 16:43:03 [info]: Для проверки статуса авторизации: GET /api/status
+2026-06-07 16:43:03 [info]: Для отправки сообщения: POST /api/chat
+2026-06-07 16:43:03 [info]: Для получения списка моделей: GET /api/models
+2026-06-07 16:43:03 [info]: ======================================================
+2026-06-07 16:43:03 [info]: API v2 - История чатов хранится на серверах Qwen
+2026-06-07 16:43:03 [info]: Создать новый чат: POST /api/chats
+2026-06-07 16:43:03 [info]: Отправить сообщение: POST /api/chat (с chatId и parentId)
+2026-06-07 16:43:03 [info]: ======================================================
+2026-06-07 16:43:03 [info]: Доступно 25 моделей Qwen (через систему маппинга):
+2026-06-07 16:43:03 [info]: - Стандартные: qwen-max, qwen-plus, qwen-turbo и их latest-версии
+2026-06-07 16:43:03 [info]: - Coder: qwen3-coder-plus, qwen2.5-coder-*b-instruct (0.5b - 32b)
+2026-06-07 16:43:03 [info]: - Визуальные: qwen-vl-max, qwen-vl-plus и их latest-версии
+2026-06-07 16:43:03 [info]: - Qwen 3: qwen3, qwen3-max, qwen3-plus, qwen3-omni-flash
+2026-06-07 16:43:03 [info]: - Qwen 3.5: qwen3.5-plus, qwen3.5-flash, qwen3.5-397b-a17b, qwen3.5-122b-a10b, qwen3.5-27b, qwen3.5-35b-a3b
+2026-06-07 16:43:03 [info]: ======================================================
+2026-06-07 16:43:03 [info]: Формат JSON запроса на чат:
+2026-06-07 16:43:03 [info]: { "message": "текст сообщения", "model": "название модели (опционально)", "chatId": "ID чата (опционально)", "parentId": "ID родительского сообщения (опционально)" }
+2026-06-07 16:43:03 [info]: Пример первого запроса: { "message": "Привет, как дела?" }
+2026-06-07 16:43:03 [info]: Пример второго запроса: { "message": "А что ты умеешь?", "chatId": "полученный_id_чата", "parentId": "полученный_parentId" }
+2026-06-07 16:43:03 [info]: ======================================================
+2026-06-07 16:43:03 [info]: Поддержка OpenAI совместимого API: POST /api/chat/completions
+2026-06-07 16:43:03 [info]: В ответе возвращаются chatId и parentId для продолжения диалога
+2026-06-07 16:43:03 [info]: ======================================================
+2026-06-07 16:43:03 [info]: Создан шаблон файла ключей: /app/src/Authorization.txt
+2026-06-07 16:43:03 [info]: ===== ДОСТУПНЫЕ МОДЕЛИ =====
+2026-06-07 16:43:03 [info]: - qwen3.7-plus
+2026-06-07 16:43:03 [info]: - qwen3.7-max
+2026-06-07 16:43:03 [info]: - qwen3.6-plus
+2026-06-07 16:43:03 [info]: - qwen3.5-plus
+2026-06-07 16:43:03 [info]: - qwen3.5-flash
+2026-06-07 16:43:03 [info]: - qwen3.5-397b-a17b
+2026-06-07 16:43:03 [info]: - qwen3.5-122b-a10b
+2026-06-07 16:43:03 [info]: - qwen3.5-27b
+2026-06-07 16:43:03 [info]: - qwen3.5-35b-a3b
+2026-06-07 16:43:03 [info]: - qwen3-max
+2026-06-07 16:43:03 [info]: - qwen3-vl-plus
+2026-06-07 16:43:03 [info]: - qwen3-coder-plus
+2026-06-07 16:43:03 [info]: - qwen3-omni-flash
+2026-06-07 16:43:03 [info]: - qwen3-omni-flash-2025-12-01
+2026-06-07 16:43:03 [info]: - qwen-max-latest
+2026-06-07 16:43:03 [info]: - qwen-plus-2025-09-11
+2026-06-07 16:43:03 [info]: - qwen-plus-2025-01-25
+2026-06-07 16:43:03 [info]: - qwq-32b
+2026-06-07 16:43:03 [info]: - qwen3-235b-a22b
+2026-06-07 16:43:03 [info]: - qwen3-30b-a3b
+2026-06-07 16:43:03 [info]: - qwen3-coder-30b-a3b-instruct
+2026-06-07 16:43:03 [info]: - qwen-turbo-2025-02-11
+2026-06-07 16:43:03 [info]: - qwen2.5-omni-7b
+2026-06-07 16:43:03 [info]: - qvq-72b-preview-0310
+2026-06-07 16:43:03 [info]: - qwen2.5-vl-32b-instruct
+2026-06-07 16:43:03 [info]: - qwen2.5-14b-instruct-1m
+2026-06-07 16:43:03 [info]: - qwen2.5-coder-32b-instruct
+2026-06-07 16:43:03 [info]: - qwen2.5-72b-instruct
+2026-06-07 16:43:03 [info]: ============================
+2026-06-07 23:28:15 [info]: Получен OpenAI-совместимый запрос
+2026-06-07 23:28:15 [info]: OpenAI/Hermes transcript folded into user message for context/tool-result preservation
+2026-06-07 23:28:15 [info]: Модель "qwen-max-latest" заменена на "qwen3.7-max"
+2026-06-07 23:28:15 [info]: Используется модель: qwen3.7-max
+2026-06-07 23:28:15 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-06-07 23:28:15 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-06-07 23:28:15 [info]: История содержит 10 сообщений: system, user, user, assistant, user, user, user, user, assistant, user
+2026-06-07 23:28:16 [info]: ===== ДОСТУПНЫЕ МОДЕЛИ =====
+2026-06-07 23:28:16 [info]: - qwen3.7-plus
+2026-06-07 23:28:16 [info]: - qwen3.7-max
+2026-06-07 23:28:16 [info]: - qwen3.6-plus
+2026-06-07 23:28:16 [info]: - qwen3.5-plus
+2026-06-07 23:28:16 [info]: - qwen3.5-flash
+2026-06-07 23:28:16 [info]: - qwen3.5-397b-a17b
+2026-06-07 23:28:16 [info]: - qwen3.5-122b-a10b
+2026-06-07 23:28:16 [info]: - qwen3.5-27b
+2026-06-07 23:28:16 [info]: - qwen3.5-35b-a3b
+2026-06-07 23:28:16 [info]: - qwen3-max
+2026-06-07 23:28:16 [info]: - qwen3-vl-plus
+2026-06-07 23:28:16 [info]: - qwen3-coder-plus
+2026-06-07 23:28:16 [info]: - qwen3-omni-flash
+2026-06-07 23:28:16 [info]: - qwen3-omni-flash-2025-12-01
+2026-06-07 23:28:16 [info]: - qwen-max-latest
+2026-06-07 23:28:16 [info]: - qwen-plus-2025-09-11
+2026-06-07 23:28:16 [info]: - qwen-plus-2025-01-25
+2026-06-07 23:28:16 [info]: - qwq-32b
+2026-06-07 23:28:16 [info]: - qwen3-235b-a22b
+2026-06-07 23:28:16 [info]: - qwen3-30b-a3b
+2026-06-07 23:28:16 [info]: - qwen3-coder-30b-a3b-instruct
+2026-06-07 23:28:16 [info]: - qwen-turbo-2025-02-11
+2026-06-07 23:28:16 [info]: - qwen2.5-omni-7b
+2026-06-07 23:28:16 [info]: - qvq-72b-preview-0310
+2026-06-07 23:28:16 [info]: - qwen2.5-vl-32b-instruct
+2026-06-07 23:28:16 [info]: - qwen2.5-14b-instruct-1m
+2026-06-07 23:28:16 [info]: - qwen2.5-coder-32b-instruct
+2026-06-07 23:28:16 [info]: - qwen2.5-72b-instruct
+2026-06-07 23:28:16 [info]: ============================
+2026-06-07 23:28:16 [info]: Используется аккаунт: acc_1780847337577
+2026-06-07 23:28:16 [info]: Используется аккаунт для создания чата: acc_1780847337577
+2026-06-07 23:28:21 [info]: Чат создан: 018bce11-9bf8-4bc6-a905-5eca3c103e85
+2026-06-07 23:28:21 [info]: Создан новый чат v2 с ID: 018bce11-9bf8-4bc6-a905-5eca3c103e85
+2026-06-07 23:28:21 [info]: Используемая модель: "qwen3.7-max"
+2026-06-07 23:28:21 [info]: Отправка запроса к API v2...
+2026-06-07 23:28:25 [info]: Ответ получен успешно
+2026-06-07 23:28:25 [info]: Файл истории для чата 018bce11-9bf8-4bc6-a905-5eca3c103e85 не найден
+2026-06-07 23:28:25 [info]: Создаем новую историю для чата 018bce11-9bf8-4bc6-a905-5eca3c103e85
+2026-06-07 23:28:54 [info]: Получен OpenAI-совместимый запрос
+2026-06-07 23:28:54 [info]: Модель "qwen-max-latest" заменена на "qwen3.7-max"
+2026-06-07 23:28:54 [info]: Используется модель: qwen3.7-max
+2026-06-07 23:28:54 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-06-07 23:28:54 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-06-07 23:28:54 [info]: История содержит 2 сообщений: system, user
+2026-06-07 23:28:54 [info]: Используется аккаунт: acc_1780847337577
+2026-06-07 23:28:54 [info]: Используется аккаунт для создания чата: acc_1780847337577
+2026-06-07 23:28:54 [info]: Чат создан: 587d42bf-4c9d-4db9-8b91-ceffad684e2a
+2026-06-07 23:28:54 [info]: Создан новый чат v2 с ID: 587d42bf-4c9d-4db9-8b91-ceffad684e2a
+2026-06-07 23:28:54 [info]: Используемая модель: "qwen3.7-max"
+2026-06-07 23:28:54 [info]: Отправка запроса к API v2...
+2026-06-07 23:28:57 [info]: Ответ получен успешно
+2026-06-07 23:28:57 [info]: Файл истории для чата 587d42bf-4c9d-4db9-8b91-ceffad684e2a не найден
+2026-06-07 23:28:57 [info]: Создаем новую историю для чата 587d42bf-4c9d-4db9-8b91-ceffad684e2a
+2026-06-07 23:29:23 [info]: Получен OpenAI-совместимый запрос
+2026-06-07 23:29:23 [info]: OpenAI/Hermes transcript folded into user message for context/tool-result preservation
+2026-06-07 23:29:23 [info]: Модель "qwen-max-latest" заменена на "qwen3.7-max"
+2026-06-07 23:29:23 [info]: Используется модель: qwen3.7-max
+2026-06-07 23:29:23 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-06-07 23:29:23 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-06-07 23:29:23 [info]: История содержит 4 сообщений: system, user, assistant, user
+2026-06-07 23:29:23 [info]: Используется аккаунт: acc_1780847337577
+2026-06-07 23:29:23 [info]: Используется аккаунт для создания чата: acc_1780847337577
+2026-06-07 23:29:23 [info]: Чат создан: 82e608c2-63d7-42df-8d1e-7545cf64e546
+2026-06-07 23:29:23 [info]: Создан новый чат v2 с ID: 82e608c2-63d7-42df-8d1e-7545cf64e546
+2026-06-07 23:29:23 [info]: Используемая модель: "qwen3.7-max"
+2026-06-07 23:29:23 [info]: Отправка запроса к API v2...
+2026-06-07 23:29:25 [info]: Ответ получен успешно
+2026-06-07 23:29:25 [info]: Файл истории для чата 82e608c2-63d7-42df-8d1e-7545cf64e546 не найден
+2026-06-07 23:29:25 [info]: Создаем новую историю для чата 82e608c2-63d7-42df-8d1e-7545cf64e546
+2026-06-08 08:27:31 [info]: Получен OpenAI-совместимый запрос
+2026-06-08 08:27:31 [info]: OpenAI/Hermes transcript folded into user message for context/tool-result preservation
+2026-06-08 08:27:31 [info]: Модель "qwen-max-latest" заменена на "qwen3.7-max"
+2026-06-08 08:27:31 [info]: Используется модель: qwen3.7-max
+2026-06-08 08:27:31 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-06-08 08:27:31 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-06-08 08:27:31 [info]: История содержит 6 сообщений: system, user, assistant, user, assistant, user
+2026-06-08 08:27:31 [info]: Используется аккаунт: acc_1780847337577
+2026-06-08 08:27:31 [info]: Используется аккаунт для создания чата: acc_1780847337577
+2026-06-08 08:27:32 [info]: Чат создан: 71d93dbe-e7d6-46b3-85a8-656a01e12a76
+2026-06-08 08:27:32 [info]: Создан новый чат v2 с ID: 71d93dbe-e7d6-46b3-85a8-656a01e12a76
+2026-06-08 08:27:32 [info]: Используемая модель: "qwen3.7-max"
+2026-06-08 08:27:32 [info]: Отправка запроса к API v2...
+2026-06-08 08:27:37 [info]: Ответ получен успешно
+2026-06-08 08:27:37 [info]: Файл истории для чата 71d93dbe-e7d6-46b3-85a8-656a01e12a76 не найден
+2026-06-08 08:27:37 [info]: Создаем новую историю для чата 71d93dbe-e7d6-46b3-85a8-656a01e12a76
+2026-06-08 09:42:31 [info]: Получен OpenAI-совместимый запрос
+2026-06-08 09:42:31 [info]: OpenAI/Hermes transcript folded into user message for context/tool-result preservation
+2026-06-08 09:42:31 [info]: Модель "qwen-max-latest" заменена на "qwen3.7-max"
+2026-06-08 09:42:31 [info]: Используется модель: qwen3.7-max
+2026-06-08 09:42:31 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-06-08 09:42:31 [info]: System message: Ты — интеллектуальный ассистент медицинской клиник...
+2026-06-08 09:42:31 [info]: История содержит 7 сообщений: system, user, assistant, user, assistant, user, user
+2026-06-08 09:42:31 [info]: Используется аккаунт: acc_1780847337577
+2026-06-08 09:42:31 [info]: Используется аккаунт для создания чата: acc_1780847337577
+2026-06-08 09:42:32 [info]: Чат создан: 5ecd317c-6597-40a2-9c4c-40efa09edaab
+2026-06-08 09:42:32 [info]: Создан новый чат v2 с ID: 5ecd317c-6597-40a2-9c4c-40efa09edaab
+2026-06-08 09:42:32 [info]: Используемая модель: "qwen3.7-max"
+2026-06-08 09:42:32 [info]: Отправка запроса к API v2...
+2026-06-08 09:42:35 [info]: Ответ получен успешно
+2026-06-08 09:42:35 [info]: Файл истории для чата 5ecd317c-6597-40a2-9c4c-40efa09edaab не найден
+2026-06-08 09:42:35 [info]: Создаем новую историю для чата 5ecd317c-6597-40a2-9c4c-40efa09edaab

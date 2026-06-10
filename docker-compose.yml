@@ -76,6 +76,34 @@ services:
       - directus_uploads:/directus/uploads
       - directus_extensions:/directus/extensions
 
+  backend:
+    build:
+      context: ./modules/backend
+      dockerfile: Dockerfile
+    container_name: clinic_backend
+    restart: always
+    ports:
+      - "8085:8085"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      TZ: Europe/Moscow
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/clinic_db
+      SPRING_DATASOURCE_USERNAME: login
+      SPRING_DATASOURCE_PASSWORD: pass
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+      JWT_SECRET: change-me-in-production-must-be-at-least-256-bits-long
+      APP_DIRECTUS_PUBLIC_URL: http://localhost:8055
+      MAIL_HOST: ${MAIL_HOST:-}
+      MAIL_PORT: ${MAIL_PORT:-587}
+      MAIL_USERNAME: ${MAIL_USERNAME:-}
+      MAIL_PASSWORD: ${MAIL_PASSWORD:-}
+
   landing:
     build:
       context: ./modules/landing

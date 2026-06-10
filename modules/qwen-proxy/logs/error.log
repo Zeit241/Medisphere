@@ -1,0 +1,98 @@
+2026-03-26 05:40:28 [error]: Ошибка при создании чата: unknown (попытка 1)
+2026-03-26 05:40:37 [error]: Ошибка при закрытии страницы в пуле: Protocol error (Target.closeTarget): Target closed
+2026-03-26 05:40:37 [error]: TargetCloseError: Protocol error (Target.closeTarget): Target closed
+    at CallbackRegistry.clear (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/common/CallbackRegistry.js:82:36)
+    at #onClose (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/Connection.js:188:25)
+    at WebSocket.<anonymous> (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/node/NodeWebSocketTransport.js:48:30)
+    at callListener (/app/node_modules/ws/lib/event-target.js:290:14)
+    at WebSocket.onClose (/app/node_modules/ws/lib/event-target.js:220:9)
+    at WebSocket.emit (node:events:524:28)
+    at WebSocket.emitClose (/app/node_modules/ws/lib/websocket.js:273:10)
+    at Socket.socketOnClose (/app/node_modules/ws/lib/websocket.js:1346:15)
+    at Socket.emit (node:events:524:28)
+    at TCP.<anonymous> (node:net:343:12)
+2026-03-26 05:41:29 [error]: Ошибка при создании чата: net::ERR_NAME_NOT_RESOLVED at https://chat.qwen.ai/
+2026-03-26 05:41:29 [error]: Error: net::ERR_NAME_NOT_RESOLVED at https://chat.qwen.ai/
+    at navigate (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/Frame.js:184:27)
+    at async Deferred.race (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/util/Deferred.js:36:20)
+    at async CdpFrame.goto (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/Frame.js:150:25)
+    at async CdpPage.goto (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/api/Page.js:580:20)
+    at async Object.getPage (file:///app/src/api/chat.js:91:9)
+    at async createChatV2 (file:///app/src/api/chat.js:962:16)
+    at async sendMessage (file:///app/src/api/chat.js:770:31)
+    at async file:///app/src/api/routes.js:916:28
+2026-03-26 07:16:15 [error]: Ошибка при создании чата: unknown (попытка 1)
+2026-03-26 07:17:26 [error]: Ошибка при создании чата: unknown (попытка 1)
+2026-03-26 07:17:40 [error]: Ошибка при закрытии страницы в пуле: Protocol error (Target.closeTarget): Target closed
+2026-03-26 07:17:40 [error]: TargetCloseError: Protocol error (Target.closeTarget): Target closed
+    at CallbackRegistry.clear (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/common/CallbackRegistry.js:82:36)
+    at #onClose (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/Connection.js:188:25)
+    at WebSocket.<anonymous> (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/node/NodeWebSocketTransport.js:48:30)
+    at callListener (/app/node_modules/ws/lib/event-target.js:290:14)
+    at WebSocket.onClose (/app/node_modules/ws/lib/event-target.js:220:9)
+    at WebSocket.emit (node:events:524:28)
+    at WebSocket.emitClose (/app/node_modules/ws/lib/websocket.js:273:10)
+    at Socket.socketOnClose (/app/node_modules/ws/lib/websocket.js:1346:15)
+    at Socket.emit (node:events:524:28)
+    at TCP.<anonymous> (node:net:343:12)
+2026-03-26 08:57:33 [error]: Ошибка при создании чата: unknown (попытка 1)
+2026-04-28 13:01:49 [error]: Ошибка при создании чата: unknown (попытка 1)
+2026-04-29 20:41:07 [error]: Ошибка при ручной авторизации: Protocol error (Network.getCookies): Session closed. Most likely the page has been closed.
+2026-04-29 20:41:07 [error]: TargetCloseError: Protocol error (Network.getCookies): Session closed. Most likely the page has been closed.
+    at CdpCDPSession.send (C:\Users\zeeit\OneDrive\Desktop\kursovaya\qwen\node_modules\puppeteer-core\lib\cjs\puppeteer\cdp\CdpSession.js:72:35)
+    at CdpPage.cookies (C:\Users\zeeit\OneDrive\Desktop\kursovaya\qwen\node_modules\puppeteer-core\lib\cjs\puppeteer\cdp\Page.js:508:66)
+    at startManualAuthenticationPuppeteer (file:///C:/Users/zeeit/OneDrive/Desktop/kursovaya/qwen/src/browser/browser.js:168:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async initBrowser (file:///C:/Users/zeeit/OneDrive/Desktop/kursovaya/qwen/src/browser/browser.js:105:13)
+    at async addAccountInteractive (file:///C:/Users/zeeit/OneDrive/Desktop/kursovaya/qwen/src/utils/accountSetup.js:27:16)
+    at async runInteractiveMenu (file:///C:/Users/zeeit/OneDrive/Desktop/kursovaya/qwen/scripts/auth.js:114:13)
+    at async file:///C:/Users/zeeit/OneDrive/Desktop/kursovaya/qwen/scripts/auth.js:136:5
+2026-04-29 20:41:07 [error]: Ошибка при инициализации браузера: Protocol error (Network.getCookies): Session closed. Most likely the page has been closed.
+2026-04-29 20:41:07 [error]: TargetCloseError: Protocol error (Network.getCookies): Session closed. Most likely the page has been closed.
+    at CdpCDPSession.send (C:\Users\zeeit\OneDrive\Desktop\kursovaya\qwen\node_modules\puppeteer-core\lib\cjs\puppeteer\cdp\CdpSession.js:72:35)
+    at CdpPage.cookies (C:\Users\zeeit\OneDrive\Desktop\kursovaya\qwen\node_modules\puppeteer-core\lib\cjs\puppeteer\cdp\Page.js:508:66)
+    at startManualAuthenticationPuppeteer (file:///C:/Users/zeeit/OneDrive/Desktop/kursovaya/qwen/src/browser/browser.js:168:36)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async initBrowser (file:///C:/Users/zeeit/OneDrive/Desktop/kursovaya/qwen/src/browser/browser.js:105:13)
+    at async addAccountInteractive (file:///C:/Users/zeeit/OneDrive/Desktop/kursovaya/qwen/src/utils/accountSetup.js:27:16)
+    at async runInteractiveMenu (file:///C:/Users/zeeit/OneDrive/Desktop/kursovaya/qwen/scripts/auth.js:114:13)
+    at async file:///C:/Users/zeeit/OneDrive/Desktop/kursovaya/qwen/scripts/auth.js:136:5
+2026-04-29 20:41:07 [error]: Не удалось запустить браузер.
+2026-04-29 20:41:18 [error]: Ошибка при извлечении токена авторизации: Базовая страница браузера закрыта
+2026-04-29 20:41:18 [error]: Error: Базовая страница браузера закрыта
+    at getPage (file:///C:/Users/zeeit/OneDrive/Desktop/kursovaya/qwen/src/api/chat.js:54:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async extractAuthToken (file:///C:/Users/zeeit/OneDrive/Desktop/kursovaya/qwen/src/api/chat.js:202:22)
+    at async addAccountInteractive (file:///C:/Users/zeeit/OneDrive/Desktop/kursovaya/qwen/src/utils/accountSetup.js:34:17)
+    at async runInteractiveMenu (file:///C:/Users/zeeit/OneDrive/Desktop/kursovaya/qwen/scripts/auth.js:114:13)
+    at async file:///C:/Users/zeeit/OneDrive/Desktop/kursovaya/qwen/scripts/auth.js:136:5
+2026-04-29 20:41:18 [error]: Токен не был получен. Аккаунт не добавлен.
+2026-06-07 15:39:01 [error]: Ошибка при создании чата: unknown (попытка 1)
+2026-06-07 15:50:50 [error]: Ошибка при получении ответа: undefined
+2026-06-07 15:59:31 [error]: Ошибка при получении ответа: undefined
+2026-06-07 16:12:04 [error]: Ошибка при получении ответа: undefined
+2026-06-07 16:24:24 [error]: Ошибка при закрытии страницы в пуле: Protocol error (Target.closeTarget): Target closed
+2026-06-07 16:24:24 [error]: TargetCloseError: Protocol error (Target.closeTarget): Target closed
+    at CallbackRegistry.clear (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/common/CallbackRegistry.js:82:36)
+    at #onClose (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/Connection.js:188:25)
+    at WebSocket.<anonymous> (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/node/NodeWebSocketTransport.js:48:30)
+    at callListener (/app/node_modules/ws/lib/event-target.js:290:14)
+    at WebSocket.onClose (/app/node_modules/ws/lib/event-target.js:220:9)
+    at WebSocket.emit (node:events:524:28)
+    at WebSocket.emitClose (/app/node_modules/ws/lib/websocket.js:273:10)
+    at Socket.socketOnClose (/app/node_modules/ws/lib/websocket.js:1346:15)
+    at Socket.emit (node:events:524:28)
+    at TCP.<anonymous> (node:net:343:12)
+2026-06-07 16:26:58 [error]: Ошибка при получении ответа: undefined
+2026-06-07 16:42:56 [error]: Ошибка при закрытии страницы в пуле: Protocol error (Target.closeTarget): Target closed
+2026-06-07 16:42:56 [error]: TargetCloseError: Protocol error (Target.closeTarget): Target closed
+    at CallbackRegistry.clear (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/common/CallbackRegistry.js:82:36)
+    at #onClose (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/Connection.js:188:25)
+    at WebSocket.<anonymous> (/app/node_modules/puppeteer-core/lib/cjs/puppeteer/node/NodeWebSocketTransport.js:48:30)
+    at callListener (/app/node_modules/ws/lib/event-target.js:290:14)
+    at WebSocket.onClose (/app/node_modules/ws/lib/event-target.js:220:9)
+    at WebSocket.emit (node:events:524:28)
+    at WebSocket.emitClose (/app/node_modules/ws/lib/websocket.js:279:10)
+    at Socket.socketOnClose (/app/node_modules/ws/lib/websocket.js:1360:15)
+    at Socket.emit (node:events:524:28)
+    at TCP.<anonymous> (node:net:343:12)
