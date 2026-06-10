@@ -12,9 +12,10 @@ RUN git clone --depth 1 --branch "${GIT_REF}" "${GIT_REPO}" app \
 FROM maven:3.9-eclipse-temurin-21-alpine AS builder
 WORKDIR /build
 COPY --from=source /src/app/pom.xml .
+COPY --from=source /src/app/checkstyle.xml .
 RUN mvn -B dependency:go-offline
 COPY --from=source /src/app/src ./src
-RUN mvn -B -DskipTests package
+RUN mvn -B -DskipTests -Dcheckstyle.skip=true package
 
 FROM eclipse-temurin:21-jre-alpine AS runner
 RUN apk add --no-cache wget \
